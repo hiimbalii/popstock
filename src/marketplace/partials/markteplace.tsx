@@ -9,15 +9,20 @@ export default function Marketplace() {
 
   const Inner = () => {
     if (status === "error") return;
-    <p>Oh no! We seemed to have encountered an error</p>;
+    <p className="text-lg text-white">
+      Oh no! We seemed to have encountered an error
+    </p>;
 
-    if (status === "loading") return <p>Loading...</p>;
+    if (status === "loading")
+      return <p className="text-lg text-white">Loading...</p>;
     if (status === "success")
       return songs.length === 0 ? (
-        <p>No songs found</p>
+        <p className="text-lg text-white">No songs found</p>
       ) : (
         songs.map((song) => (
           <SongSummary
+            key={song.id}
+            songId={song.id}
             imageUrl={song.album.images[0]?.url ?? ""}
             title={song.name}
             artist={song.artists[0]?.name ?? ""}

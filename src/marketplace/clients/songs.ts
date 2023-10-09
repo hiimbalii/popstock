@@ -50,6 +50,7 @@ export interface SongResponse {
   artists: { name: string }[];
   name: string;
   popularity: number;
+  id: string
 }
 export interface RecommendationsResponse {
   tracks: SongResponse[];
