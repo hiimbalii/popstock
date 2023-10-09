@@ -1,4 +1,4 @@
-import Tile, { TileTitle } from "../../shared/tile";
+import Tile, { TileTitle } from "../../shared/components/tile";
 
 export default function Portfolio() {
   return (
