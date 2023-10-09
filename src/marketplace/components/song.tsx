@@ -43,7 +43,25 @@ export default function SongSummary({
         <div className="flex flex-col">
           <p>Price per share: {price}</p>
           <Button color="primary">Open</Button>
-          <Button onClick={() => dispatch({ type: 'buy', payload: { id:songId, price, quantiy: 1}})}>Buy</Button>
+          <Button
+            onClick={() =>
+              dispatch({
+                type: "buy",
+                payload: {
+                  id: songId,
+                  price,
+                  quantiy: 1,
+                  songInfo: {
+                    name: title,
+                    subtitle: `${artist} - ${album}`,
+                    albumCover: imageUrl,
+                  },
+                },
+              })
+            }
+          >
+            Buy
+          </Button>
         </div>
       </div>
     </Tile>
