@@ -1,4 +1,4 @@
-export interface ButtonProps {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
   color?: "primary" | "secondary";
   children: React.ReactNode;
 }
