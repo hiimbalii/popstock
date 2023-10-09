@@ -5,7 +5,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 const colors = {
   primary: "bg-green-500 hover:bg-green-600",
-  secondary: "bg-gray-500 hover:bg-gray-600",
+  secondary: "bg-gray-600 hover:bg-gray-700",
 };
 export default function Button({
   color = "secondary",
