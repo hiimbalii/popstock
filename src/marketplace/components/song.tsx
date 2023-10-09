@@ -1,3 +1,4 @@
+import Button from "../../shared/button";
 import Tile from "../../shared/tile";
 
 export interface SongProps {
@@ -16,6 +17,7 @@ export default function SongSummary({
   year,
   popularity,
 }: SongProps) {
+  const price = popularity * 10 || 10;
   return (
     <Tile className="h-auto mb-2">
       <div className="h-full p-1 flex ">
@@ -33,13 +35,9 @@ export default function SongSummary({
           <span className="text-sm mt-2">{year}</span>
         </div>
         <div className="flex flex-col">
-          <p>Price per share: {popularity}</p>
-          <button className="bg-green-500 hover:bg-green-600 rounded-full py-1 px-3 my-1">
-            Open
-          </button>
-          <button className="bg-gray-500 hover:bg-gray-600 rounded-full py-1 px-3 my-1">
-            Buy
-          </button>
+          <p>Price per share: {price}</p>
+          <Button color="primary">Open</Button>
+          <Button>Buy</Button>
         </div>
       </div>
     </Tile>
