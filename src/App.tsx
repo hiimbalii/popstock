@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Wallet from "./marketplace/partials/wallet";
+import Wallet from "./inventory/partials/wallet";
 import Portfolio from "./inventory/partials/portfolio";
 import Marketplace from "./marketplace/partials/markteplace";
 import getAuthToken from "./app_root/auth_client";
