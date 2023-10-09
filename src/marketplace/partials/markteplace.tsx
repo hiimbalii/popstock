@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import SongSummary from "../components/song";
 import { AuthContext } from "../../app_root/authProvider";
-import { SongResponse, getSongs, useSongsList } from "../clients/songs";
+import { useSongsList } from "../clients/songs";
 
 export default function Marketplace() {
   const authToken = useContext<string>(AuthContext);
-  const {songs,error}=useSongsList(authToken)
+  const { songs, error } = useSongsList(authToken);
   return (
     <div className="px-2 w-full h-full overflow-x-scroll">
       {error && <p>Oh no! You ddos'd spotify too hard :/</p>}

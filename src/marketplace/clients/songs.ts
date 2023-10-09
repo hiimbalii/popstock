@@ -21,7 +21,7 @@ const useSongsList = (authToken: string, searchString?: string) => {
       setSongs(JSON.parse(storedData))
       return
     }
-    if (searchString) {
+    if (searchString) { // it's enough to refresh cache on search
       localStorage.removeItem('songs')
     }
     setIsLoading(true)
