@@ -1,4 +1,4 @@
-import Tile from "./tile";
+import Tile from "../../shared/tile";
 
 export interface SongProps {
   imageUrl: string;
@@ -34,8 +34,12 @@ export default function SongSummary({
         </div>
         <div className="flex flex-col">
           <p>Price per share: {popularity}</p>
-          <button className='bg-green-500 hover:bg-green-600 rounded-full py-1 px-3 my-1'>Open</button>
-          <button className="bg-gray-500 hover:bg-gray-600 rounded-full py-1 px-3 my-1">Buy</button>
+          <button className="bg-green-500 hover:bg-green-600 rounded-full py-1 px-3 my-1">
+            Open
+          </button>
+          <button className="bg-gray-500 hover:bg-gray-600 rounded-full py-1 px-3 my-1">
+            Buy
+          </button>
         </div>
       </div>
     </Tile>

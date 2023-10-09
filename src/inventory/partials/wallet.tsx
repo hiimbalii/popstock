@@ -1,4 +1,4 @@
-import Tile, { TileTitle } from "../components/tile";
+import Tile, { TileTitle } from "../../shared/tile";
 
 export default function Wallet() {
   return (

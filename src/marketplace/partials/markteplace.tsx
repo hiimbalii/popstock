@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import SongSummary from "../components/song";
-import { AuthContext } from "../AppRoot/authProvider";
+import { AuthContext } from "../../app_root/authProvider";
 import { SongResponse, getSongs } from "../clients/songs";
 
 export default function Marketplace() {
