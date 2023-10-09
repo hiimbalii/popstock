@@ -48,4 +48,9 @@ const songStoreReducer = (state = initialState, action: SongStoreAction) => {
   return state;
 };
 const songsStore = createStore(songStoreReducer);
+songsStore.subscribe(() => {
+  const state = songsStore.getState()
+  localStorage.setItem('wallet', JSON.stringify(state.wallet))
+  localStorage.setItem('portfolio', JSON.stringify(state.portfolio))
+})
 export { songsStore };
