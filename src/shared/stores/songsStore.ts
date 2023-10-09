@@ -28,6 +28,8 @@ interface SongStoreSellAction {
   type: "sell";
   payload: {
     shareId: number;
+    quantity: number;
+    sellPrice: number;
   };
 }
 export type SongStoreAction = SongStoreBuyAction | SongStoreSellAction;
@@ -57,14 +59,14 @@ const songStoreReducer = (state = initialState, action: SongStoreAction) => {
   } else if (action.type === "sell") {
     return {
       ...state,
-      portfolio: state.portfolio.filter(
-        (share) => share.shareId !== action.payload.shareId
-      ),
-      wallet:
-        state.wallet +
-        (state.portfolio.find(
-          (share) => share.shareId === action.payload.shareId
-        )?.buyPrice || 0), // this is for TS, but it shouldn't be possible
+      portfolio: state.portfolio
+        .map((share) => {
+          if (share.shareId !== action.payload.shareId) return share;
+          share.quantity -= action.payload.quantity;
+          return share;
+        })
+        .filter((share) => share.quantity > 0),
+      wallet: state.wallet + action.payload.sellPrice * action.payload.quantity,
     };
   }
   return state;
