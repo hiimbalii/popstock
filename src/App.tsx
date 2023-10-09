@@ -4,7 +4,7 @@ import Wallet from "./partial/wallet";
 import Portfolio from "./partial/portfolio";
 import Marketplace from "./partial/markteplace";
 import getAuthToken from "./AppRoot/auth_client";
-import AuthProvider from "./providers/authProvider";
+import AuthProvider from "./AppRoot/authProvider";
 
 function App() {
   return (
