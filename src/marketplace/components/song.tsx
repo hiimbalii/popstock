@@ -1,5 +1,5 @@
 import Button from "../../shared/components/button";
-import Tile from "../../shared/tile";
+import Tile from "../../shared/components/tile";
 
 export interface SongProps {
   imageUrl: string;
