@@ -12,14 +12,6 @@ Details on the card
 ### MVP
 Goals: Practice basic react and redux development.
 
-* As a user I must see recommended songs I can trade
-
-Define and implement 'marketplace', where the user can see the songs recommended by spotify
-
-* As a user I must see how much 'money' i have left to trade with
-
-Define and implement 'wallet', which shows the remaining balance of the user. Implement a solution to keep track of the balance of the user
-
 * As a user I must be able to buy shares for a song displayed on the marketplace
 
 Add a buy button to the songs found in marketplace and implement a solution for the application to store the shares bought and deduct the price of the user.
@@ -28,6 +20,7 @@ Add a buy button to the songs found in marketplace and implement a solution for 
 
 Define and implement 'portfolio', which displays the song shares owned by the user and enables them to sell the shares. Implement a solution to remove sold shares from the portfolio of the user and increment their balance
 
+* As a user I could be able to infinitly scroll
 
 ### Search
 Goals: Practice adding code to an 'existing' codebase, get better at using GET requests and forms.
@@ -73,6 +66,13 @@ Goals: Get better at using 3rd parties and POST/PATCH/DELETE, Learn how to use a
 ## In Prog - UI
 *(ui and logic is separated so i can get feedback on my code easier)*
 
+* As a user I must see how much 'money' i have left to trade with
+
+Define and implement 'wallet', which shows the remaining balance of the user. Implement a solution to keep track of the balance of the user
+
+* As a user I must see recommended songs I can trade
+
+Define and implement 'marketplace', where the user can see the songs recommended by spotify
 ## In Prog - Logic
 
 ## QA
