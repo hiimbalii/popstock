@@ -1,9 +1,10 @@
 import { createStore } from "redux";
 import { SongResponse } from "../../marketplace/clients/songs";
 import { act } from "react-dom/test-utils";
+import { nanoid } from "nanoid";
 
 export interface Share {
-  shareId: number;
+  shareId: string;
   songId: string;
   quantity: number;
   buyPrice: number;
@@ -27,7 +28,7 @@ interface SongStoreBuyAction {
 interface SongStoreSellAction {
   type: "sell";
   payload: {
-    shareId: number;
+    shareId: string;
     quantity: number;
     sellPrice: number;
   };
@@ -47,7 +48,7 @@ const songStoreReducer = (state = initialState, action: SongStoreAction) => {
       portfolio: [
         {
           ...action.payload.songInfo,
-          shareId: state.portfolio.length + 1,
+          shareId: nanoid(),
           songId: action.payload.id,
           buyPrice: action.payload.price,
           quantity: action.payload.quantiy,
