@@ -31,7 +31,7 @@ export default function Portfolio() {
   return (
     <Tile className="flex-grow flex flex-col h-5/6">
       <TileTitle>Portfolio</TileTitle>
-      <div className="overflow-auto flex-grow">
+      <div className="overflow-auto flex-grow flex flex-col gap-1">
         {shares.map((share) => (
           <ShareDetails
             key={share.shareId}
