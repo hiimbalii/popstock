@@ -5,12 +5,15 @@ import { Dispatch } from "redux";
 
 export interface ShareDetailsProps {
   share: Share;
+  currentPrice: number;
 }
 
-export default function ShareDetails({ share }: ShareDetailsProps) {
+export default function ShareDetails({
+  share,
+  currentPrice,
+}: ShareDetailsProps) {
   const dispatch = useDispatch<Dispatch<SongStoreAction>>();
-  const newPrice = 13;
-  const increase = newPrice - share.buyPrice;
+  const increase = currentPrice - share.buyPrice;
   const delta = (increase / share.buyPrice) * 100;
   const deltaRounded = Math.round(delta * 100) / 100;
   return (
@@ -30,25 +33,31 @@ export default function ShareDetails({ share }: ShareDetailsProps) {
         <p className="text-white text-xs">
           Current price:{" "}
           <strong>
-            {newPrice}
-            <span
-              className={`${
-                deltaRounded > 0 ? "text-green-600" : "text-red-600"
-              } ml-1`}
-            >
-              ({deltaRounded > 0 ? "+" : null}
-              {deltaRounded}%)
-            </span>
+            {currentPrice}
+            {!!deltaRounded && (
+              <span
+                className={`${
+                  deltaRounded > 0 ? "text-green-600" : "text-red-600"
+                } ml-1`}
+              >
+                ({deltaRounded > 0 ? "+" : null}
+                {deltaRounded}%)
+              </span>
+            )}
           </strong>
         </p>
       </div>
       <div className="flex flex-col gap-0">
-          <Button color="primary">Open</Button>
+        <Button color="primary">Open</Button>
         <Button
           onClick={() =>
             dispatch({
               type: "sell",
-                payload: { shareId: share.shareId, sellPrice: newPrice, quantity: 2},
+              payload: {
+                shareId: share.shareId,
+                sellPrice: currentPrice,
+                quantity: 1,
+              },
             })
           }
         >

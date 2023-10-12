@@ -2,19 +2,33 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Tile, { TileTitle } from "../../shared/components/tile";
 import { selectShares } from "../selectors/sharesSelector";
-import { Dispatch } from "redux";
-import { SongStoreAction } from "../../shared/stores/songsStore";
 import ShareDetails from "../components/share";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../app_root/authProvider";
+import { getTrackPrices } from "../clients/get_track_prices";
 
 export default function Portfolio() {
   const shares = useSelector(selectShares);
-  const dispatch = useDispatch<Dispatch<SongStoreAction>>();
+
+  const authToken = useContext<string>(AuthContext);
+  const [priceList, setPriceList] = useState<{ [key: string]: number }>({});
+
+  useEffect(() => {
+    if (!authToken) return;
+    const listOfIds = shares.map((share) => share.songId);
+    getTrackPrices(authToken, listOfIds).then(prices=>setPriceList(prices));
+  }, [shares, authToken]);
+
   return (
     <Tile className="flex-grow flex flex-col">
       <TileTitle>Portfolio</TileTitle>
       <div className="overflow-auto flex-grow">
         {shares.map((share) => (
-          <ShareDetails key={share.shareId} share={share} />
+          <ShareDetails
+            key={share.shareId}
+            share={share}
+            currentPrice={priceList[share.songId] ?? 0}
+          />
         ))}
       </div>
     </Tile>
