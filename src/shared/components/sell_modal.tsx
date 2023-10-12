@@ -1,7 +1,7 @@
 import Button from "./button";
 import { Share, SongStoreAction } from "../stores/songsStore";
 import * as Dialog from "@radix-ui/react-dialog";
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import calculateDelta from "../utils/calcDelta";
@@ -11,7 +11,7 @@ interface SellModalProps {
 }
 
 export default function SellModal({ share, currentPrice }: SellModalProps) {
-  const [selectedAmmount, setSelectedAmmount] = useState(share.quantity ?? 1);
+  const [selectedAmmount, setSelectedAmmount] = useState(share.quantity);
   const dispatch = useDispatch<Dispatch<SongStoreAction>>();
   const handleInput: ChangeEventHandler<HTMLInputElement> = (ev) => {
     const value = parseInt(ev.target.value);
@@ -28,6 +28,10 @@ export default function SellModal({ share, currentPrice }: SellModalProps) {
     });
   };
 
+  const handleOpen = () => {
+    if (selectedAmmount > share.quantity) setSelectedAmmount(share.quantity);
+  };
+
   const profit = (selectedAmmount || share.quantity) * currentPrice;
   const delta = calculateDelta(share.buyPrice, currentPrice);
   const bgColor =
@@ -35,7 +39,7 @@ export default function SellModal({ share, currentPrice }: SellModalProps) {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button>Sell</Button>
+        <Button onClick={handleOpen}>Sell</Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="bg-gray-700 opacity-70 fixed inset-0 w-screen h-screen" />
