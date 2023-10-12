@@ -43,6 +43,7 @@ const songStoreReducer = (state = initialState, action: SongStoreAction) => {
   if (action.type === "buy") {
     const grandSum = action.payload.price * action.payload.quantity;
     if (state.wallet < grandSum) return state;
+    // it would be more elegant if its the same song for the same price it'd stack
     return {
       ...state,
       portfolio: [
