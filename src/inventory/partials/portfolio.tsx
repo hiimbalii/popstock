@@ -6,6 +6,7 @@ import ShareDetails from "../components/share";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../app_root/authProvider";
 import { getTrackPrices } from "../clients/get_track_prices";
+import calculateDelta from "../../shared/utils/calcDelta";
 
 export default function Portfolio() {
   const shares = useSelector(selectShares);
@@ -28,6 +29,8 @@ export default function Portfolio() {
     (prev, curr) => prev + curr.buyPrice * curr.quantity,
     0
   );
+
+  const totalDelta = calculateDelta(totalInvested, totalValue);
   return (
     <Tile className="flex-grow flex flex-col h-5/6">
       <TileTitle>Portfolio</TileTitle>
@@ -47,7 +50,8 @@ export default function Portfolio() {
         <span>
           {Number.isNaN(totalValue) ? 0 : totalValue}{" "}
           <small>
-            in value (<strong>{totalInvested}</strong> invested)
+            in value (<strong>{totalInvested}</strong> invested{" "}
+            {totalDelta !== 0 && `${totalDelta}% ${totalDelta>0?'growth':'decrease'}`})
           </small>
         </span>
       </div>
