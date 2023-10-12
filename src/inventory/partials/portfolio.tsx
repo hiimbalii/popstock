@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import Tile, { TileTitle } from "../../shared/components/tile";
 import { selectShares } from "../selectors/sharesSelector";

@@ -1,7 +1,7 @@
 import Button from "./button";
 import { Share, SongStoreAction } from "../stores/songsStore";
 import * as Dialog from "@radix-ui/react-dialog";
-import { ChangeEventHandler, KeyboardEventHandler, useState } from "react";
+import { ChangeEventHandler,  useState } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 interface SellModalProps {

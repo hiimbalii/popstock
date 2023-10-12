@@ -1,7 +1,5 @@
-import { useDispatch } from "react-redux";
 import Button from "../../shared/components/button";
-import { Share, SongStoreAction } from "../../shared/stores/songsStore";
-import { Dispatch } from "redux";
+import { Share } from "../../shared/stores/songsStore";
 import SellModal from "../../shared/components/sell_modal";
 
 export interface ShareDetailsProps {
@@ -13,7 +11,6 @@ export default function ShareDetails({
   share,
   currentPrice,
 }: ShareDetailsProps) {
-  const dispatch = useDispatch<Dispatch<SongStoreAction>>();
   const increase = currentPrice - share.buyPrice;
   const delta = (increase / share.buyPrice) * 100;
   const deltaRounded = Math.round(delta * 100) / 100;

@@ -1,6 +1,4 @@
 import { createStore } from "redux";
-import { SongResponse } from "../../marketplace/clients/songs";
-import { act } from "react-dom/test-utils";
 import { nanoid } from "nanoid";
 
 export interface Share {
