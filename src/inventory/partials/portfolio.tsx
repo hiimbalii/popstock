@@ -24,6 +24,10 @@ export default function Portfolio() {
     0
   );
 
+  const totalInvested = shares.reduce(
+    (prev, curr) => prev + curr.buyPrice * curr.quantity,
+    0
+  );
   return (
     <Tile className="flex-grow flex flex-col h-5/6">
       <TileTitle>Portfolio</TileTitle>
@@ -41,7 +45,10 @@ export default function Portfolio() {
           {shares.length} <small>shares</small>
         </span>
         <span>
-          {Number.isNaN(totalValue) ? 0 : totalValue} <small>in value</small>
+          {Number.isNaN(totalValue) ? 0 : totalValue}{" "}
+          <small>
+            in value (<strong>{totalInvested}</strong> invested)
+          </small>
         </span>
       </div>
     </Tile>
