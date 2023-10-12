@@ -16,11 +16,16 @@ export default function Portfolio() {
   useEffect(() => {
     if (!authToken) return;
     const listOfIds = shares.map((share) => share.songId);
-    getTrackPrices(authToken, listOfIds).then(prices=>setPriceList(prices));
+    getTrackPrices(authToken, listOfIds).then((prices) => setPriceList(prices));
   }, [shares, authToken]);
 
+  const totalValue = shares.reduce(
+    (prev, curr) => prev + priceList[curr.songId] * curr.quantity,
+    0
+  );
+
   return (
-    <Tile className="flex-grow flex flex-col">
+    <Tile className="flex-grow flex flex-col h-5/6">
       <TileTitle>Portfolio</TileTitle>
       <div className="overflow-auto flex-grow">
         {shares.map((share) => (
@@ -30,6 +35,14 @@ export default function Portfolio() {
             currentPrice={priceList[share.songId] ?? 0}
           />
         ))}
+      </div>
+      <div className="flex justify-between mt-1">
+        <span>
+          {shares.length} <small>shares</small>
+        </span>
+        <span>
+          {Number.isNaN(totalValue) ? 0 : totalValue} <small>in value</small>
+        </span>
       </div>
     </Tile>
   );
