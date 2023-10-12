@@ -17,6 +17,7 @@ export default function Portfolio() {
   useEffect(() => {
     if (!authToken) return;
     const listOfIds = shares.map((share) => share.songId);
+    if (!listOfIds.length) return;
     getTrackPrices(authToken, listOfIds).then((prices) => setPriceList(prices));
   }, [shares, authToken]);
 
@@ -51,7 +52,9 @@ export default function Portfolio() {
           {Number.isNaN(totalValue) ? 0 : totalValue}{" "}
           <small>
             in value (<strong>{totalInvested}</strong> invested{" "}
-            {totalDelta !== 0 && `${totalDelta}% ${totalDelta>0?'growth':'decrease'}`})
+            {totalDelta !== 0 &&
+              `${totalDelta}% ${totalDelta > 0 ? "growth" : "decrease"}`}
+            )
           </small>
         </span>
       </div>
