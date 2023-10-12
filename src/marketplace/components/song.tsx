@@ -3,6 +3,7 @@ import Button from "../../shared/components/button";
 import Tile from "../../shared/components/tile";
 import { Dispatch } from "redux";
 import { SongStoreAction } from "../../shared/stores/songsStore";
+import BuyModal from "../../shared/components/buy_modal";
 
 export interface SongProps {
   songId: string;
@@ -13,15 +14,8 @@ export interface SongProps {
   year: string;
   popularity: number;
 }
-export default function SongSummary({
-  songId,
-  imageUrl,
-  artist,
-  album,
-  title,
-  year,
-  popularity,
-}: SongProps) {
+export default function SongSummary(props: SongProps) {
+  const { songId, imageUrl, artist, album, title, year, popularity } = props;
   const price = popularity || 1;
   const dispatch = useDispatch<Dispatch<SongStoreAction>>();
   return (
@@ -43,7 +37,8 @@ export default function SongSummary({
         <div className="flex flex-col">
           <p>Price per share: {price}</p>
           <Button color="primary">Open</Button>
-          <Button
+          <BuyModal songProps={props} />
+          {/* <Button
             onClick={() =>
               dispatch({
                 type: "buy",
@@ -61,7 +56,7 @@ export default function SongSummary({
             }
           >
             Buy
-          </Button>
+          </Button> */}
         </div>
       </div>
     </Tile>
