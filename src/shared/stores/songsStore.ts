@@ -21,7 +21,7 @@ interface SongStoreBuyAction {
   payload: {
     id: string;
     price: number;
-    quantiy: number;
+    quantity: number;
     songInfo: { name: string; subtitle: string; albumCover: string };
   };
 }
@@ -41,7 +41,7 @@ const initialState: SongStoreState = {
 };
 const songStoreReducer = (state = initialState, action: SongStoreAction) => {
   if (action.type === "buy") {
-    const grandSum = action.payload.price * action.payload.quantiy;
+    const grandSum = action.payload.price * action.payload.quantity;
     if (state.wallet < grandSum) return state;
     return {
       ...state,
@@ -51,7 +51,7 @@ const songStoreReducer = (state = initialState, action: SongStoreAction) => {
           shareId: nanoid(),
           songId: action.payload.id,
           buyPrice: action.payload.price,
-          quantity: action.payload.quantiy,
+          quantity: action.payload.quantity,
         },
         ...state.portfolio,
       ],
