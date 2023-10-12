@@ -5,7 +5,9 @@ export default function calculateDelta(
   newPrice: number,
   rounding = 2
 ): number {
+  if (!originalPrice) return 0; //division by 0
   const increase = newPrice - originalPrice;
   const delta = (increase / Math.abs(originalPrice)) * 100;
-  return (Math.round(delta * 10 * rounding) / (10 * rounding));
+  if (rounding) return Math.round(delta * 10 * rounding) / (10 * rounding);
+  return Math.round(delta);
 }
