@@ -22,7 +22,7 @@ export default function SongSummary({
   year,
   popularity,
 }: SongProps) {
-  const price = popularity * 10 || 10;
+  const price = popularity || 1;
   const dispatch = useDispatch<Dispatch<SongStoreAction>>();
   return (
     <Tile className="h-auto mb-2">
