@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import Button from "../../shared/components/button";
 import { Share, SongStoreAction } from "../../shared/stores/songsStore";
 import { Dispatch } from "redux";
+import SellModal from "../../shared/components/sell_modal";
 
 export interface ShareDetailsProps {
   share: Share;
@@ -28,7 +29,8 @@ export default function ShareDetails({
         <p className="text-white text-md">{share.name}</p>
         <p className="text-white text-xs">{share.subtitle}</p>
         <p className="text-white text-xs mt-1">
-          Bought <strong>{share.quantity}</strong> shares for <strong>{share.buyPrice}</strong> points{" "}
+          Bought <strong>{share.quantity}</strong> shares for{" "}
+          <strong>{share.buyPrice}</strong> points{" "}
         </p>{" "}
         <p className="text-white text-xs">
           Current price:{" "}
@@ -49,7 +51,8 @@ export default function ShareDetails({
       </div>
       <div className="flex flex-col gap-0">
         <Button color="primary">Open</Button>
-        <Button
+        <SellModal currentPrice={currentPrice} share={share} />
+        {/* <Button
           onClick={() =>
             dispatch({
               type: "sell",
@@ -62,7 +65,8 @@ export default function ShareDetails({
           }
         >
           Sell
-        </Button>
+
+        </Button> */}
       </div>
     </div>
   );
