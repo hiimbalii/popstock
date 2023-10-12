@@ -46,7 +46,7 @@ export default function ShareDetails({
         </p>
       </div>
       <div className="flex flex-col gap-0">
-        <Button color="primary">Open</Button>
+        <Button color="primary" disabled>Open</Button>
         <SellModal currentPrice={currentPrice} share={share} />
         {/* <Button
           onClick={() =>

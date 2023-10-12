@@ -32,7 +32,9 @@ export default function SongSummary(props: SongProps) {
         </div>
         <div className="flex flex-col">
           <p>Price per share: {price}</p>
-          <Button color="primary">Open</Button>
+          <Button color="primary" disabled>
+            Open
+          </Button>
           <BuyModal songProps={props} />
         </div>
       </div>
