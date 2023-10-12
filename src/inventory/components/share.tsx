@@ -28,7 +28,7 @@ export default function ShareDetails({
         <p className="text-white text-md">{share.name}</p>
         <p className="text-white text-xs">{share.subtitle}</p>
         <p className="text-white text-xs mt-1">
-          Bought for <strong>{share.buyPrice}</strong>{" "}
+          Bought <strong>{share.quantity}</strong> shares for <strong>{share.buyPrice}</strong> points{" "}
         </p>{" "}
         <p className="text-white text-xs">
           Current price:{" "}
