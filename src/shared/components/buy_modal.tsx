@@ -20,7 +20,7 @@ export default function BuyModal({
   const handleInput: ChangeEventHandler<HTMLInputElement> = (ev) => {
     const value = parseInt(ev.target.value);
     if (Number.isNaN(value)) return; //better way probs?
-    if (value < 0) return;
+    if (value <= 0) return;
     setSelectedAmmount(parseInt(ev.target.value));
   };
   const handleSell = () => {
