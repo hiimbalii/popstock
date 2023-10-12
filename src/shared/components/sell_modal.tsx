@@ -1,9 +1,10 @@
 import Button from "./button";
 import { Share, SongStoreAction } from "../stores/songsStore";
 import * as Dialog from "@radix-ui/react-dialog";
-import { ChangeEventHandler,  useState } from "react";
+import { ChangeEventHandler, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
+import calculateDelta from "../utils/calcDelta";
 interface SellModalProps {
   share: Share;
   currentPrice: number;
@@ -28,13 +29,9 @@ export default function SellModal({ share, currentPrice }: SellModalProps) {
   };
 
   const profit = (selectedAmmount || share.quantity) * currentPrice;
-  const priceDiff = share.buyPrice - currentPrice;
+  const delta = calculateDelta(share.buyPrice, currentPrice);
   const bgColor =
-    priceDiff === 0
-      ? "bg-yellow-500"
-      : priceDiff < 0
-      ? "bg-green-500"
-      : "bg-red-500";
+    delta === 0 ? "bg-yellow-500" : delta > 0 ? "bg-green-500" : "bg-red-500";
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
@@ -71,7 +68,9 @@ export default function SellModal({ share, currentPrice }: SellModalProps) {
                 <div className={`w-1/2 ${bgColor} ml-1 px-2 py-1 rounded-md`}>
                   <small>Current Price</small>
                   <small className="block">
-                    <strong>{currentPrice}</strong> points
+                    <strong>{currentPrice}</strong> points (
+                    {delta > 0 ? "+" : null}
+                    {delta}%)
                   </small>
                   <p>
                     Total: <strong>{share.quantity * currentPrice}</strong>
