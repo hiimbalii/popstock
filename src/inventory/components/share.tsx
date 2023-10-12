@@ -1,6 +1,7 @@
 import Button from "../../shared/components/button";
 import { Share } from "../../shared/stores/songsStore";
 import SellModal from "../../shared/components/sell_modal";
+import calculateDelta from "../../shared/utils/calcDelta";
 
 export interface ShareDetailsProps {
   share: Share;
@@ -11,9 +12,7 @@ export default function ShareDetails({
   share,
   currentPrice,
 }: ShareDetailsProps) {
-  const increase = currentPrice - share.buyPrice;
-  const delta = (increase / share.buyPrice) * 100;
-  const deltaRounded = Math.round(delta * 100) / 100;
+  const delta = calculateDelta(share.buyPrice, currentPrice);
   return (
     <div className="h-auto w-full hover:bg-gray-500 rounded-md px-2 py-1 flex flex-row items-center">
       <img
@@ -33,14 +32,14 @@ export default function ShareDetails({
           Current price:{" "}
           <strong>
             {currentPrice}
-            {!!deltaRounded && (
+            {!!delta && (
               <span
                 className={`${
-                  deltaRounded > 0 ? "text-green-600" : "text-red-600"
+                  delta > 0 ? "text-green-600" : "text-red-600"
                 } ml-1`}
               >
-                ({deltaRounded > 0 ? "+" : null}
-                {deltaRounded}%)
+                ({delta > 0 ? "+" : null}
+                {delta}%)
               </span>
             )}
           </strong>
