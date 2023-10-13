@@ -48,21 +48,6 @@ export default function ShareDetails({
       <div className="flex flex-col gap-0">
         <Button color="primary" disabled>Open</Button>
         <SellModal currentPrice={currentPrice} share={share} />
-        {/* <Button
-          onClick={() =>
-            dispatch({
-              type: "sell",
-              payload: {
-                shareId: share.shareId,
-                sellPrice: currentPrice,
-                quantity: 1,
-              },
-            })
-          }
-        >
-          Sell
-
-        </Button> */}
       </div>
     </div>
   );
