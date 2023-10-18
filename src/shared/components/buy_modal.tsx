@@ -1,20 +1,20 @@
 import Button from "./button";
-import {  SongStoreAction } from "../stores/songsStore";
 import * as Dialog from "@radix-ui/react-dialog";
-import { ChangeEventHandler,  useState } from "react";
+import { ChangeEventHandler, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
-import { SongProps } from "../../marketplace/components/song";
-import { selectWallet } from "../../inventory/selectors/walletSelector";
+import { PortfolioAction } from "../stores/portfolioReducer";
+import { TrackData } from "../coreTypes";
+import { selectWallet } from "../stores/selectors";
+
 interface BuyModalProps {
-  songProps: SongProps;
+  songProps: TrackData;
 }
 
-export default function BuyModal({
-  songProps: { songId, imageUrl, artist, album, title, year, popularity },
-}: BuyModalProps) {
+export default function BuyModal({ songProps }: BuyModalProps) {
   const [selectedAmmount, setSelectedAmmount] = useState(1);
-  const dispatch = useDispatch<Dispatch<SongStoreAction>>();
+  const dispatch = useDispatch<Dispatch<PortfolioAction>>();
+  const { songId, imageUrl, artist, album, title, popularity } = songProps;
   const wallet = useSelector(selectWallet);
 
   const handleInput: ChangeEventHandler<HTMLInputElement> = (ev) => {
@@ -24,7 +24,7 @@ export default function BuyModal({
     setSelectedAmmount(parseInt(ev.target.value));
   };
   const handleSell = () => {
-    if (diff>0) {
+    if (diff > 0) {
       //more elegant way
       return;
     }
@@ -34,17 +34,13 @@ export default function BuyModal({
         id: songId,
         price,
         quantity: selectedAmmount,
-        songInfo: {
-          name: title,
-          albumCover: imageUrl,
-          subtitle: `${artist} - ${album}`,
-        },
+        trackData: songProps,
       },
     });
   };
 
   const price = popularity || 1;
-  const diff =   selectedAmmount * price-wallet;
+  const diff = selectedAmmount * price - wallet;
 
   return (
     <Dialog.Root>
@@ -79,7 +75,11 @@ export default function BuyModal({
                   value={selectedAmmount}
                 />
                 <Dialog.Close className="flex-grow">
-                  <Button color="primary" onClick={handleSell} disabled={diff>0}>
+                  <Button
+                    color="primary"
+                    onClick={handleSell}
+                    disabled={diff > 0}
+                  >
                     Buy shares
                   </Button>
                 </Dialog.Close>
@@ -92,10 +92,9 @@ export default function BuyModal({
                   Wallet: <strong>{wallet}</strong>
                 </span>
               </div>
-              { diff>0 && (
+              {diff > 0 && (
                 <span className="text-red-500">
-                  You are missing{" "}
-                  <strong>{diff}</strong> points
+                  You are missing <strong>{diff}</strong> points
                 </span>
               )}
             </div>

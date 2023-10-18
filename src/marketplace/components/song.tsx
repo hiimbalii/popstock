@@ -1,17 +1,9 @@
 import Button from "../../shared/components/button";
 import Tile from "../../shared/components/tile";
 import BuyModal from "../../shared/components/buy_modal";
+import { TrackData } from "../../shared/coreTypes";
 
-export interface SongProps {
-  songId: string;
-  imageUrl: string;
-  artist: string;
-  album: string;
-  title: string;
-  year: string;
-  popularity: number;
-}
-export default function SongSummary(props: SongProps) {
+export default function SongSummary(props: TrackData) {
   const { imageUrl, artist, album, title, year, popularity } = props;
   const price = popularity || 1;
   return (

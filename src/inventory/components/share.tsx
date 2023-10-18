@@ -1,6 +1,6 @@
 import Button from "../../shared/components/button";
-import { Share } from "../../shared/stores/songsStore";
 import SellModal from "../../shared/components/sell_modal";
+import { Share } from "../../shared/coreTypes";
 import calculateDelta from "../../shared/utils/calcDelta";
 
 export interface ShareDetailsProps {
@@ -19,11 +19,13 @@ export default function ShareDetails({
         className="w-20 h-20"
         aria-hidden
         alt="album cover art"
-        src={share.albumCover}
+        src={share.trackData.imageUrl}
       />
       <div className="ml-2 flex flex-col w-full">
-        <p className="text-white text-md">{share.name}</p>
-        <p className="text-white text-xs">{share.subtitle}</p>
+        <p className="text-white text-md">{share.trackData.title}</p>
+        <p className="text-white text-xs">
+          {share.trackData.album} - {share.trackData.artist}
+        </p>
         <p className="text-white text-xs mt-1">
           Bought <strong>{share.quantity}</strong> shares for{" "}
           <strong>{share.buyPrice}</strong> points{" "}
@@ -46,7 +48,9 @@ export default function ShareDetails({
         </p>
       </div>
       <div className="flex flex-col gap-0">
-        <Button color="primary" disabled>Open</Button>
+        <Button color="primary" disabled>
+          Open
+        </Button>
         <SellModal currentPrice={currentPrice} share={share} />
       </div>
     </div>

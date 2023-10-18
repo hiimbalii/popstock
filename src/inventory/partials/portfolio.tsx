@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 
 import Tile, { TileTitle } from "../../shared/components/tile";
-import { selectShares } from "../selectors/sharesSelector";
 import ShareDetails from "../components/share";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../app_root/authProvider";
 import { getTrackPrices } from "../clients/get_track_prices";
 import calculateDelta from "../../shared/utils/calcDelta";
+import { selectShares } from "../../shared/stores/selectors";
 
 export default function Portfolio() {
   const shares = useSelector(selectShares);
@@ -16,13 +16,13 @@ export default function Portfolio() {
 
   useEffect(() => {
     if (!authToken) return;
-    const listOfIds = shares.map((share) => share.songId);
+    const listOfIds = shares.map((share) => share.trackData.songId);
     if (!listOfIds.length) return;
     getTrackPrices(authToken, listOfIds).then((prices) => setPriceList(prices));
   }, [shares, authToken]);
 
   const totalValue = shares.reduce(
-    (prev, curr) => prev + priceList[curr.songId] * curr.quantity,
+    (prev, curr) => prev + priceList[curr.trackData.songId] * curr.quantity,
     0
   );
 
@@ -40,7 +40,7 @@ export default function Portfolio() {
           <ShareDetails
             key={share.shareId}
             share={share}
-            currentPrice={priceList[share.songId] ?? 0}
+            currentPrice={priceList[share.trackData.songId] ?? 0}
           />
         ))}
       </div>

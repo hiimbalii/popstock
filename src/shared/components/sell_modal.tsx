@@ -1,10 +1,11 @@
 import Button from "./button";
-import { Share, SongStoreAction } from "../stores/songsStore";
+import { Share } from "../coreTypes";
 import * as Dialog from "@radix-ui/react-dialog";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import calculateDelta from "../utils/calcDelta";
+import { PortfolioAction } from "../stores/portfolioReducer";
 interface SellModalProps {
   share: Share;
   currentPrice: number;
@@ -12,7 +13,7 @@ interface SellModalProps {
 
 export default function SellModal({ share, currentPrice }: SellModalProps) {
   const [selectedAmmount, setSelectedAmmount] = useState(share.quantity);
-  const dispatch = useDispatch<Dispatch<SongStoreAction>>();
+  const dispatch = useDispatch<Dispatch<PortfolioAction>>();
   const handleInput: ChangeEventHandler<HTMLInputElement> = (ev) => {
     const value = parseInt(ev.target.value);
     if (Number.isNaN(value)) return; //better way probs?
@@ -52,11 +53,13 @@ export default function SellModal({ share, currentPrice }: SellModalProps) {
                   className="w-16 h-16"
                   aria-hidden
                   alt="album cover art"
-                  src={share.albumCover}
+                  src={share.trackData.imageUrl}
                 />
                 <div className="ml-2">
-                  <p>{share.name}</p>
-                  <small>{share.subtitle}</small>
+                  <p>{share.trackData.title}</p>
+                  <small>
+                    {share.trackData.artist} - {share.trackData.album}
+                  </small>
                 </div>
               </div>
               <div className="flex flex-row">
