@@ -49,3 +49,21 @@ function getTrackData(value: SongResponse): TrackData {
     popularity: value.popularity,
   };
 }
+
+export function openTrack(track: TrackData): OpenTrackAction {
+  return {
+    type: "tracks/open",
+    payload: {
+      track,
+    },
+  };
+}
+
+export function closeTrack(): OpenTrackAction {
+  return {
+    type: "tracks/open",
+    payload: {
+      track: null,
+    },
+  };
+}
