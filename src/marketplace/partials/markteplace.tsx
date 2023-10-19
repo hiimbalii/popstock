@@ -8,12 +8,12 @@ export default function Marketplace() {
   const { songs, status } = useSongsList(authToken);
 
   const Inner = () => {
-    if (status === "error") return;
+    if (status === "rejected") return;
     <p className="text-lg text-white">
       Oh no! We seemed to have encountered an error
     </p>;
 
-    if (status === "loading")
+    if (status === "idle")
       return <p className="text-lg text-white">Loading...</p>;
     if (status === "success")
       return songs.length === 0 ? (
@@ -22,12 +22,12 @@ export default function Marketplace() {
         songs.map((song) => (
           <SongSummary
             key={song.id}
-            songId={song.id}
-            imageUrl={song.album.images[0]?.url ?? ""}
-            title={song.name}
-            artist={song.artists[0]?.name ?? ""}
-            album={song.album.name}
-            year={song.album.release_date}
+            id={song.id}
+            albumCoverUrl={song.albumCoverUrl ?? ""}
+            title={song.title}
+            artist={song.artist ?? ""}
+            album={song.album}
+            date={song.date}
             popularity={song.popularity}
           ></SongSummary>
         ))

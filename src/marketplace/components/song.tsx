@@ -4,7 +4,14 @@ import BuyModal from "../../shared/components/buy_modal";
 import { TrackData } from "../../shared/coreTypes";
 
 export default function SongSummary(props: TrackData) {
-  const { imageUrl, artist, album, title, year, popularity } = props;
+  const {
+    albumCoverUrl: imageUrl,
+    artist,
+    album,
+    title,
+    date: year,
+    popularity,
+  } = props;
   const price = popularity || 1;
   return (
     <Tile className="h-auto mb-2">

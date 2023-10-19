@@ -1,29 +1,12 @@
 import { nanoid } from "nanoid";
 import { Reducer } from "redux";
-import { Share, TrackData } from "../coreTypes";
+import { Share } from "../../shared/coreTypes";
+import { PortfolioAction } from "./portfolioActions";
 
 export interface PortfolioStoreState {
   wallet: number;
   portfolio: Share[];
 }
-interface SongStoreBuyAction {
-  type: "buy";
-  payload: {
-    id: string;
-    price: number;
-    quantity: number;
-    trackData: TrackData;
-  };
-}
-interface SongStoreSellAction {
-  type: "sell";
-  payload: {
-    shareId: string;
-    quantity: number;
-    sellPrice: number;
-  };
-}
-export type PortfolioAction = SongStoreBuyAction | SongStoreSellAction;
 
 const createInitialState = (): PortfolioStoreState => {
   return {
@@ -45,7 +28,6 @@ export const portfolioReducer: Reducer<PortfolioStoreState, PortfolioAction> = (
       portfolio: [
         {
           shareId: nanoid(),
-          songId: action.payload.id,
           buyPrice: action.payload.price,
           quantity: action.payload.quantity,
           trackData: action.payload.trackData,

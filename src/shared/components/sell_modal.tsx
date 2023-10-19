@@ -5,7 +5,10 @@ import { ChangeEventHandler, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import calculateDelta from "../utils/calcDelta";
-import { PortfolioAction } from "../stores/portfolioReducer";
+import {
+  PortfolioAction,
+  sellShare,
+} from "../../inventory/state/portfolioActions";
 interface SellModalProps {
   share: Share;
   currentPrice: number;
@@ -23,10 +26,7 @@ export default function SellModal({ share, currentPrice }: SellModalProps) {
 
   const handleSell = () => {
     const quantity = selectedAmmount === 0 ? share.quantity : selectedAmmount;
-    dispatch({
-      type: "sell",
-      payload: { shareId: share.shareId, quantity, sellPrice: currentPrice },
-    });
+    dispatch(sellShare(share, currentPrice, quantity));
   };
 
   const handleOpen = () => {
@@ -53,7 +53,7 @@ export default function SellModal({ share, currentPrice }: SellModalProps) {
                   className="w-16 h-16"
                   aria-hidden
                   alt="album cover art"
-                  src={share.trackData.imageUrl}
+                  src={share.trackData.albumCoverUrl}
                 />
                 <div className="ml-2">
                   <p>{share.trackData.title}</p>

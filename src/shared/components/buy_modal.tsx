@@ -3,9 +3,12 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { ChangeEventHandler, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
-import { PortfolioAction } from "../stores/portfolioReducer";
 import { TrackData } from "../coreTypes";
 import { selectWallet } from "../stores/selectors";
+import {
+  PortfolioAction,
+  buyShare,
+} from "../../inventory/state/portfolioActions";
 
 interface BuyModalProps {
   songProps: TrackData;
@@ -14,7 +17,13 @@ interface BuyModalProps {
 export default function BuyModal({ songProps }: BuyModalProps) {
   const [selectedAmmount, setSelectedAmmount] = useState(1);
   const dispatch = useDispatch<Dispatch<PortfolioAction>>();
-  const { songId, imageUrl, artist, album, title, popularity } = songProps;
+  const {
+    albumCoverUrl: imageUrl,
+    artist,
+    album,
+    title,
+    popularity,
+  } = songProps;
   const wallet = useSelector(selectWallet);
 
   const handleInput: ChangeEventHandler<HTMLInputElement> = (ev) => {
@@ -23,20 +32,12 @@ export default function BuyModal({ songProps }: BuyModalProps) {
     if (value <= 0) return;
     setSelectedAmmount(parseInt(ev.target.value));
   };
-  const handleSell = () => {
+  const handleBuy = () => {
     if (diff > 0) {
       //more elegant way
       return;
     }
-    dispatch({
-      type: "buy",
-      payload: {
-        id: songId,
-        price,
-        quantity: selectedAmmount,
-        trackData: songProps,
-      },
-    });
+    dispatch(buyShare(songProps, selectedAmmount));
   };
 
   const price = popularity || 1;
@@ -77,7 +78,7 @@ export default function BuyModal({ songProps }: BuyModalProps) {
                 <Dialog.Close className="flex-grow">
                   <Button
                     color="primary"
-                    onClick={handleSell}
+                    onClick={handleBuy}
                     disabled={diff > 0}
                   >
                     Buy shares

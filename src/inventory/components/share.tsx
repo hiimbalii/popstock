@@ -19,7 +19,7 @@ export default function ShareDetails({
         className="w-20 h-20"
         aria-hidden
         alt="album cover art"
-        src={share.trackData.imageUrl}
+        src={share.trackData.albumCoverUrl}
       />
       <div className="ml-2 flex flex-col w-full">
         <p className="text-white text-md">{share.trackData.title}</p>

@@ -16,13 +16,13 @@ export default function Portfolio() {
 
   useEffect(() => {
     if (!authToken) return;
-    const listOfIds = shares.map((share) => share.trackData.songId);
+    const listOfIds = shares.map((share) => share.trackData.id);
     if (!listOfIds.length) return;
     getTrackPrices(authToken, listOfIds).then((prices) => setPriceList(prices));
   }, [shares, authToken]);
 
   const totalValue = shares.reduce(
-    (prev, curr) => prev + priceList[curr.trackData.songId] * curr.quantity,
+    (prev, curr) => prev + priceList[curr.trackData.id] * curr.quantity,
     0
   );
 
@@ -40,7 +40,7 @@ export default function Portfolio() {
           <ShareDetails
             key={share.shareId}
             share={share}
-            currentPrice={priceList[share.trackData.songId] ?? 0}
+            currentPrice={priceList[share.trackData.id] ?? 0}
           />
         ))}
       </div>

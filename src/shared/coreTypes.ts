@@ -5,11 +5,11 @@ export interface Share {
   trackData: TrackData;
 }
 export interface TrackData {
-  songId: string;
-  imageUrl: string;
+  id: string;
+  albumCoverUrl: string;
   artist: string;
   album: string;
   title: string;
-  year: string;
+  date: string;
   popularity: number;
 }
