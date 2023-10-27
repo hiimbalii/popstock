@@ -1,7 +1,7 @@
-import Button from './button';
-import {Share} from '../coreTypes';
-import calculateDelta from '../utils/calcDelta';
-import {PortfolioAction, sellShare} from '../../core/store/portfolioActions';
+import Button from '../../common/components/button';
+import {Share} from '../../common/types/share';
+import calculateDelta from '../../common/utils/calcDelta';
+import {PortfolioAction, sellShare} from '../../core/actions/portfolioActions';
 import * as Dialog from '@radix-ui/react-dialog';
 import {ChangeEventHandler, useState} from 'react';
 import {useDispatch} from 'react-redux';

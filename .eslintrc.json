@@ -21,6 +21,7 @@
         "react"
     ],
     "rules": {
+        "import/named": 0,
         "import/order": [
             "error",
             {
@@ -36,10 +37,6 @@
                 ]
             }
         ],
-        "indent": [
-            "error",
-            2
-        ],
         "linebreak-style": [
             "error",
             "unix"
@@ -53,5 +50,17 @@
             "error",
             "always"
         ]
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".jsx",
+                    ".ts",
+                    ".tsx"
+                ]
+            }
+        }
     }
 }

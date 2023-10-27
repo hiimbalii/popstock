@@ -1,7 +1,7 @@
 import BuyModal from './buy_modal';
-import Button from '../../shared/components/button';
-import Tile from '../../shared/components/tile';
-import {TrackData} from '../../common/coreTypes';
+import Button from '../../common/components/button';
+import Tile from '../../common/components/tile';
+import {TrackData} from '../../common/types/track';
 
 export default function SongSummary(props: TrackData) {
   const {

@@ -2,9 +2,9 @@ import './App.css';
 import Portfolio from './components/blocks/portfolio';
 import Marketplace from './components/blocks/markteplace';
 import AuthProvider from './core/providers/authProvider';
-import {Provider} from 'react-redux';
-import { songsStore } from './core/store/store';
+import {songsStore} from './core/store/store';
 import Wallet from './components/blocks/wallet';
+import {Provider} from 'react-redux';
 
 function App() {
   return (

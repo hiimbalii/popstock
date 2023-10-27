@@ -27,7 +27,8 @@ const useSongsList = (authToken: string) => {
   const status = useSelector(selectLoadingState);
   const searchTerm = useSelector(selectSearchTerm);
 
-  const dispatch = useDispatch<ThunkDispatch<AppState, any, TracksAction>>();
+  const dispatch =
+    useDispatch<ThunkDispatch<AppState, unknown, TracksAction>>();
 
   const prevSearchTerm = useRef<string | null>(null);
   useEffect(() => {

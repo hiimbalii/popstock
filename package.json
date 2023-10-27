@@ -54,7 +54,7 @@
     "eject": "react-scripts eject",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix",
+    "lint:fix": "eslint . --fix",
     "start": "react-scripts start",
     "test": "react-scripts test"
   },

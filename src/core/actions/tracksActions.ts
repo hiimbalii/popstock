@@ -1,6 +1,5 @@
 import {SongResponse, getSongs} from '../clients/songs';
 import {TrackData} from '../../common/types/track';
-import {AppState} from '../store/store';
 import {Dispatch} from 'redux';
 
 interface LoadTracksAction {
@@ -27,8 +26,7 @@ export type TracksAction =
   | OpenTrackAction;
 
 export function fetchTracks(authToken: string, searchTerm: string | null) {
-  return (dispatch: Dispatch<TracksAction>, getState: () => AppState) => {
-    const state = getState();
+  return (dispatch: Dispatch<TracksAction>) => {
     dispatch({type: 'tracks/load', payload: {searchTerm}});
     getSongs(authToken, searchTerm).then(data => {
       dispatch({

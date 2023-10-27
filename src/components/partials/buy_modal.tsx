@@ -1,11 +1,11 @@
-import Button from './button';
-import {TrackData} from '../../common/coreTypes';
+import Button from '../../common/components/button';
+import {TrackData} from '../../common/types/track';
+import {PortfolioAction, buyShare} from '../../core/actions/portfolioActions';
 import {selectWallet} from '../../core/store/selectors';
-import {PortfolioAction, buyShare} from '../../core/store/portfolioActions';
-import * as Dialog from '@radix-ui/react-dialog';
 import {ChangeEventHandler, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Dispatch} from 'redux';
+import * as Dialog from '@radix-ui/react-dialog';
 
 interface BuyModalProps {
   songProps: TrackData;

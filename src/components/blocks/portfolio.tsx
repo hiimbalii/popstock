@@ -1,9 +1,9 @@
-import Tile, {TileTitle} from '../../shared/components/tile';
 import ShareDetails from '../partials/share';
 import {AuthContext} from '../../core/providers/authProvider';
 import {getTrackPrices} from '../../core/clients/get_track_prices';
 import calculateDelta from '../../common/utils/calcDelta';
 import {selectShares} from '../../core/store/selectors';
+import Tile, {TileTitle} from '../../common/components/tile';
 import {useContext, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 

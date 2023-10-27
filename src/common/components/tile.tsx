@@ -3,9 +3,13 @@ export interface TileProps {
   className?: string;
 }
 export default function Tile({children = null, className = ''}: TileProps) {
-  return <div className={`w-full bg-gray-800 hover:bg-gray-900 text-white p-3 rounded-md ${className ?? ''}`}>
+  return (
+    <div
+      className={`w-full bg-gray-800 hover:bg-gray-900 text-white p-3 rounded-md ${
+        className ?? ''
+      }`}>
       {children}
-  </div>;
+    </div>
   );
 }
 
@@ -13,5 +17,5 @@ export interface TileTitleProps {
   children: React.ReactNode;
 }
 export function TileTitle({children}: TileTitleProps) {
-  return  <h2 className="text-sm">{children}</h2>;
+  return <h2 className='text-sm'>{children}</h2>;
 }

@@ -1,4 +1,4 @@
-import Tile, {TileTitle} from '../../shared/components/tile';
+import Tile, {TileTitle} from '../../common/components/tile';
 import {selectWallet} from '../../core/store/selectors';
 import {useSelector} from 'react-redux';
 
