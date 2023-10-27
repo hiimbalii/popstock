@@ -1,8 +1,8 @@
-import { Share } from "../../common/types/share";
-import { TrackData } from "../../common/types/track";
+import {Share} from '../../common/types/share';
+import {TrackData} from '../../common/types/track';
 
 interface BuyAction {
-  type: "buy";
+  type: 'buy';
   payload: {
     price: number;
     quantity: number;
@@ -10,7 +10,7 @@ interface BuyAction {
   };
 }
 interface SellAction {
-  type: "sell";
+  type: 'sell';
   payload: {
     shareId: string;
     quantity: number;
@@ -22,10 +22,10 @@ export type PortfolioAction = BuyAction | SellAction;
 export function sellShare(
   share: Share,
   price: number,
-  quantity: number
+  quantity: number,
 ): SellAction {
   return {
-    type: "sell",
+    type: 'sell',
     payload: {
       shareId: share.shareId,
       sellPrice: price,
@@ -36,7 +36,7 @@ export function sellShare(
 
 export function buyShare(track: TrackData, quantity: number): BuyAction {
   return {
-    type: "buy",
+    type: 'buy',
     payload: {
       trackData: track,
       price: track.popularity || 1,

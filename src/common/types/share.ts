@@ -1,4 +1,4 @@
-import { TrackData } from "./track";
+import {TrackData} from './track';
 
 export interface Share {
   shareId: string;

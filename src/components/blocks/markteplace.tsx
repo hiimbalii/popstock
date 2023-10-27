@@ -1,40 +1,39 @@
-import { useContext } from "react";
-import SongSummary from "../partials/song";
-import { AuthContext } from "../../core/providers/authProvider";
-import { useSongsList } from "../../core/clients/songs";
+import SongSummary from '../partials/song';
+import {AuthContext} from '../../core/providers/authProvider';
+import {useSongsList} from '../../core/clients/songs';
+import {useContext} from 'react';
 
 export default function Marketplace() {
   const authToken = useContext<string>(AuthContext);
-  const { songs, status } = useSongsList(authToken);
+  const {songs, status} = useSongsList(authToken);
 
   const Inner = () => {
-    if (status === "rejected") return;
-    <p className="text-lg text-white">
+    if (status === 'rejected') return;
+    <p className='text-lg text-white'>
       Oh no! We seemed to have encountered an error
     </p>;
 
-    if (status === "idle")
-      return <p className="text-lg text-white">Loading...</p>;
-    if (status === "success")
+    if (status === 'idle')
+      return <p className='text-lg text-white'>Loading...</p>;
+    if (status === 'success')
       return songs.length === 0 ? (
-        <p className="text-lg text-white">No songs found</p>
+        <p className='text-lg text-white'>No songs found</p>
       ) : (
-        songs.map((song) => (
+        songs.map(song => (
           <SongSummary
             key={song.id}
             id={song.id}
-            albumCoverUrl={song.albumCoverUrl ?? ""}
+            albumCoverUrl={song.albumCoverUrl ?? ''}
             title={song.title}
-            artist={song.artist ?? ""}
+            artist={song.artist ?? ''}
             album={song.album}
             date={song.date}
-            popularity={song.popularity}
-          ></SongSummary>
+            popularity={song.popularity}></SongSummary>
         ))
       );
   };
   return (
-    <div className="px-2 w-full h-full overflow-x-scroll">
+    <div className='px-2 w-full h-full overflow-x-scroll'>
       <Inner />
     </div>
   );

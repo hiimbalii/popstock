@@ -3,7 +3,7 @@
 export default function calculateDelta(
   originalPrice: number,
   newPrice: number,
-  rounding = 2
+  rounding = 2,
 ): number {
   if (!originalPrice) return 0; //division by 0
   const increase = newPrice - originalPrice;

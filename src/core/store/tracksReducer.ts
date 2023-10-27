@@ -1,9 +1,9 @@
-import { Reducer } from "redux";
-import { TracksAction } from "../actions/tracksActions";
-import { TrackData } from "../../common/types/track";
+import {TracksAction} from '../actions/tracksActions';
+import {TrackData} from '../../common/types/track';
+import {Reducer} from 'redux';
 
 export interface TracksState {
-  loadingState: "idle" | "rejected" | "success" | "loading";
+  loadingState: 'idle' | 'rejected' | 'success' | 'loading';
   catalogue: {
     loadedTracks: TrackData[];
     searchTerm: string | null;
@@ -12,23 +12,23 @@ export interface TracksState {
 }
 export const trackReducer: Reducer<TracksState, TracksAction> = (
   state: TracksState = {
-    loadingState: "idle",
-    catalogue: { loadedTracks: [], searchTerm: null },
+    loadingState: 'idle',
+    catalogue: {loadedTracks: [], searchTerm: null},
     open: null,
   },
-  action: TracksAction
+  action: TracksAction,
 ) => {
   switch (action.type) {
-    case "tracks/load":
-      return { ...state, loadingState: "loading" };
-    case "tracks/recieve":
+    case 'tracks/load':
+      return {...state, loadingState: 'loading'};
+    case 'tracks/recieve':
       return {
         ...state,
-        loadingState: "success",
-        catalogue: { ...state.catalogue, loadedTracks: action.payload.tracks },
+        loadingState: 'success',
+        catalogue: {...state.catalogue, loadedTracks: action.payload.tracks},
       };
-    case "tracks/open":
-      return { ...state, open: action.payload.track };
+    case 'tracks/open':
+      return {...state, open: action.payload.track};
     default:
       return state;
   }

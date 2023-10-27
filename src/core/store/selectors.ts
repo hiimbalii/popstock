@@ -1,4 +1,4 @@
-import { AppState } from "./store";
+import {AppState} from './store';
 
 export const selectShares = (state: AppState) => state.portfolio.portfolio;
 

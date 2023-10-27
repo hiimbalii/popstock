@@ -48,6 +48,7 @@
             "error",
             "single"
         ],
+        "react/react-in-jsx-scope": 0,
         "semi": [
             "error",
             "always"

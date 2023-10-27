@@ -1,22 +1,22 @@
-import { Dispatch } from "redux";
-import { SongResponse, getSongs } from "../clients/songs";
-import { TrackData } from "../../common/types/track";
-import { AppState } from "../store/store";
+import {SongResponse, getSongs} from '../clients/songs';
+import {TrackData} from '../../common/types/track';
+import {AppState} from '../store/store';
+import {Dispatch} from 'redux';
 
 interface LoadTracksAction {
-  type: "tracks/load";
+  type: 'tracks/load';
   payload: {
     searchTerm: string | null;
   };
 }
 interface RecieveTracksAction {
-  type: "tracks/recieve";
+  type: 'tracks/recieve';
   payload: {
     tracks: TrackData[];
   };
 }
 interface OpenTrackAction {
-  type: "tracks/open";
+  type: 'tracks/open';
   payload: {
     track: TrackData | null;
   };
@@ -29,11 +29,11 @@ export type TracksAction =
 export function fetchTracks(authToken: string, searchTerm: string | null) {
   return (dispatch: Dispatch<TracksAction>, getState: () => AppState) => {
     const state = getState();
-    dispatch({ type: "tracks/load", payload: { searchTerm } });
-    getSongs(authToken, searchTerm).then((data) => {
+    dispatch({type: 'tracks/load', payload: {searchTerm}});
+    getSongs(authToken, searchTerm).then(data => {
       dispatch({
-        type: "tracks/recieve",
-        payload: { tracks: data.tracks.map(getTrackData) },
+        type: 'tracks/recieve',
+        payload: {tracks: data.tracks.map(getTrackData)},
       });
     });
   };
@@ -42,17 +42,17 @@ function getTrackData(value: SongResponse): TrackData {
   return {
     id: value.id,
     title: value.name,
-    albumCoverUrl: value.album.images[0].url || "not_found",
+    albumCoverUrl: value.album.images[0].url || 'not_found',
     album: value.album.name,
     date: value.album.release_date,
-    artist: value.artists.map((x) => x.name).join(","),
+    artist: value.artists.map(x => x.name).join(','),
     popularity: value.popularity,
   };
 }
 
 export function openTrack(track: TrackData): OpenTrackAction {
   return {
-    type: "tracks/open",
+    type: 'tracks/open',
     payload: {
       track,
     },
@@ -61,7 +61,7 @@ export function openTrack(track: TrackData): OpenTrackAction {
 
 export function closeTrack(): OpenTrackAction {
   return {
-    type: "tracks/open",
+    type: 'tracks/open',
     payload: {
       track: null,
     },

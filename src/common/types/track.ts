@@ -1,4 +1,3 @@
-
 export interface TrackData {
   id: string;
   albumCoverUrl: string;
