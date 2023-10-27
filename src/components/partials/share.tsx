@@ -1,7 +1,7 @@
 import Button from "../../shared/components/button";
 import SellModal from "../../shared/components/sell_modal";
-import { Share } from "../../shared/coreTypes";
-import calculateDelta from "../../shared/utils/calcDelta";
+import { Share } from "../../common/coreTypes";
+import calculateDelta from "../../common/utils/calcDelta";
 
 export interface ShareDetailsProps {
   share: Share;

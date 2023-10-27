@@ -4,8 +4,8 @@ import {
   selectLoadingState,
   selectSearchTerm,
   selectTracks,
-} from "../../shared/stores/selectors";
-import { TracksAction, fetchTracks } from "../state/tracksActions";
+} from "../store/selectors";
+import { TracksAction, fetchTracks } from "../store/tracksActions";
 import { ThunkDispatch } from "redux-thunk";
 import { AppState } from "../../shared/stores/songsStore";
 

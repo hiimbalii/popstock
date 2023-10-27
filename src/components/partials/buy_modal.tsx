@@ -3,12 +3,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { ChangeEventHandler, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux";
-import { TrackData } from "../coreTypes";
-import { selectWallet } from "../stores/selectors";
-import {
-  PortfolioAction,
-  buyShare,
-} from "../../inventory/state/portfolioActions";
+import { TrackData } from "../../common/coreTypes";
+import { selectWallet } from "../../core/store/selectors";
+import { PortfolioAction, buyShare } from "../../core/store/portfolioActions";
 
 interface BuyModalProps {
   songProps: TrackData;

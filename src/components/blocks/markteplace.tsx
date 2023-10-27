@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import SongSummary from "../components/song";
-import { AuthContext } from "../../app_root/authProvider";
-import { useSongsList } from "../clients/songs";
+import SongSummary from "../partials/song";
+import { AuthContext } from "../../core/providers/authProvider";
+import { useSongsList } from "../../core/clients/songs";
 
 export default function Marketplace() {
   const authToken = useContext<string>(AuthContext);

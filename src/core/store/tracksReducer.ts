@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { TrackData } from "../../shared/coreTypes";
+import { TrackData } from "../../common/coreTypes";
 import { TracksAction } from "./tracksActions";
 import { act } from "react-dom/test-utils";
 

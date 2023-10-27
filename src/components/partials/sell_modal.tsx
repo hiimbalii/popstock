@@ -5,10 +5,7 @@ import { ChangeEventHandler, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 import calculateDelta from "../utils/calcDelta";
-import {
-  PortfolioAction,
-  sellShare,
-} from "../../inventory/state/portfolioActions";
+import { PortfolioAction, sellShare } from "../../core/store/portfolioActions";
 interface SellModalProps {
   share: Share;
   currentPrice: number;

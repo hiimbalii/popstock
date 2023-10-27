@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import Tile, { TileTitle } from "../../shared/components/tile";
-import { selectWallet } from "../../shared/stores/selectors";
+import { selectWallet } from "../../core/store/selectors";
 
 export default function Wallet() {
   const wallet = useSelector(selectWallet);

@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 
 import Tile, { TileTitle } from "../../shared/components/tile";
-import ShareDetails from "../components/share";
+import ShareDetails from "../partials/share";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../app_root/authProvider";
-import { getTrackPrices } from "../clients/get_track_prices";
-import calculateDelta from "../../shared/utils/calcDelta";
-import { selectShares } from "../../shared/stores/selectors";
+import { AuthContext } from "../../core/providers/authProvider";
+import { getTrackPrices } from "../../core/clients/get_track_prices";
+import calculateDelta from "../../common/utils/calcDelta";
+import { selectShares } from "../../core/store/selectors";
 
 export default function Portfolio() {
   const shares = useSelector(selectShares);

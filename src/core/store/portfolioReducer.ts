@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import { Reducer } from "redux";
-import { Share } from "../../shared/coreTypes";
+import { Share } from "../../common/coreTypes";
 import { PortfolioAction } from "./portfolioActions";
 
 export interface PortfolioStoreState {

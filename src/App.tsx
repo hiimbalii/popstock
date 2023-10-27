@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
 import Wallet from "./inventory/partials/wallet";
-import Portfolio from "./inventory/partials/portfolio";
-import Marketplace from "./marketplace/partials/markteplace";
-import AuthProvider from "./app_root/authProvider";
+import Portfolio from "./components/blocks/portfolio";
+import Marketplace from "./components/blocks/markteplace";
+import AuthProvider from "./core/providers/authProvider";
 import { Provider } from "react-redux";
 import { songsStore } from "./shared/stores/songsStore";
 

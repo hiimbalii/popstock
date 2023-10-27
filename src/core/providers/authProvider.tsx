@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import getAuthToken from "./auth_client";
+import getAuthToken from "../clients/auth_client";
 
 const AuthContext = React.createContext<string>("");
 export { AuthContext };

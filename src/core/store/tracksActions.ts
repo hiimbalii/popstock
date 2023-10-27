@@ -1,5 +1,5 @@
 import { Dispatch } from "redux";
-import { TrackData } from "../../shared/coreTypes";
+import { TrackData } from "../../common/coreTypes";
 import { AppState } from "../../shared/stores/songsStore";
 import { SongResponse, getSongs } from "../clients/songs";
 
