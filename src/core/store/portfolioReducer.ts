@@ -1,22 +1,22 @@
 import { nanoid } from "nanoid";
 import { Reducer } from "redux";
-import { Share } from "../../common/coreTypes";
-import { PortfolioAction } from "./portfolioActions";
+import { PortfolioAction } from "../actions/portfolioActions";
+import { Share } from "../../common/types/share";
 
-export interface PortfolioStoreState {
+export interface PortfolioState {
   wallet: number;
   portfolio: Share[];
 }
 
-const createInitialState = (): PortfolioStoreState => {
+const createInitialState = (): PortfolioState => {
   return {
     wallet: JSON.parse(localStorage.getItem("wallet") || "1000"),
     portfolio: JSON.parse(localStorage.getItem("portfolio") || "[]"),
   };
 };
 
-export const portfolioReducer: Reducer<PortfolioStoreState, PortfolioAction> = (
-  state: PortfolioStoreState = createInitialState(),
+export const portfolioReducer: Reducer<PortfolioState, PortfolioAction> = (
+  state: PortfolioState = createInitialState(),
   action: PortfolioAction
 ) => {
   if (action.type === "buy") {

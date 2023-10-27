@@ -1,4 +1,5 @@
-import { Share, TrackData } from "../../common/coreTypes";
+import { Share } from "../../common/types/share";
+import { TrackData } from "../../common/types/track";
 
 interface BuyAction {
   type: "buy";

@@ -5,9 +5,9 @@ import {
   selectSearchTerm,
   selectTracks,
 } from "../store/selectors";
-import { TracksAction, fetchTracks } from "../store/tracksActions";
 import { ThunkDispatch } from "redux-thunk";
-import { AppState } from "../../shared/stores/songsStore";
+import { TracksAction, fetchTracks } from "../actions/tracksActions";
+import { AppState } from "../store/store";
 
 const getSongs = (
   auth_token: string,

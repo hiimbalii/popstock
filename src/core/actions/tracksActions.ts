@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
-import { TrackData } from "../../common/coreTypes";
-import { AppState } from "../../shared/stores/songsStore";
 import { SongResponse, getSongs } from "../clients/songs";
+import { TrackData } from "../../common/types/track";
+import { AppState } from "../store/store";
 
 interface LoadTracksAction {
   type: "tracks/load";

@@ -1,7 +1,6 @@
 import { Reducer } from "redux";
-import { TrackData } from "../../common/coreTypes";
-import { TracksAction } from "./tracksActions";
-import { act } from "react-dom/test-utils";
+import { TracksAction } from "../actions/tracksActions";
+import { TrackData } from "../../common/types/track";
 
 export interface TracksState {
   loadingState: "idle" | "rejected" | "success" | "loading";
