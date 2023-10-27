@@ -2,7 +2,7 @@ import {
   selectLoadingState,
   selectSearchTerm,
   selectTracks,
-} from '../store/selectors';
+} from '../../common/selectors/selectors';
 import {TracksAction, fetchTracks} from '../actions/tracksActions';
 import {AppState} from '../store/store';
 import {useEffect, useRef} from 'react';
@@ -21,37 +21,3 @@ const getTracks = (
 
   throw new Error('search not yet implemented');
 };
-
-const useTrackList = (authToken: string) => {
-  const tracks = useSelector(selectTracks);
-  const status = useSelector(selectLoadingState);
-  const searchTerm = useSelector(selectSearchTerm);
-
-  const dispatch =
-    useDispatch<ThunkDispatch<AppState, unknown, TracksAction>>();
-
-  const prevSearchTerm = useRef<string | null>(null);
-  useEffect(() => {
-    if (!authToken) return;
-    if (status === 'idle' || prevSearchTerm.current !== searchTerm) {
-      dispatch(fetchTracks(authToken, searchTerm));
-    }
-  }, [status, dispatch, searchTerm, authToken]);
-  return {tracks, status};
-};
-export {getTracks, useTrackList};
-
-export interface TrackResponse {
-  album: {
-    name: string;
-    images: {url: string}[];
-    release_date: string;
-  };
-  artists: {name: string}[];
-  name: string;
-  popularity: number;
-  id: string;
-}
-export interface RecommendationsResponse {
-  tracks: TrackResponse[];
-}
