@@ -21,7 +21,7 @@ export default function ShareDetails({share, currentPrice}: ShareDetailsProps) {
       <div className='ml-2 flex flex-col w-full'>
         <p className='text-white text-md'>{share.trackData.title}</p>
         <p className='text-white text-xs'>
-          {share.trackData.album} - {share.trackData.artist}
+          {share.trackData.albumName} - {share.trackData.artist}
         </p>
         <p className='text-white text-xs mt-1'>
           Bought <strong>{share.quantity}</strong> shares for{' '}

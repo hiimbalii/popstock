@@ -55,7 +55,7 @@ export default function SellModal({share, currentPrice}: SellModalProps) {
                 <div className='ml-2'>
                   <p>{share.trackData.title}</p>
                   <small>
-                    {share.trackData.artist} - {share.trackData.album}
+                    {share.trackData.artist} - {share.trackData.albumName}
                   </small>
                 </div>
               </div>

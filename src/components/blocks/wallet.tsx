@@ -1,5 +1,5 @@
 import Tile, {TileTitle} from '../../common/components/tile';
-import {selectWallet} from '../../core/store/selectors';
+import {selectWallet} from '../../common/selectors/selectors';
 import {useSelector} from 'react-redux';
 
 export default function Wallet() {

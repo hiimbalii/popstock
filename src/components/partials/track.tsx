@@ -7,7 +7,7 @@ export default function TrackSummary(props: TrackData) {
   const {
     albumCoverUrl: imageUrl,
     artist,
-    album,
+    albumName,
     title,
     date: year,
     popularity,
@@ -25,7 +25,7 @@ export default function TrackSummary(props: TrackData) {
         <div className='ml-3  h-full flex-grow flex flex-col'>
           <h3 className='text-2xl'>{title}</h3>
           <p className='text-sm'>
-            {artist} - {album}
+            {artist} - {albumName}
           </p>
           <span className='text-sm mt-2'>{year}</span>
         </div>

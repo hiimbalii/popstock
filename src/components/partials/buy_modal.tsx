@@ -1,7 +1,7 @@
 import Button from '../../common/components/button';
 import {TrackData} from '../../common/types/track';
 import {PortfolioAction, buyShare} from '../../core/actions/portfolioActions';
-import {selectWallet} from '../../core/store/selectors';
+import {selectWallet} from '../../common/selectors/selectors';
 import {ChangeEventHandler, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Dispatch} from 'redux';
@@ -14,7 +14,13 @@ interface BuyModalProps {
 export default function BuyModal({track}: BuyModalProps) {
   const [selectedAmmount, setSelectedAmmount] = useState(1);
   const dispatch = useDispatch<Dispatch<PortfolioAction>>();
-  const {albumCoverUrl: imageUrl, artist, album, title, popularity} = track;
+  const {
+    albumCoverUrl: imageUrl,
+    artist,
+    albumName: album,
+    title,
+    popularity,
+  } = track;
   const wallet = useSelector(selectWallet);
 
   const handleInput: ChangeEventHandler<HTMLInputElement> = ev => {
