@@ -1,4 +1,4 @@
-import {SongResponse, getSongs} from '../clients/songs';
+import {TrackResponse, getTracks} from '../clients/tracks';
 import {TrackData} from '../../common/types/track';
 import {Dispatch} from 'redux';
 
@@ -28,7 +28,7 @@ export type TracksAction =
 export function fetchTracks(authToken: string, searchTerm: string | null) {
   return (dispatch: Dispatch<TracksAction>) => {
     dispatch({type: 'tracks/load', payload: {searchTerm}});
-    getSongs(authToken, searchTerm).then(data => {
+    getTracks(authToken, searchTerm).then(data => {
       dispatch({
         type: 'tracks/recieve',
         payload: {tracks: data.tracks.map(getTrackData)},
@@ -36,7 +36,7 @@ export function fetchTracks(authToken: string, searchTerm: string | null) {
     });
   };
 }
-function getTrackData(value: SongResponse): TrackData {
+function getTrackData(value: TrackResponse): TrackData {
   return {
     id: value.id,
     title: value.name,

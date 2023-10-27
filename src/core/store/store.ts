@@ -8,17 +8,17 @@ import {
 } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-const songsStore = createStore(
+const store = createStore(
   combineReducers({portfolio: portfolioReducer, tracks: trackReducer}),
   applyMiddleware(thunkMiddleware),
 );
-songsStore.subscribe(() => {
-  const state = songsStore.getState();
+store.subscribe(() => {
+  const state = store.getState();
   localStorage.setItem('wallet', JSON.stringify(state.portfolio.wallet));
   localStorage.setItem('portfolio', JSON.stringify(state.portfolio.portfolio));
 });
 
-export {songsStore};
+export {store};
 export type AppState = CombinedState<{
   portfolio: PortfolioState;
   tracks: TracksState;

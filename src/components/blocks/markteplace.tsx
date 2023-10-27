@@ -1,11 +1,11 @@
-import SongSummary from '../partials/song';
+import TrackSummary from '../partials/track';
 import {AuthContext} from '../../core/providers/authProvider';
-import {useSongsList} from '../../core/clients/songs';
+import {useTrackList} from '../../core/clients/tracks';
 import {useContext} from 'react';
 
 export default function Marketplace() {
   const authToken = useContext<string>(AuthContext);
-  const {songs, status} = useSongsList(authToken);
+  const {tracks, status} = useTrackList(authToken);
 
   const Inner = () => {
     if (status === 'rejected') return;
@@ -16,19 +16,19 @@ export default function Marketplace() {
     if (status === 'idle')
       return <p className='text-lg text-white'>Loading...</p>;
     if (status === 'success')
-      return songs.length === 0 ? (
+      return tracks.length === 0 ? (
         <p className='text-lg text-white'>No songs found</p>
       ) : (
-        songs.map(song => (
-          <SongSummary
-            key={song.id}
-            id={song.id}
-            albumCoverUrl={song.albumCoverUrl ?? ''}
-            title={song.title}
-            artist={song.artist ?? ''}
-            album={song.album}
-            date={song.date}
-            popularity={song.popularity}></SongSummary>
+        tracks.map(track => (
+          <TrackSummary
+            key={track.id}
+            id={track.id}
+            albumCoverUrl={track.albumCoverUrl ?? ''}
+            title={track.title}
+            artist={track.artist ?? ''}
+            album={track.album}
+            date={track.date}
+            popularity={track.popularity}></TrackSummary>
         ))
       );
   };

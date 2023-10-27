@@ -9,7 +9,7 @@ import {useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
 
-const getSongs = (
+const getTracks = (
   auth_token: string,
   searchString: string | null,
 ): Promise<RecommendationsResponse> => {
@@ -22,8 +22,8 @@ const getSongs = (
   throw new Error('search not yet implemented');
 };
 
-const useSongsList = (authToken: string) => {
-  const songs = useSelector(selectTracks);
+const useTrackList = (authToken: string) => {
+  const tracks = useSelector(selectTracks);
   const status = useSelector(selectLoadingState);
   const searchTerm = useSelector(selectSearchTerm);
 
@@ -37,11 +37,11 @@ const useSongsList = (authToken: string) => {
       dispatch(fetchTracks(authToken, searchTerm));
     }
   }, [status, dispatch, searchTerm, authToken]);
-  return {songs, status};
+  return {tracks, status};
 };
-export {getSongs, useSongsList};
+export {getTracks, useTrackList};
 
-export interface SongResponse {
+export interface TrackResponse {
   album: {
     name: string;
     images: {url: string}[];
@@ -53,5 +53,5 @@ export interface SongResponse {
   id: string;
 }
 export interface RecommendationsResponse {
-  tracks: SongResponse[];
+  tracks: TrackResponse[];
 }

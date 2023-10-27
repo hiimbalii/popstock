@@ -3,7 +3,7 @@ import Button from '../../common/components/button';
 import Tile from '../../common/components/tile';
 import {TrackData} from '../../common/types/track';
 
-export default function SongSummary(props: TrackData) {
+export default function TrackSummary(props: TrackData) {
   const {
     albumCoverUrl: imageUrl,
     artist,
@@ -34,7 +34,7 @@ export default function SongSummary(props: TrackData) {
           <Button color='primary' disabled>
             Open
           </Button>
-          <BuyModal songProps={props} />
+          <BuyModal track={props} />
         </div>
       </div>
     </Tile>

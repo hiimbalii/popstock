@@ -8,13 +8,13 @@ import {Dispatch} from 'redux';
 import * as Dialog from '@radix-ui/react-dialog';
 
 interface BuyModalProps {
-  songProps: TrackData;
+  track: TrackData;
 }
 
-export default function BuyModal({songProps}: BuyModalProps) {
+export default function BuyModal({track}: BuyModalProps) {
   const [selectedAmmount, setSelectedAmmount] = useState(1);
   const dispatch = useDispatch<Dispatch<PortfolioAction>>();
-  const {albumCoverUrl: imageUrl, artist, album, title, popularity} = songProps;
+  const {albumCoverUrl: imageUrl, artist, album, title, popularity} = track;
   const wallet = useSelector(selectWallet);
 
   const handleInput: ChangeEventHandler<HTMLInputElement> = ev => {
@@ -28,7 +28,7 @@ export default function BuyModal({songProps}: BuyModalProps) {
       //more elegant way
       return;
     }
-    dispatch(buyShare(songProps, selectedAmmount));
+    dispatch(buyShare(track, selectedAmmount));
   };
 
   const price = popularity || 1;
