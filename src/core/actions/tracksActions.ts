@@ -1,5 +1,5 @@
-import {TrackResponse, getTracks} from '../clients/tracks';
 import {TrackData} from '../../common/types/track';
+import getTracks from '../clients/tracks';
 import {Dispatch} from 'redux';
 
 interface LoadTracksAction {
@@ -28,23 +28,12 @@ export type TracksAction =
 export function fetchTracks(authToken: string, searchTerm: string | null) {
   return (dispatch: Dispatch<TracksAction>) => {
     dispatch({type: 'tracks/load', payload: {searchTerm}});
-    getTracks(authToken, searchTerm).then(data => {
+    getTracks(authToken, searchTerm).then(tracks => {
       dispatch({
         type: 'tracks/recieve',
-        payload: {tracks: data.tracks.map(getTrackData)},
+        payload: {tracks},
       });
     });
-  };
-}
-function getTrackData(value: TrackResponse): TrackData {
-  return {
-    id: value.id,
-    title: value.name,
-    albumCoverUrl: value.album.images[0].url || 'not_found',
-    album: value.album.name,
-    date: value.album.release_date,
-    artist: value.artists.map(x => x.name).join(','),
-    popularity: value.popularity,
   };
 }
 

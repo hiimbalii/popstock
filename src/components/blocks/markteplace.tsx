@@ -1,6 +1,6 @@
 import TrackSummary from '../partials/track';
 import {AuthContext} from '../../core/providers/authProvider';
-import {useTrackList} from '../../core/clients/tracks';
+import {useTrackList} from '../../common/hooks/useTracks';
 import {useContext} from 'react';
 
 export default function Marketplace() {
@@ -20,15 +20,7 @@ export default function Marketplace() {
         <p className='text-lg text-white'>No songs found</p>
       ) : (
         tracks.map(track => (
-          <TrackSummary
-            key={track.id}
-            id={track.id}
-            albumCoverUrl={track.albumCoverUrl ?? ''}
-            title={track.title}
-            artist={track.artist ?? ''}
-            album={track.album}
-            date={track.date}
-            popularity={track.popularity}></TrackSummary>
+          <TrackSummary key={track.id} {...track}></TrackSummary>
         ))
       );
   };
