@@ -1,4 +1,4 @@
-import Button from '../../common/components/button';
+import Button from './button';
 import {Share} from '../../common/types/share';
 import calculateDelta from '../../common/utils/calcDelta';
 import {PortfolioAction, sellShare} from '../../core/actions/portfolioActions';

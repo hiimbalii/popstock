@@ -1,4 +1,4 @@
-import Button from '../../common/components/button';
+import Button from './button';
 import {TrackData} from '../../common/types/track';
 import {PortfolioAction, buyShare} from '../../core/actions/portfolioActions';
 import {selectWallet} from '../../common/selectors/selectors';

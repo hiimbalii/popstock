@@ -1,6 +1,6 @@
 import BuyModal from './buy_modal';
-import Button from '../../common/components/button';
-import Tile from '../../common/components/tile';
+import Button from './button';
+import Tile from './tile';
 import {TrackData} from '../../common/types/track';
 
 export default function TrackSummary(props: TrackData) {
