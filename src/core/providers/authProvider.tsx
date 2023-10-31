@@ -1,4 +1,4 @@
-import getAuthToken from '../clients/auth_client';
+import getAuthToken from '../../clients/auth_client';
 import React, {useEffect, useState} from 'react';
 
 const AuthContext = React.createContext<string>('');

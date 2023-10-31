@@ -1,5 +1,5 @@
 import {TrackData} from '../../common/types/track';
-import getTracks from '../clients/tracks';
+import getTracks from '../../clients/tracks';
 import {Dispatch} from 'redux';
 
 interface LoadTracksAction {

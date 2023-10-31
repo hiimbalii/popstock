@@ -1,6 +1,6 @@
 import ShareDetails from '../partials/share';
 import {AuthContext} from '../../core/providers/authProvider';
-import {getTrackPrices} from '../../core/clients/get_track_prices';
+import {getTrackPrices} from '../../clients/get_track_prices';
 import calculateDelta from '../../common/utils/calcDelta';
 import {selectShares} from '../../common/selectors/selectors';
 import Tile, {TileTitle} from '../../common/components/tile';

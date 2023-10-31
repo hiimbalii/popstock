@@ -2,7 +2,7 @@ import {
   RecommendationsResponse,
   TrackData,
   mapRecommendationResponse,
-} from '../../common/types/track';
+} from '../common/types/track';
 
 const getTracks = (
   auth_token: string,
