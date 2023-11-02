@@ -24,15 +24,17 @@ export default function ShareDetails({share, currentPrice}: ShareDetailsProps) {
           {share.trackData.albumName} - {share.trackData.artist}
         </p>
         <p className='text-white text-xs mt-1'>
-          Bought <strong>{share.quantity}</strong> shares for{' '}
-          <strong>{share.buyPrice}</strong> points{' '}
+          Bought <strong data-testid='share-qty'>{share.quantity}</strong>{' '}
+          shares for <strong data-testid='buy-price'>{share.buyPrice}</strong>{' '}
+          points{' '}
         </p>{' '}
         <p className='text-white text-xs'>
           Current price:{' '}
-          <strong>
+          <strong data-testid='sell-price'>
             {currentPrice}
             {!!delta && (
               <span
+                data-testid='delta'
                 className={`${
                   delta > 0 ? 'text-green-600' : 'text-red-600'
                 } ml-1`}>
