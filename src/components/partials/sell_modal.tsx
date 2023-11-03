@@ -4,7 +4,7 @@ import {Share} from '../../common/types/share';
 import calculateDelta from '../../common/utils/calcDelta';
 import {PortfolioAction, sellShare} from '../../core/actions/portfolioActions';
 import * as Dialog from '@radix-ui/react-dialog';
-import {ChangeEventHandler, useState} from 'react';
+import {ChangeEventHandler, useId, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {Dispatch} from 'redux';
 interface SellModalProps {
@@ -15,6 +15,7 @@ interface SellModalProps {
 export default function SellModal({share, currentPrice}: SellModalProps) {
   const [selectedAmmount, setSelectedAmmount] = useState(share.quantity);
   const dispatch = useDispatch<Dispatch<PortfolioAction>>();
+  const amountId = useId();
   const handleInput: ChangeEventHandler<HTMLInputElement> = ev => {
     const value = parseInt(ev.target.value);
     if (Number.isNaN(value)) return; //better way probs?
@@ -58,37 +59,52 @@ export default function SellModal({share, currentPrice}: SellModalProps) {
           <div className='w-1/2 bg-gray-400 mr-1 px-2 py-1 rounded-md'>
             <small>Bought</small>
             <small className='block'>
-              <strong>{share.buyPrice}</strong> points
+              <strong data-testid='buy-price'>{share.buyPrice}</strong> points
             </small>
             <p>
-              Total: <strong>{share.quantity * share.buyPrice}</strong>
+              Total:{' '}
+              <strong data-testid='buy-total'>
+                {share.quantity * share.buyPrice}
+              </strong>
             </p>
           </div>
           <div className={`w-1/2 ${bgColor} ml-1 px-2 py-1 rounded-md`}>
             <small>Current Price</small>
             <small className='block'>
-              <strong>{currentPrice}</strong> points ({delta > 0 ? '+' : null}
+              <strong data-testid='curr-price'>{currentPrice}</strong> points (
+              {delta > 0 ? '+' : null}
               {delta}%)
             </small>
             <p>
-              Total: <strong>{share.quantity * currentPrice}</strong>
+              Total:{' '}
+              <strong data-testid='curr-total'>
+                {share.quantity * currentPrice}
+              </strong>
             </p>
           </div>
         </div>
         <p>
-          Total shares: <strong>{share.quantity}</strong>
+          Total shares:{' '}
+          <strong data-testid='total-shares'>{share.quantity}</strong>
         </p>
         <div className='flex flex-row justify-end gap-3'>
           {share.quantity !== 1 && (
-            <input
-              className='ring-1 p-1 py-0 flex-grow'
-              type='number'
-              onChange={handleInput}
-              value={selectedAmmount}
-            />
+            <div className='flex flex-col'>
+              {/* TODO: ugly */}
+              <label className='text-xs' htmlFor={amountId}>
+                Amount to sell
+              </label>
+              <input
+                className='ring-1 p-1 py-0 flex-grow'
+                type='number'
+                onChange={handleInput}
+                value={selectedAmmount}
+                id={amountId}
+              />
+            </div>
           )}
-          <Dialog.Close asChild className='flex-grow'>
-            <Button color='primary' onClick={handleSell}>
+          <Dialog.Close asChild>
+            <Button color='primary' onClick={handleSell} fullWidth>
               {share.quantity === 1
                 ? 'Sell share'
                 : `Sell ${
@@ -100,7 +116,7 @@ export default function SellModal({share, currentPrice}: SellModalProps) {
           </Dialog.Close>
         </div>
         <p>
-          Sell for <strong>{profit}</strong> points
+          Sell for <strong data-testid='profit'>{profit}</strong> points
         </p>
       </div>
       <div className='flex flex-row self-end'>
