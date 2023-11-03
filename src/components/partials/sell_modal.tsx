@@ -87,7 +87,7 @@ export default function SellModal({share, currentPrice}: SellModalProps) {
               value={selectedAmmount}
             />
           )}
-          <Dialog.Close className='flex-grow'>
+          <Dialog.Close asChild className='flex-grow'>
             <Button color='primary' onClick={handleSell}>
               {share.quantity === 1
                 ? 'Sell share'
@@ -104,7 +104,7 @@ export default function SellModal({share, currentPrice}: SellModalProps) {
         </p>
       </div>
       <div className='flex flex-row self-end'>
-        <Dialog.Close>
+        <Dialog.Close asChild>
           <Button>Close</Button>
         </Dialog.Close>
       </div>
