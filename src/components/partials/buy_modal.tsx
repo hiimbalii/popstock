@@ -89,12 +89,13 @@ export default function BuyModal({track}: BuyModalProps) {
             <strong data-testid='total-cost'>{selectedAmmount * price}</strong>
           </span>
           <span>
-            Wallet: <strong>{wallet}</strong>
+            Wallet: <strong data-testid='wallet'>{wallet}</strong>
           </span>
         </div>
         {diff > 0 && (
           <span className='text-red-500'>
-            You are missing <strong>{diff}</strong> points
+            You are missing <strong data-testid='too-much'>{diff}</strong>{' '}
+            points
           </span>
         )}
       </div>
