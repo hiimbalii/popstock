@@ -13,6 +13,7 @@ import {screen} from '@testing-library/dom';
 /// * close button should only close the modal
 // TODO: Unify song display
 
+// TODO: mock dispatch instead of checking store
 jest.mock('nanoid', () => ({
   nanoid: () => 1,
 }));
