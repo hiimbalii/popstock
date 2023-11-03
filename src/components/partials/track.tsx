@@ -30,7 +30,7 @@ export default function TrackSummary(props: TrackData) {
           <span className='text-sm mt-2'>{year}</span>
         </div>
         <div className='flex flex-col'>
-          <p>Price per share: {price}</p>
+          <p data-testid='price'>Price per share: {price}</p>
           <Button color='primary' disabled>
             Open
           </Button>
