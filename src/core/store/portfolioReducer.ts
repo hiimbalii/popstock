@@ -1,5 +1,6 @@
 import {PortfolioAction} from '../actions/portfolioActions';
 import {Share} from '../../common/types/share';
+// TODO: Remove nanoid to make funct pure
 import {nanoid} from 'nanoid';
 import {Reducer} from 'redux';
 
