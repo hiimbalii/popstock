@@ -20,8 +20,8 @@ describe('<ShareDetails />', () => {
     renderWithProvider(<ShareDetails share={share} currentPrice={1} />);
 
     expect(screen.getByText('song-title')).toBeInTheDocument();
-    expect(screen.getByText(/.*- artist-name/i)).toBeInTheDocument();
-    expect(screen.getByText(/album-name -.*/i)).toBeInTheDocument();
+    expect(screen.getByText(/artist-name -.*/i)).toBeInTheDocument();
+    expect(screen.getByText(/.*- album-name/i)).toBeInTheDocument();
   });
 
   it('should display all owned shares', () => {
