@@ -4,6 +4,7 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: 'primary' | 'secondary';
   children: React.ReactNode;
+  fullWidth?: boolean;
 }
 
 const colors = {
@@ -13,13 +14,15 @@ const colors = {
     'bg-gray-600 hover:bg-gray-700 disabled:bg-gray-300 disabled:text-gray-500',
 };
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  {color = 'secondary', children, ...props}: ButtonProps,
+  {color = 'secondary', children, fullWidth, ...props}: ButtonProps,
   ref,
 ) {
   return (
     <button
       ref={ref}
-      className={`rounded-full py-1 px-3 my-1 disabled:cursor-not-allowed ${colors[color]}`}
+      className={`rounded-full py-1 px-3 my-1 disabled:cursor-not-allowed ${
+        fullWidth ? 'flex-grow' : ''
+      } ${colors[color]}`}
       {...props}>
       {children}
     </button>

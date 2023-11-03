@@ -73,8 +73,12 @@ export default function BuyModal({track}: BuyModalProps) {
               id={amountId}
             />
           </div>
-          <Dialog.Close asChild className='flex-grow'>
-            <Button color='primary' onClick={handleBuy} disabled={diff > 0}>
+          <Dialog.Close asChild>
+            <Button
+              color='primary'
+              onClick={handleBuy}
+              disabled={diff > 0}
+              fullWidth>
               Buy shares
             </Button>
           </Dialog.Close>
