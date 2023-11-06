@@ -1,7 +1,13 @@
 import SellModal from './sell_modal';
-import {renderWithProvider, shareMock} from '../../common/utils/test-utils';
+import {
+  createMockStore,
+  renderWithProvider,
+  shareMock,
+  trackMock,
+} from '../../common/utils/test-utils';
 import userEvent from '@testing-library/user-event';
 import {screen} from '@testing-library/dom';
+import {useDispatch} from 'react-redux';
 /// Modal is already tested so we only test SELL modal funct
 /// * Song should be rendered correctly
 /// * original buy should be rendered
@@ -17,6 +23,8 @@ import {screen} from '@testing-library/dom';
 jest.mock('nanoid', () => ({
   nanoid: () => 1,
 }));
+jest.createMockFromModule('react-redux');
+
 describe('<SellModal />', () => {
   const currentPrice = 11;
 
@@ -188,4 +196,114 @@ describe('<SellModal />', () => {
     );
   });
   // TODO:  sell: 1, rand, all -> spy on dispatch
+  it('should close without selling anything', async () => {
+    renderWithProvider(
+      <SellModal share={shareMock} currentPrice={currentPrice} />,
+    );
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(
+      screen.getByRole('button', {name: 'Close'}),
+      undefined,
+      {skipPointerEventsCheck: true},
+    );
+    // TODO: Mocked dispatch
+  });
+  it('should sell 1 if they only have 1', async () => {
+    const store = createMockStore({
+      portfolio: {portfolio: [{...shareMock, quantity: 1}], wallet: 1000},
+      tracks: {
+        catalogue: {searchTerm: '', loadedTracks: [trackMock]},
+        loadingState: 'loading',
+      },
+    });
+    renderWithProvider(
+      <SellModal
+        share={{...shareMock, quantity: 1}}
+        currentPrice={currentPrice}
+      />,
+      store,
+    );
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(
+      screen.getByRole('button', {name: 'Sell share'}),
+      undefined,
+      {skipPointerEventsCheck: true},
+    );
+
+    const tracks = store.getState().portfolio.portfolio;
+    expect(tracks).toHaveLength(0);
+  });
+  it('should sell all by default', async () => {
+    const store = createMockStore({
+      portfolio: {portfolio: [shareMock], wallet: 1000},
+      tracks: {
+        catalogue: {searchTerm: '', loadedTracks: [trackMock]},
+        loadingState: 'loading',
+      },
+    });
+    renderWithProvider(
+      <SellModal share={shareMock} currentPrice={currentPrice} />,
+      store,
+    );
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(
+      screen.getByRole('button', {name: 'Sell all shares'}),
+      undefined,
+      {skipPointerEventsCheck: true},
+    );
+
+    const tracks = store.getState().portfolio.portfolio;
+    expect(tracks).toHaveLength(0);
+  });
+  it('should sell all when selecting 0', async () => {
+    const store = createMockStore({
+      portfolio: {portfolio: [shareMock], wallet: 1000},
+      tracks: {
+        catalogue: {searchTerm: '', loadedTracks: [trackMock]},
+        loadingState: 'loading',
+      },
+    });
+    renderWithProvider(
+      <SellModal share={shareMock} currentPrice={currentPrice} />,
+      store,
+    );
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.clear(screen.getByLabelText('Amount to sell'));
+    await userEvent.type(screen.getByLabelText('Amount to sell'), '0');
+    await userEvent.click(
+      screen.getByRole('button', {name: 'Sell all shares'}),
+      undefined,
+      {skipPointerEventsCheck: true},
+    );
+
+    const tracks = store.getState().portfolio.portfolio;
+    expect(tracks).toHaveLength(0);
+  });
+  it('should sell the selected number when entering arbitrary number', async () => {
+    const store = createMockStore({
+      portfolio: {portfolio: [shareMock], wallet: 1000},
+      tracks: {
+        catalogue: {searchTerm: '', loadedTracks: [trackMock]},
+        loadingState: 'loading',
+      },
+    });
+    renderWithProvider(
+      <SellModal share={shareMock} currentPrice={currentPrice} />,
+      store,
+    );
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.clear(screen.getByLabelText('Amount to sell'));
+    await userEvent.type(
+      screen.getByLabelText('Amount to sell'),
+      (shareMock.quantity - 1).toString(),
+    );
+    await userEvent.click(
+      screen.getByRole('button', {name: /sell/i}),
+      undefined,
+      {skipPointerEventsCheck: true},
+    );
+
+    const tracks = store.getState().portfolio.portfolio;
+    expect(tracks).toHaveLength(0);
+  });
 });
