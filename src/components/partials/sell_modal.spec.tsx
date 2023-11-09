@@ -27,6 +27,7 @@ jest.createMockFromModule('react-redux');
 
 describe('<SellModal />', () => {
   const currentPrice = 11;
+  beforeEach(() => expect(shareMock.quantity).toBe(444));
 
   it('should display track', async () => {
     renderWithProvider(
@@ -195,7 +196,6 @@ describe('<SellModal />', () => {
       sellAmount.toString(),
     );
   });
-  // TODO:  sell: 1, rand, all -> spy on dispatch
   it('should close without selling anything', async () => {
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={currentPrice} />,
@@ -206,7 +206,6 @@ describe('<SellModal />', () => {
       undefined,
       {skipPointerEventsCheck: true},
     );
-    // TODO: Mocked dispatch
   });
   it('should sell 1 if they only have 1', async () => {
     const store = createMockStore({
@@ -234,8 +233,9 @@ describe('<SellModal />', () => {
     expect(tracks).toHaveLength(0);
   });
   it('should sell all by default', async () => {
+    const initialWallet = 1000;
     const store = createMockStore({
-      portfolio: {portfolio: [shareMock], wallet: 1000},
+      portfolio: {portfolio: [shareMock], wallet: initialWallet},
       tracks: {
         catalogue: {searchTerm: '', loadedTracks: [trackMock]},
         loadingState: 'loading',
@@ -254,10 +254,13 @@ describe('<SellModal />', () => {
 
     const tracks = store.getState().portfolio.portfolio;
     expect(tracks).toHaveLength(0);
+    const wallet = store.getState().portfolio.wallet;
+    expect(wallet).toBe(initialWallet + shareMock.quantity * currentPrice);
   });
   it('should sell all when selecting 0', async () => {
+    const initialWallet = 1000;
     const store = createMockStore({
-      portfolio: {portfolio: [shareMock], wallet: 1000},
+      portfolio: {portfolio: [shareMock], wallet: initialWallet},
       tracks: {
         catalogue: {searchTerm: '', loadedTracks: [trackMock]},
         loadingState: 'loading',
@@ -278,15 +281,20 @@ describe('<SellModal />', () => {
 
     const tracks = store.getState().portfolio.portfolio;
     expect(tracks).toHaveLength(0);
+    const wallet = store.getState().portfolio.wallet;
+    expect(wallet).toBe(initialWallet + shareMock.quantity * currentPrice);
   });
   it('should sell the selected number when entering arbitrary number', async () => {
+    const nrOfSharesToSell = shareMock.quantity - 2;
+    const initialWallet = 1000;
     const store = createMockStore({
-      portfolio: {portfolio: [shareMock], wallet: 1000},
+      portfolio: {portfolio: [shareMock], wallet: initialWallet},
       tracks: {
         catalogue: {searchTerm: '', loadedTracks: [trackMock]},
         loadingState: 'loading',
       },
     });
+
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={currentPrice} />,
       store,
@@ -295,7 +303,7 @@ describe('<SellModal />', () => {
     await userEvent.clear(screen.getByLabelText('Amount to sell'));
     await userEvent.type(
       screen.getByLabelText('Amount to sell'),
-      (shareMock.quantity - 1).toString(),
+      nrOfSharesToSell.toString(),
     );
     await userEvent.click(
       screen.getByRole('button', {name: /sell/i}),
@@ -304,6 +312,9 @@ describe('<SellModal />', () => {
     );
 
     const tracks = store.getState().portfolio.portfolio;
-    expect(tracks).toHaveLength(0);
+    expect(tracks).toHaveLength(1);
+    expect(tracks[0].quantity).toBe(shareMock.quantity - nrOfSharesToSell);
+    const wallet = store.getState().portfolio.wallet;
+    expect(wallet).toBe(initialWallet + nrOfSharesToSell * currentPrice);
   });
 });
