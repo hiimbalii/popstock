@@ -8,17 +8,19 @@ import {
 } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
-const store = createStore(
-  combineReducers({portfolio: portfolioReducer, tracks: trackReducer}),
-  applyMiddleware(thunkMiddleware),
-);
+const reducer = combineReducers({
+  portfolio: portfolioReducer,
+  tracks: trackReducer,
+});
+const store = createStore(reducer, applyMiddleware(thunkMiddleware));
+
 store.subscribe(() => {
   const state = store.getState();
   localStorage.setItem('wallet', JSON.stringify(state.portfolio.wallet));
   localStorage.setItem('portfolio', JSON.stringify(state.portfolio.portfolio));
 });
 
-export {store};
+export {store, reducer};
 export type AppState = CombinedState<{
   portfolio: PortfolioState;
   tracks: TracksState;
