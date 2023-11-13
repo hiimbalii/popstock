@@ -49,11 +49,17 @@ export default function Portfolio() {
           <small>shares</small>
         </span>
         <span>
-          {Number.isNaN(totalValue) ? 0 : totalValue}{' '}
+          <strong data-testid='total-value'>
+            {Number.isNaN(totalValue) ? 0 : totalValue}
+          </strong>{' '}
           <small>
-            in value (<strong>{totalInvested}</strong> invested{' '}
-            {totalDelta !== 0 &&
-              `${totalDelta}% ${totalDelta > 0 ? 'growth' : 'decrease'}`}
+            in value (
+            <strong data-testid='total-invested'>{totalInvested}</strong>{' '}
+            invested{' '}
+            <span data-testid='total-delta'>
+              {totalDelta !== 0 &&
+                `${totalDelta}% ${totalDelta > 0 ? 'growth' : 'decrease'}`}
+            </span>
             )
           </small>
         </span>
