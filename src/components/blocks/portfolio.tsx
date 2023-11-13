@@ -45,7 +45,8 @@ export default function Portfolio() {
       </div>
       <div className='flex justify-between mt-1'>
         <span>
-          {shares.length} <small>shares</small>
+          <strong data-testid='shares-count'>{shares.length}</strong>{' '}
+          <small>shares</small>
         </span>
         <span>
           {Number.isNaN(totalValue) ? 0 : totalValue}{' '}
