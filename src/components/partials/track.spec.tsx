@@ -28,7 +28,7 @@ describe('<TrackSummary />', () => {
     );
   });
 
-  it('get price from popularity', () => {
+  it('should derive price from popularity', () => {
     renderWithProvider(<TrackSummary {...trackMock} />);
 
     expect(screen.getByTestId('price')).toHaveTextContent(
@@ -36,19 +36,19 @@ describe('<TrackSummary />', () => {
     );
   });
   // TODO: Move this functionality somewhere outside of presenation layer
-  it('have price tag of at least 1', () => {
+  it('should have price tag of at least 1', () => {
     const zeroPopularity = {...trackMock, popularity: 0};
     renderWithProvider(<TrackSummary {...zeroPopularity} />);
 
     expect(screen.getByTestId('price')).toHaveTextContent('1');
   });
 
-  it('not have modal open by default', () => {
+  it('should not have modal open by default', () => {
     renderWithProvider(<TrackSummary {...trackMock} />);
 
     expect(screen.queryByRole('dialog')).toBeNull();
   });
-  it('open buy modal on clicking the button', async () => {
+  it('should open buy modal on clicking the button', async () => {
     renderWithProvider(<TrackSummary {...trackMock} />);
 
     await userEvent.click(screen.getByText('Buy'));
