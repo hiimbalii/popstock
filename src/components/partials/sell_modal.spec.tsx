@@ -166,7 +166,7 @@ describe('<SellModal />', () => {
   // shouldn't be able to enter more or less than limits
 
   // eslint-disable-next-line quotes
-  it("shouldn't enter less than 0", async () => {
+  it('should not allow user to enter less than 0', async () => {
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={currentPrice} />,
     );
