@@ -30,7 +30,7 @@ describe('<Button />', () => {
     expect(screen.getByRole('button')).not.toBeDisabled();
     expect(screen.getByRole('button')).toHaveTextContent('button');
   });
-  it('render element with arbitrary child', () => {
+  it('renders element with arbitrary child', () => {
     render(<Button {...iconButton} />);
 
     expect(screen.getByRole('button')).toBeInTheDocument();
