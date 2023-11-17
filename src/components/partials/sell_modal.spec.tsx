@@ -69,7 +69,7 @@ describe('<SellModal />', () => {
       (currentPrice * shareMock.quantity).toString(),
     );
   });
-  it('should render delta currectly (0)', async () => {
+  it('should render current delta (0)', async () => {
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={shareMock.buyPrice} />,
     );
