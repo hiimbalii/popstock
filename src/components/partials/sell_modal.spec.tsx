@@ -129,7 +129,7 @@ describe('<SellModal />', () => {
     );
   });
 
-  it('should say amount to be sold on button', async () => {
+  it('should render the amount to be sold on button', async () => {
     const sellAmount = shareMock.quantity - 1;
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={currentPrice} />,
