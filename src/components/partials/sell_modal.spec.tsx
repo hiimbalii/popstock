@@ -151,7 +151,7 @@ describe('<SellModal />', () => {
     );
   });
 
-  it('entering 0 should default to all', async () => {
+  it('should behave as if all shares were selected when selecting 0', async () => {
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={currentPrice} />,
     );
