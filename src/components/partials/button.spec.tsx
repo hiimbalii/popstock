@@ -23,21 +23,21 @@ describe('<Button />', () => {
     ),
   };
 
-  it('render element with a plain string as child', () => {
+  it('should render element with a plain string as child', () => {
     render(<Button {...defaultProps} />);
 
     expect(screen.getByRole('button')).toBeInTheDocument();
     expect(screen.getByRole('button')).not.toBeDisabled();
     expect(screen.getByRole('button')).toHaveTextContent('button');
   });
-  it('renders element with arbitrary HTML element as child', () => {
+  it('should render element with arbitrary HTML element as child', () => {
     render(<Button {...arbitraryButton} />);
 
     expect(screen.getByRole('button')).toBeInTheDocument();
     expect(screen.getByRole('button')).not.toBeDisabled();
     expect(screen.getByTestId('random-content')).toBeInTheDocument();
   });
-  it('listens to clicks', async () => {
+  it('should listen to clicks', async () => {
     render(<Button {...defaultProps} />);
 
     userEvent.click(screen.getByRole('button'));
@@ -45,12 +45,12 @@ describe('<Button />', () => {
     expect(clickListener).toBeCalledTimes(1);
   });
 
-  it('renders secondary style by default', () => {
+  it('should render secondary style by default', () => {
     render(<Button {...defaultProps} />);
 
     expect(screen.getByRole('button')).toHaveClass('bg-gray-600');
   });
-  it('render primary style', () => {
+  it('should render primary style', () => {
     render(<Button {...defaultProps} color='primary' />);
 
     expect(screen.getByRole('button')).toHaveClass('bg-green-500');
