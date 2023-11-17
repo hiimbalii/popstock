@@ -7,8 +7,7 @@ import {
 } from '../../common/utils/test-utils';
 import userEvent from '@testing-library/user-event';
 import {screen} from '@testing-library/dom';
-import {useDispatch} from 'react-redux';
-/// Modal is already tested so we only test SELL modal funct
+
 /// * Song should be rendered correctly
 /// * original buy should be rendered
 /// * current price should be rendered
@@ -86,7 +85,7 @@ describe('<SellModal />', () => {
     // find {number}% and check if it's a positive number with optional decimal places
     expect(screen.queryByText(/\d*%\)/i)).toHaveTextContent(/\+\d*(\.\d*)?%/i);
   });
-  it('should render delta correctly (-)', async () => {
+  it('should render current delta (-)', async () => {
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={shareMock.buyPrice - 3} />,
     );
@@ -112,7 +111,7 @@ describe('<SellModal />', () => {
       currentPrice.toString(),
     );
   });
-  it('should prefill amount to maximum', async () => {
+  it('should select all shares by default', async () => {
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={currentPrice} />,
     );
@@ -129,7 +128,7 @@ describe('<SellModal />', () => {
     );
   });
 
-  it('should render the amount to be sold on button', async () => {
+  it('should render the amount to be sold on button if its not 0 or all of them', async () => {
     const sellAmount = shareMock.quantity - 1;
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={currentPrice} />,
@@ -165,8 +164,7 @@ describe('<SellModal />', () => {
   });
   // shouldn't be able to enter more or less than limits
 
-  // eslint-disable-next-line quotes
-  it('should not allow user to enter less than 0', async () => {
+  it('should not allow user to enter an amount to sell less than 0', async () => {
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={currentPrice} />,
     );
@@ -179,8 +177,7 @@ describe('<SellModal />', () => {
     );
   });
 
-  // eslint-disable-next-line quotes
-  it("should not allow user to enter sell amount more than what is owned", async () => {
+  it('should not allow user to enter amount to sell more than what is owned', async () => {
     const sellAmount = shareMock.quantity + 1;
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={currentPrice} />,
@@ -196,7 +193,7 @@ describe('<SellModal />', () => {
       sellAmount.toString(),
     );
   });
-  it('should close without selling anything', async () => {
+  it('should close without selling anything when clicking the close button', async () => {
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={currentPrice} />,
     );
@@ -207,7 +204,7 @@ describe('<SellModal />', () => {
       {skipPointerEventsCheck: true},
     );
   });
-  it('should sell 1 if they only have 1', async () => {
+  it('should sell only 1 if the user only has 1 share', async () => {
     const store = createMockStore({
       portfolio: {portfolio: [{...shareMock, quantity: 1}], wallet: 1000},
       tracks: {
@@ -232,7 +229,7 @@ describe('<SellModal />', () => {
     const tracks = store.getState().portfolio.portfolio;
     expect(tracks).toHaveLength(0);
   });
-  it('should sell all by default', async () => {
+  it('should sell all shares by default', async () => {
     const initialWallet = 1000;
     const store = createMockStore({
       portfolio: {portfolio: [shareMock], wallet: initialWallet},
@@ -257,7 +254,7 @@ describe('<SellModal />', () => {
     const wallet = store.getState().portfolio.wallet;
     expect(wallet).toBe(initialWallet + shareMock.quantity * currentPrice);
   });
-  it('should sell all when selecting 0', async () => {
+  it('should sell all shares when selecting 0', async () => {
     const initialWallet = 1000;
     const store = createMockStore({
       portfolio: {portfolio: [shareMock], wallet: initialWallet},
@@ -284,7 +281,7 @@ describe('<SellModal />', () => {
     const wallet = store.getState().portfolio.wallet;
     expect(wallet).toBe(initialWallet + shareMock.quantity * currentPrice);
   });
-  it('should sell the selected number when entering arbitrary number', async () => {
+  it('should sell the selected number of shares when entering arbitrary number', async () => {
     const nrOfSharesToSell = shareMock.quantity - 2;
     const initialWallet = 1000;
     const store = createMockStore({
