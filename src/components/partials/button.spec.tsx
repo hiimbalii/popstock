@@ -37,7 +37,7 @@ describe('<Button />', () => {
     expect(screen.getByRole('button')).not.toBeDisabled();
     expect(screen.getByTestId('img-content')).toBeInTheDocument();
   });
-  it('listen to clicks', async () => {
+  it('listens to clicks', async () => {
     render(<Button {...defaultProps} />);
 
     userEvent.click(screen.getByRole('button'));
