@@ -72,7 +72,7 @@ describe('<BuyModal />', () => {
     const {wallet: originalWallet, portfolio: originalPortfolio} =
       store.getState().portfolio;
     await userEvent.click(screen.getByText('Close'), undefined, {
-      skipPointerEventsCheck: true, // i am clueless as of why it is needed
+      skipPointerEventsCheck: true,
     });
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
