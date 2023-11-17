@@ -12,30 +12,30 @@ describe('<Button />', () => {
     children: 'button',
     onClick: clickListener,
   };
-  const iconButton: ButtonProps = {
+  const arbitraryButton: ButtonProps = {
     ...defaultProps,
     children: (
       <img
         src='https://placehold.co/400'
         alt='placeholder'
-        data-testid='img-content'
+        data-testid='random-content'
       />
     ),
   };
 
-  it('render element with text child', () => {
+  it('render element with a plain string as child', () => {
     render(<Button {...defaultProps} />);
 
     expect(screen.getByRole('button')).toBeInTheDocument();
     expect(screen.getByRole('button')).not.toBeDisabled();
     expect(screen.getByRole('button')).toHaveTextContent('button');
   });
-  it('renders element with arbitrary child', () => {
-    render(<Button {...iconButton} />);
+  it('renders element with arbitrary HTML element as child', () => {
+    render(<Button {...arbitraryButton} />);
 
     expect(screen.getByRole('button')).toBeInTheDocument();
     expect(screen.getByRole('button')).not.toBeDisabled();
-    expect(screen.getByTestId('img-content')).toBeInTheDocument();
+    expect(screen.getByTestId('random-content')).toBeInTheDocument();
   });
   it('listens to clicks', async () => {
     render(<Button {...defaultProps} />);
