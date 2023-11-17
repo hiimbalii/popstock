@@ -180,7 +180,7 @@ describe('<SellModal />', () => {
   });
 
   // eslint-disable-next-line quotes
-  it("shouldn't enter more than owned", async () => {
+  it("should not allow user to enter sell amount more than what is owned", async () => {
     const sellAmount = shareMock.quantity + 1;
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={currentPrice} />,
