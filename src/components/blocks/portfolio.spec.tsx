@@ -7,6 +7,7 @@ import {
 } from '../../common/utils/test-utils';
 import {reducer} from '../../core/store/store';
 import {screen} from '@testing-library/react';
+import {act} from 'react-dom/test-utils';
 /// Criterias
 /// * should render empty state when no shares are added
 /// [TBA] * should render error when shares or prices can not be loaded
@@ -16,10 +17,19 @@ import {screen} from '@testing-library/react';
 /// * Should get current prices from api
 /// * should render sum of share values
 /// * should render delta
+/// * should re-render when selling or buying
 
 jest.mock('nanoid', () => {
   () => 1;
 });
+const priceListMock = {
+  'song-1': 12,
+  'song-2': 23,
+};
+jest.mock('../../clients/get_track_prices', () => ({
+  getTrackPrices: () => Promise.resolve(priceListMock),
+}));
+jest.mock('../../common/hooks/useAuth', () => () => 'auth_token');
 describe('<Portfolio />', () => {
   const initialState: ReturnType<typeof reducer> = {
     portfolio: {
@@ -62,6 +72,26 @@ describe('<Portfolio />', () => {
       totalInvested.toString(),
     );
   });
+
+  it('should show how much money the porfolio is worth', async () => {
+    //TODO: The original business logic would make sense to be implemented not like this
+    const storeMock = createMockStore(initialState);
+    await act(async () => renderWithProvider(<Portfolio />, storeMock));
+
+    const totalValue = Object.entries(priceListMock).reduce(
+      (prev, listItem) =>
+        prev +
+        listItem[1] *
+          (initialState.portfolio.portfolio.find(
+            share => share.trackData.id === listItem[0],
+          )?.quantity ?? 0),
+      0,
+    );
+    expect(screen.getByTestId('total-value')).toHaveTextContent(
+      totalValue.toString(),
+    );
+  });
+
   it('show empty state', () => {
     const storeMock = createMockStore();
     renderWithProvider(<Portfolio />, storeMock);
