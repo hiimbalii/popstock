@@ -84,7 +84,7 @@ describe('<BuyModal />', () => {
     expect(portfolio).toHaveLength(originalPortfolio.length);
   });
 
-  it('should close modal with buying 1 stock when just clicking buy', async () => {
+  it('should close modal with buying 1 stock when clicking buy without selecting amount', async () => {
     const {wallet: originalWallet, portfolio: originalPortfolio} =
       store.getState().portfolio;
     await userEvent.click(screen.getByText('Buy shares'));
