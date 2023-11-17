@@ -45,7 +45,7 @@ describe('<Button />', () => {
     expect(clickListener).toBeCalledTimes(1);
   });
 
-  it('render secondary style by default', () => {
+  it('renders secondary style by default', () => {
     render(<Button {...defaultProps} />);
 
     expect(screen.getByRole('button')).toHaveClass('bg-gray-600');
