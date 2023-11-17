@@ -77,7 +77,7 @@ describe('<SellModal />', () => {
 
     expect(screen.queryByText(/\d*%\)/i)).toHaveTextContent(/0%/i);
   });
-  it('should render delta currectly (+)', async () => {
+  it('should render current delta (+)', async () => {
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={shareMock.buyPrice + 3} />,
     );
