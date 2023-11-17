@@ -53,8 +53,7 @@ describe('<BuyModal />', () => {
     const wallet = store.getState().portfolio.wallet;
     expect(screen.getByTestId('wallet')).toHaveTextContent(wallet.toString());
   });
-  // eslint-disable-next-line quotes
-  it("should display message and disable buy button if user can't afford shares", async () => {
+  it('should display message and disable buy button if user cannot afford shares', async () => {
     const wallet = store.getState().portfolio.wallet;
     const tooMuch = Math.ceil(wallet / trackMock.popularity);
     const diff = tooMuch * trackMock.popularity - wallet;
