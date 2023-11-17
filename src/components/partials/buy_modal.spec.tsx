@@ -4,7 +4,6 @@ import {store} from '../../core/store/store';
 import userEvent from '@testing-library/user-event';
 import {screen} from '@testing-library/dom';
 
-/// Modal is already tested so we only test BUY modal funct
 /// * song should be rendered out
 /// * total cost should update
 /// * wallet should be rendered
@@ -13,7 +12,6 @@ import {screen} from '@testing-library/dom';
 /// * close button should only close the modal
 // TODO: Unify song display
 
-// TODO: mock dispatch instead of checking store
 jest.mock('nanoid', () => ({
   nanoid: () => 1,
 }));

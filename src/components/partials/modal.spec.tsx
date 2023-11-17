@@ -2,7 +2,6 @@ import Modal from './modal';
 import userEvent from '@testing-library/user-event';
 import {render, screen} from '@testing-library/react';
 
-/// Dialog is tested by the radix team so here we only test if the props are gucci
 /// criteria:
 /// * should render button
 /// * on click should render modal
