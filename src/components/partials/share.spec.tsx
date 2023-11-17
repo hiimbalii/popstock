@@ -57,7 +57,6 @@ describe('<ShareDetails />', () => {
 
     expect(screen.queryByTestId('delta')).toBeNull();
   });
-  //TODO: test delta +/-
   it('should not open modal by default', () => {
     renderWithProvider(<ShareDetails share={share} currentPrice={76} />);
 
