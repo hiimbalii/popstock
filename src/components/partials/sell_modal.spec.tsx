@@ -86,7 +86,7 @@ describe('<SellModal />', () => {
     // find {number}% and check if it's a positive number with optional decimal places
     expect(screen.queryByText(/\d*%\)/i)).toHaveTextContent(/\+\d*(\.\d*)?%/i);
   });
-  it('should render delta currectly (-)', async () => {
+  it('should render delta correctly (-)', async () => {
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={shareMock.buyPrice - 3} />,
     );
