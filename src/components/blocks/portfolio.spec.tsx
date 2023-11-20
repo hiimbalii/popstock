@@ -4,8 +4,10 @@ import {
   renderWithProvider,
   shareMock,
   shareMock2,
+  trackMock,
 } from '../../common/utils/test-utils';
 import {reducer} from '../../core/store/store';
+import {buyShare} from '../../core/actions/portfolioActions';
 import {screen} from '@testing-library/react';
 import {act} from 'react-dom/test-utils';
 /// Criterias
@@ -41,27 +43,27 @@ describe('<Portfolio />', () => {
     },
   };
 
-  it('should render everything in the porfolio', () => {
+  it('should render everything in the porfolio', async () => {
     const storeMock = createMockStore(initialState);
-    renderWithProvider(<Portfolio />, storeMock);
+    await act(async () => renderWithProvider(<Portfolio />, storeMock));
 
     initialState.portfolio.portfolio.forEach(track => {
       expect(screen.getByText(track.trackData.title)).toBeInTheDocument();
     });
   });
 
-  it('should show how many shares are owned', () => {
+  it('should show how many shares are owned', async () => {
     const storeMock = createMockStore(initialState);
-    renderWithProvider(<Portfolio />, storeMock);
+    await act(async () => renderWithProvider(<Portfolio />, storeMock));
 
     expect(screen.getByTestId('shares-count')).toHaveTextContent(
       initialState.portfolio.portfolio.length.toString(),
     );
   });
 
-  it('should show how much money is invested', () => {
+  it('should show how much money is invested', async () => {
     const storeMock = createMockStore(initialState);
-    renderWithProvider(<Portfolio />, storeMock);
+    await act(async () => renderWithProvider(<Portfolio />, storeMock));
 
     const totalInvested = initialState.portfolio.portfolio.reduce(
       (prev, share) => prev + share.quantity * share.buyPrice,
@@ -122,7 +124,7 @@ describe('<Portfolio />', () => {
     await act(async () => renderWithProvider(<Portfolio />, storeMock));
     expect(screen.getByTestId('total-delta')).not.toHaveTextContent(/.+/);
   });
-  it('should not render delta if delta is positive', async () => {
+  it('should render delta if delta is positive', async () => {
     const initialStateZeroDelta: ReturnType<typeof reducer> = {
       ...initialState,
       portfolio: {
@@ -147,7 +149,7 @@ describe('<Portfolio />', () => {
       /-\d+(\.\d{1,2})?% decrease/i,
     );
   });
-  it('should not render delta if delta is negative', async () => {
+  it('should render delta if delta is negative', async () => {
     const initialStateZeroDelta: ReturnType<typeof reducer> = {
       ...initialState,
       portfolio: {
