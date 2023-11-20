@@ -58,6 +58,7 @@ export default function Portfolio() {
             invested{' '}
             <span data-testid='total-delta'>
               {totalDelta !== 0 &&
+                !Number.isNaN(totalDelta) &&
                 `${totalDelta}% ${totalDelta > 0 ? 'growth' : 'decrease'}`}
             </span>
             )
