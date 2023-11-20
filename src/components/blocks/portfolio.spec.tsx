@@ -14,14 +14,13 @@ import {act} from 'react-dom/test-utils';
 /// * Should render contents of portfolio
 /// * should render sum of original prices
 /// * should render count of shares owned
-/// * Should get current prices from api
 /// * should render sum of share values
 /// * should render delta
 /// * should re-render when selling or buying
 
-jest.mock('nanoid', () => {
-  () => 1;
-});
+jest.mock('nanoid', () => ({
+  nanoid: () => 1234,
+}));
 const priceListMock = {
   'song-1': 12,
   'song-2': 23,
@@ -92,12 +91,85 @@ describe('<Portfolio />', () => {
     );
   });
 
-  it('show empty state', () => {
+  it('should show empty state', () => {
     const storeMock = createMockStore();
     renderWithProvider(<Portfolio />, storeMock);
 
     expect(screen.getByTestId('total-invested')).toHaveTextContent('0');
     expect(screen.getByTestId('total-value')).toHaveTextContent('0');
     expect(screen.getByTestId('shares-count')).toHaveTextContent('0');
+  });
+  it('should not render delta if delta is 0', async () => {
+    const initialStateZeroDelta: ReturnType<typeof reducer> = {
+      ...initialState,
+      portfolio: {
+        ...initialState.portfolio,
+        portfolio: [
+          {
+            ...shareMock,
+            quantity: 2,
+            buyPrice: 23,
+          },
+          {
+            ...shareMock2,
+            quantity: 2,
+            buyPrice: 12,
+          },
+        ],
+      },
+    };
+    const storeMock = createMockStore(initialStateZeroDelta);
+    await act(async () => renderWithProvider(<Portfolio />, storeMock));
+    expect(screen.getByTestId('total-delta')).not.toHaveTextContent(/.+/);
+  });
+  it('should not render delta if delta is positive', async () => {
+    const initialStateZeroDelta: ReturnType<typeof reducer> = {
+      ...initialState,
+      portfolio: {
+        ...initialState.portfolio,
+        portfolio: [
+          {
+            ...shareMock,
+            quantity: 2,
+            buyPrice: 555,
+          },
+          {
+            ...shareMock2,
+            quantity: 2,
+            buyPrice: 555,
+          },
+        ],
+      },
+    };
+    const storeMock = createMockStore(initialStateZeroDelta);
+    await act(async () => renderWithProvider(<Portfolio />, storeMock));
+    expect(screen.getByTestId('total-delta')).toHaveTextContent(
+      /-\d+(\.\d{1,2})?% decrease/i,
+    );
+  });
+  it('should not render delta if delta is negative', async () => {
+    const initialStateZeroDelta: ReturnType<typeof reducer> = {
+      ...initialState,
+      portfolio: {
+        ...initialState.portfolio,
+        portfolio: [
+          {
+            ...shareMock,
+            quantity: 2,
+            buyPrice: 1,
+          },
+          {
+            ...shareMock2,
+            quantity: 2,
+            buyPrice: 1,
+          },
+        ],
+      },
+    };
+    const storeMock = createMockStore(initialStateZeroDelta);
+    await act(async () => renderWithProvider(<Portfolio />, storeMock));
+    expect(screen.getByTestId('total-delta')).toHaveTextContent(
+      /\d+(\.\d{1,2})?% growth/i,
+    );
   });
 });
