@@ -5,6 +5,7 @@ export interface TileProps {
 export default function Tile({children = null, className = ''}: TileProps) {
   return (
     <div
+      data-testid='tile'
       className={`w-full bg-gray-800 hover:bg-gray-900 text-white p-3 rounded-md ${
         className ?? ''
       }`}>

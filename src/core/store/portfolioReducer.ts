@@ -1,5 +1,6 @@
 import {PortfolioAction} from '../actions/portfolioActions';
 import {Share} from '../../common/types/share';
+// TODO: Remove nanoid to make funct pure
 import {nanoid} from 'nanoid';
 import {Reducer} from 'redux';
 
@@ -42,8 +43,7 @@ export const portfolioReducer: Reducer<PortfolioState, PortfolioAction> = (
       portfolio: state.portfolio
         .map(share => {
           if (share.shareId !== action.payload.shareId) return share;
-          share.quantity -= action.payload.quantity;
-          return share;
+          return {...share, quantity: share.quantity - action.payload.quantity};
         })
         .filter(share => share.quantity > 0),
       wallet: state.wallet + action.payload.sellPrice * action.payload.quantity,
