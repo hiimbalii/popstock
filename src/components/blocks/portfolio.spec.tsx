@@ -10,15 +10,6 @@ import {reducer} from '../../core/store/store';
 import {buyShare, sellShare} from '../../core/actions/portfolioActions';
 import {screen} from '@testing-library/react';
 import {act} from 'react-dom/test-utils';
-/// Criterias
-/// * should render empty state when no shares are added
-/// [TBA] * should render error when shares or prices can not be loaded
-/// * Should render contents of portfolio
-/// * should render sum of original prices
-/// * should render count of shares owned
-/// * should render sum of share values
-/// * should render delta
-/// * should re-render when selling or buying
 
 jest.mock('nanoid', () => ({
   nanoid: () => 1234,

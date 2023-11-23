@@ -4,9 +4,6 @@ import {
   renderWithProvider,
 } from '../../common/utils/test-utils';
 import {screen} from '@testing-library/react';
-/// criterias:
-/// * when login added: show profile info
-/// * display money in wallet
 
 jest.mock('nanoid', () => {
   () => 1;
