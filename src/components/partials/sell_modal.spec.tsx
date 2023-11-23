@@ -8,17 +8,6 @@ import {
 import userEvent from '@testing-library/user-event';
 import {screen} from '@testing-library/dom';
 
-/// * Song should be rendered correctly
-/// * original buy should be rendered
-/// * current price should be rendered
-
-/// * with 1 share there should be a sell button
-/// * with n shares there should be a number input that takes 1-n in and sells the appropriate amn shares
-/// close button should only close but not sell
-
-/// * total shares should display properly
-/// * sell for __ should display properly
-
 jest.mock('nanoid', () => ({
   nanoid: () => 1,
 }));

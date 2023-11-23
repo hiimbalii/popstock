@@ -2,11 +2,6 @@ import Modal from './modal';
 import userEvent from '@testing-library/user-event';
 import {render, screen} from '@testing-library/react';
 
-/// criteria:
-/// * should render button
-/// * on click should render modal
-/// * modal should have expected content and title
-
 describe('<Modal />', () => {
   const modal = (
     <Modal openButton={<button>open</button>} title='modal'>

@@ -7,11 +7,6 @@ import calculateDelta from '../../common/utils/calcDelta';
 import {screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-/// * should render out track info
-/// * should render out original buying price and owned amount
-/// * should render out current price
-/// * should render out delta if there is any
-/// * should open a sell modal with the correct price and track
 jest.mock('nanoid', () => ({
   nanoid: () => 1,
 }));

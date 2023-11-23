@@ -1,10 +1,6 @@
 import Button, {ButtonProps} from './button';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-/// Acceptance criterias:
-/// * Render HTML button with text or component as child
-/// * Handle events like a <button> element
-/// * Render different styles for different versions
 
 describe('<Button />', () => {
   const clickListener = jest.fn();

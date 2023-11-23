@@ -4,12 +4,6 @@ import {store} from '../../core/store/store';
 import userEvent from '@testing-library/user-event';
 import {screen} from '@testing-library/dom';
 
-/// * song should be rendered out
-/// * total cost should update
-/// * wallet should be rendered
-/// * over the limit text should appear when wallet < total
-/// * buy button should buy& close
-/// * close button should only close the modal
 // TODO: Unify song display
 
 jest.mock('nanoid', () => ({

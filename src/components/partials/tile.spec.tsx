@@ -1,10 +1,6 @@
 import Tile, {TileProps, TileTitle} from './tile';
 import {render, screen} from '@testing-library/react';
 
-/// Criterias:
-/// * Render child
-/// * Render with default classes by default
-/// * Forward classes to container
 describe('<Tile />', () => {
   const defaultProps: TileProps = {
     children: (

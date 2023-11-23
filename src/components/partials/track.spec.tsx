@@ -2,12 +2,7 @@ import TrackSummary from './track';
 import {renderWithProvider, trackMock} from '../../common/utils/test-utils';
 import {screen} from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-/// Criterias:
-/// * Should render the artist name, album title, release date and song title
-/// * should get a 'price from popularity
-/// * should render album cover art for traders not using screen readers (not sure what is the most correct and precise way to define this)
 
-/// * should open a buy modal with the correct price and track
 jest.mock('nanoid', () => ({
   nanoid: () => 1,
 }));
