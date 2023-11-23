@@ -8,7 +8,7 @@ import {
 } from '../../common/utils/test-utils';
 import {reducer} from '../../core/store/store';
 import {buyShare, sellShare} from '../../core/actions/portfolioActions';
-import {screen} from '@testing-library/react';
+import {screen, waitFor} from '@testing-library/react';
 import {act} from 'react-dom/test-utils';
 
 jest.mock('nanoid', () => ({
@@ -171,8 +171,9 @@ describe('<Portfolio />', () => {
     storeMock.dispatch(
       buyShare({...trackMock, id: 'track-3', title: 'track-3'}, 21),
     );
-    screen.debug();
-    expect(screen.queryByText('track-3')).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.queryByText('track-3')).toBeInTheDocument(),
+    );
     expect(screen.getByTestId('shares-count')).toHaveTextContent('3');
 
     const shareToSell = storeMock
