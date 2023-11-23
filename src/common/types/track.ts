@@ -27,10 +27,10 @@ export function mapTrackResponse(res: TrackResponse): TrackData {
   return {
     id: res.id,
     title: res.name,
-    popularity: res.popularity,
+    popularity: res.popularity || 1,
     albumName: res.album.name,
     albumCoverUrl: res.album.images[0]?.url ?? '',
-    artist: res.artists.map(a => a.name).join(' ,'),
+    artist: res.artists.map(a => a.name).join(', '),
     date: res.album.release_date,
   };
 }
