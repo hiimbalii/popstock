@@ -7,10 +7,12 @@ export default function Marketplace() {
   const {tracks, status} = useTrackList(authToken);
 
   const Inner = () => {
-    if (status === 'rejected') return;
-    <p className='text-lg text-white'>
-      Oh no! We seemed to have encountered an error
-    </p>;
+    if (status === 'rejected')
+      return (
+        <p className='text-lg text-white'>
+          Oh no! We seemed to have encountered an error
+        </p>
+      );
 
     if (status === 'idle')
       return <p className='text-lg text-white'>Loading...</p>;
