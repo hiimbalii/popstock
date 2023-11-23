@@ -7,7 +7,7 @@ import {
   trackMock,
 } from '../../common/utils/test-utils';
 import {reducer} from '../../core/store/store';
-import {buyShare} from '../../core/actions/portfolioActions';
+import {buyShare, sellShare} from '../../core/actions/portfolioActions';
 import {screen} from '@testing-library/react';
 import {act} from 'react-dom/test-utils';
 /// Criterias
@@ -173,5 +173,22 @@ describe('<Portfolio />', () => {
     expect(screen.getByTestId('total-delta')).toHaveTextContent(
       /\d+(\.\d{1,2})?% growth/i,
     );
+  });
+  it('should display new list of shares when portfolio changes', async () => {
+    const storeMock = createMockStore(initialState);
+    await act(async () => renderWithProvider(<Portfolio />, storeMock));
+    storeMock.dispatch(
+      buyShare({...trackMock, id: 'track-3', title: 'track-3'}, 21),
+    );
+    screen.debug();
+    expect(screen.queryByText('track-3')).toBeInTheDocument();
+    expect(screen.getByTestId('shares-count')).toHaveTextContent('3');
+
+    const shareToSell = storeMock
+      .getState()
+      .portfolio.portfolio.find(x => x.trackData.id === 'track-3')!;
+    storeMock.dispatch(sellShare(shareToSell, 1, 21));
+    expect(screen.queryByText('track-3')).toBeInTheDocument();
+    expect(screen.getByTestId('shares-count')).toHaveTextContent('3');
   });
 });
