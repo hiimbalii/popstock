@@ -1,7 +1,7 @@
 import {store as appStore, reducer as appReducer} from '../../core/store/store';
 import {TrackData} from '../types/track';
 import {Share} from '../types/share';
-import {render} from '@testing-library/react';
+import {render, renderHook} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {Store, applyMiddleware, createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk';
@@ -13,11 +13,14 @@ export function createMockStore(initialState?: ReturnType<typeof appReducer>) {
     applyMiddleware(thunkMiddleware),
   );
 }
+const createProvider = (el: React.ReactNode, store: Store) => (
+  <Provider store={store}>{el}</Provider>
+);
 export function renderWithProvider(
-  el: React.ReactElement,
+  el: React.ReactNode,
   store: Store = appStore,
 ) {
-  return render(<Provider store={store}>{el}</Provider>);
+  return render(createProvider(el, store));
 }
 
 export const trackMock: TrackData = {
@@ -53,3 +56,18 @@ export const shareMock2: Share = {
   buyPrice: 60,
   trackData: {...trackMock2},
 };
+const hookWrapper = (
+  store: Store,
+): React.JSXElementConstructor<{children: React.ReactNode}> => {
+  return ({children}: {children: React.ReactNode}) =>
+    createProvider(children, store);
+};
+
+export function renderHookWithProvider<T>(
+  wrappedHook: (...params: unknown[]) => T,
+  store: Store = appStore,
+) {
+  return renderHook(wrappedHook, {
+    wrapper: hookWrapper(store),
+  });
+}
