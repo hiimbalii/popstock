@@ -1,10 +1,12 @@
 import {store as appStore, reducer as appReducer} from '../../core/store/store';
-import {TrackData} from '../types/track';
+import {TrackData, TrackResponse} from '../types/track';
 import {Share} from '../types/share';
 import {render, renderHook} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {Store, applyMiddleware, createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk';
+import {HttpResponse, http} from 'msw';
+import {SetupServer, setupServer} from 'msw/node';
 
 export function createMockStore(initialState?: ReturnType<typeof appReducer>) {
   return createStore(
@@ -70,4 +72,45 @@ export function renderHookWithProvider<T>(
   return renderHook(wrappedHook, {
     wrapper: hookWrapper(store),
   });
+}
+
+const mockTrackResponse = (id: string): TrackResponse => ({
+  album: {
+    name: `album-name-${id}`,
+    release_date: `date-${id}`,
+    images: [
+      {
+        url: `url-${id}`,
+      },
+    ],
+  },
+  id: `id-${id}`,
+  artists: [{name: `artist-1-${id}`}],
+  name: `track-name-${id}`,
+  popularity: 4,
+});
+const track = (id: string): TrackData => ({
+  albumName: `album-name-${id}`,
+  id: `id-${id}`,
+  albumCoverUrl: `url-${id}`,
+  artist: `artist-1-${id}`,
+  title: `track-name-${id}`,
+  date: `date-${id}`,
+  popularity: 4,
+});
+export function buildServer(): {
+  expectedResponse: TrackData[];
+  server: SetupServer;
+} {
+  const handlers = [
+    http.get(
+      'https://api.spotify.com/v1/recommendations?seed_genres=alternative',
+      () => HttpResponse.json({tracks: [mockTrackResponse('1')]}),
+    ),
+  ];
+  const server = setupServer(...handlers);
+  return {
+    expectedResponse: [track('1')],
+    server,
+  };
 }
