@@ -57,11 +57,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "start": "react-scripts start",
-    "test": "react-scripts test "
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!msw)/\" "
   },
-  "version": "0.1.0",
-  "jest":{
-    "setupFiles":["./jest.polyfills.ts"],
-    "testPathIgnorePatterns":"./node_modules/"
-  }
+  "version": "0.1.0"
 }

@@ -103,9 +103,8 @@ export function buildServer(): {
   server: SetupServer;
 } {
   const handlers = [
-    http.get(
-      'https://api.spotify.com/v1/recommendations?seed_genres=alternative',
-      () => HttpResponse.json({tracks: [mockTrackResponse('1')]}),
+    http.get('https://api.spotify.com/v1/recommendations', () =>
+      HttpResponse.json({tracks: [mockTrackResponse('1')]}),
     ),
   ];
   const server = setupServer(...handlers);
