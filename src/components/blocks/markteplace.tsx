@@ -1,17 +1,18 @@
 import TrackSummary from '../partials/track';
-import {AuthContext} from '../../core/providers/authProvider';
 import {useTrackList} from '../../common/hooks/useTracks';
-import {useContext} from 'react';
+import useAuth from '../../common/hooks/useAuth';
 
 export default function Marketplace() {
-  const authToken = useContext<string>(AuthContext);
+  const authToken = useAuth();
   const {tracks, status} = useTrackList(authToken);
 
   const Inner = () => {
-    if (status === 'rejected') return;
-    <p className='text-lg text-white'>
-      Oh no! We seemed to have encountered an error
-    </p>;
+    if (status === 'rejected')
+      return (
+        <p className='text-lg text-white'>
+          Oh no! We seemed to have encountered an error
+        </p>
+      );
 
     if (status === 'idle')
       return <p className='text-lg text-white'>Loading...</p>;

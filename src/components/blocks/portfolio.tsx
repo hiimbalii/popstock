@@ -1,16 +1,16 @@
 import ShareDetails from '../partials/share';
-import {AuthContext} from '../../core/providers/authProvider';
 import {getTrackPrices} from '../../clients/get_track_prices';
 import calculateDelta from '../../common/utils/calcDelta';
 import {selectShares} from '../../common/selectors/selectors';
 import Tile, {TileTitle} from '../partials/tile';
-import {useContext, useEffect, useState} from 'react';
+import useAuth from '../../common/hooks/useAuth';
+import {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 
 export default function Portfolio() {
   const shares = useSelector(selectShares);
 
-  const authToken = useContext<string>(AuthContext);
+  const authToken = useAuth();
   const [priceList, setPriceList] = useState<{[key: string]: number}>({});
 
   useEffect(() => {
@@ -45,14 +45,22 @@ export default function Portfolio() {
       </div>
       <div className='flex justify-between mt-1'>
         <span>
-          {shares.length} <small>shares</small>
+          <strong data-testid='shares-count'>{shares.length}</strong>{' '}
+          <small>shares</small>
         </span>
         <span>
-          {Number.isNaN(totalValue) ? 0 : totalValue}{' '}
+          <strong data-testid='total-value'>
+            {Number.isNaN(totalValue) ? 0 : totalValue}
+          </strong>{' '}
           <small>
-            in value (<strong>{totalInvested}</strong> invested{' '}
-            {totalDelta !== 0 &&
-              `${totalDelta}% ${totalDelta > 0 ? 'growth' : 'decrease'}`}
+            in value (
+            <strong data-testid='total-invested'>{totalInvested}</strong>{' '}
+            invested{' '}
+            <span data-testid='total-delta'>
+              {totalDelta !== 0 &&
+                !Number.isNaN(totalDelta) &&
+                `${totalDelta}% ${totalDelta > 0 ? 'growth' : 'decrease'}`}
+            </span>
             )
           </small>
         </span>

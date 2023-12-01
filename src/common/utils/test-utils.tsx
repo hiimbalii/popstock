@@ -30,9 +30,26 @@ export const trackMock: TrackData = {
   popularity: 7,
 };
 
+export const trackMock2: TrackData = {
+  title: 'song-title-2',
+  id: 'song-2',
+  albumCoverUrl: 'cover-img-2',
+  artist: 'artist-name-2',
+  albumName: 'album-name-2',
+  date: 'date-2',
+  popularity: 77,
+};
+
 export const shareMock: Share = {
   shareId: 'test-share-1',
   quantity: 444,
   buyPrice: 1237,
   trackData: {...trackMock},
+};
+
+export const shareMock2: Share = {
+  shareId: 'test-share-2',
+  quantity: 23,
+  buyPrice: 60,
+  trackData: {...trackMock2},
 };
