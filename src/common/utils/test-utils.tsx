@@ -7,6 +7,7 @@ import {Store, applyMiddleware, createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import {HttpResponse, http} from 'msw';
 import {SetupServer, setupServer} from 'msw/node';
+import {useContext} from 'react';
 
 export function createMockStore(initialState?: ReturnType<typeof appReducer>) {
   return createStore(
@@ -72,6 +73,12 @@ export function renderHookWithProvider<T>(
   return renderHook(wrappedHook, {
     wrapper: hookWrapper(store),
   });
+}
+export function renderProviderAndGetContext<T>(
+  context: React.Context<T>,
+  wrapper: React.JSXElementConstructor<{children: React.ReactNode}>,
+) {
+  return renderHook(() => useContext(context), {wrapper});
 }
 
 const mockTrackResponse = (id: string): TrackResponse => ({
