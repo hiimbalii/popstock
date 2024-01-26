@@ -167,10 +167,12 @@ describe('<Portfolio />', () => {
   });
   it('should display new list of shares when portfolio changes', async () => {
     const storeMock = createMockStore(initialState);
-    await act(async () => renderWithProvider(<Portfolio />, storeMock));
-    storeMock.dispatch(
-      buyShare({...trackMock, id: 'track-3', title: 'track-3'}, 21),
-    );
+    await act(async () => {
+      renderWithProvider(<Portfolio />, storeMock);
+      storeMock.dispatch(
+        buyShare({...trackMock, id: 'track-3', title: 'track-3'}, 21),
+      );
+    });
     await waitFor(() =>
       expect(screen.queryByText('track-3')).toBeInTheDocument(),
     );
@@ -179,8 +181,12 @@ describe('<Portfolio />', () => {
     const shareToSell = storeMock
       .getState()
       .portfolio.portfolio.find(x => x.trackData.id === 'track-3')!;
-    storeMock.dispatch(sellShare(shareToSell, 1, 21));
-    expect(screen.queryByText('track-3')).toBeInTheDocument();
-    expect(screen.getByTestId('shares-count')).toHaveTextContent('3');
+    await act(async () => {
+      storeMock.dispatch(sellShare(shareToSell, 1, 21));
+    });
+    await waitFor(() =>
+      expect(screen.queryByText('track-3')).not.toBeInTheDocument(),
+    );
+    expect(screen.getByTestId('shares-count')).toHaveTextContent('2');
   });
 });
