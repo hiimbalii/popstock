@@ -1,18 +1,18 @@
 import ShareDetails from '../partials/share';
 import {getTrackPrices} from '../../clients/get_track_prices';
 import calculateDelta from '../../common/utils/calcDelta';
-import {selectShares} from '../../common/selectors/selectors';
+import {selectAuthToken, selectShares} from '../../common/selectors/selectors';
 import Tile, {TileTitle} from '../partials/tile';
-import {useAuth} from '../../core/providers/authProvider';
 import {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 
 export default function Portfolio() {
   const shares = useSelector(selectShares);
 
-  const authToken = useAuth();
+  const authToken = useSelector(selectAuthToken);
   const [priceList, setPriceList] = useState<{[key: string]: number}>({});
 
+  //TODO: Move this logic into a proper hook
   useEffect(() => {
     if (!authToken) return;
     const listOfIds = shares.map(share => share.trackData.id);

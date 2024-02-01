@@ -1,10 +1,8 @@
 import TrackSummary from '../partials/track';
 import {useTrackList} from '../../common/hooks/useTracks';
-import {useAuth} from '../../core/providers/authProvider';
 
 export default function Marketplace() {
-  const authToken = useAuth();
-  const {tracks, status} = useTrackList(authToken);
+  const {tracks, status} = useTrackList();
 
   const Inner = () => {
     if (status === 'rejected')

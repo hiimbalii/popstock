@@ -2,20 +2,22 @@ import {
   selectTracks,
   selectLoadingState,
   selectSearchTerm,
+  selectAuthToken,
 } from '../selectors/selectors';
-import {AppState} from '../../core/store/store';
+import {PopstockState} from '../../core/store/store';
 import {TracksAction, fetchTracks} from '../../core/actions/tracksActions';
 import {useRef, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {ThunkDispatch} from 'redux-thunk';
 
-const useTrackList = (authToken: string) => {
+const useTrackList = () => {
   const tracks = useSelector(selectTracks);
   const status = useSelector(selectLoadingState);
   const searchTerm = useSelector(selectSearchTerm);
+  const authToken = useSelector(selectAuthToken);
 
   const dispatch =
-    useDispatch<ThunkDispatch<AppState, unknown, TracksAction>>();
+    useDispatch<ThunkDispatch<PopstockState, unknown, TracksAction>>();
 
   const prevSearchTerm = useRef<string | null>(null);
   useEffect(() => {
