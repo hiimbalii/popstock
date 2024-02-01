@@ -1,4 +1,6 @@
+import getUser from '../../clients/user_info';
 import {getTokenFromParams} from '../../common/utils/auth';
+import {PopstockState} from '../store/store';
 import {Dispatch} from 'redux';
 
 type LoginAction = {
@@ -7,7 +9,13 @@ type LoginAction = {
     token: string;
   };
 };
-export type AppAction = LoginAction;
+type LoadDataAction = {
+  type: 'app/loadData';
+  payload: {
+    name: string;
+  };
+};
+export type AppAction = LoginAction | LoadDataAction;
 
 export const login = (token: string): LoginAction => ({
   type: 'app/login',
@@ -15,6 +23,16 @@ export const login = (token: string): LoginAction => ({
     token,
   },
 });
+export const loadData =
+  () => (dispatch: Dispatch<AppAction>, store: () => PopstockState) => {
+    const {
+      app: {access_token},
+    } = store();
+    if (!access_token) return;
+    getUser(access_token).then(({display_name}) =>
+      dispatch({type: 'app/loadData', payload: {name: display_name}}),
+    );
+  };
 export const tryParseTokenFromUrl = () => (dispatch: Dispatch<AppAction>) => {
   getTokenFromParams().then(token => {
     if (token) {

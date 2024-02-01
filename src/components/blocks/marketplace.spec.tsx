@@ -21,7 +21,7 @@ jest.mock('../../common/hooks/useAuth', () => () => 'auth_token');
 
 describe('<Marketplace />', () => {
   const initialState: ReturnType<typeof reducer> = {
-    app: {access_token: ''},
+    app: {access_token: '', name: ''},
     portfolio: {
       wallet: 1000,
       portfolio: [],

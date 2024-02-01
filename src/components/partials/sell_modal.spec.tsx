@@ -200,7 +200,7 @@ describe('<SellModal />', () => {
         catalogue: {searchTerm: '', loadedTracks: [trackMock]},
         loadingState: 'loading',
       },
-      app: {access_token: ''},
+      app: {access_token: '', name: ''},
     });
     renderWithProvider(
       <SellModal
@@ -227,7 +227,7 @@ describe('<SellModal />', () => {
         catalogue: {searchTerm: '', loadedTracks: [trackMock]},
         loadingState: 'loading',
       },
-      app: {access_token: ''},
+      app: {access_token: '', name: ''},
     });
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={currentPrice} />,
@@ -253,7 +253,7 @@ describe('<SellModal />', () => {
         catalogue: {searchTerm: '', loadedTracks: [trackMock]},
         loadingState: 'loading',
       },
-      app: {access_token: ''},
+      app: {access_token: '', name: ''},
     });
     renderWithProvider(
       <SellModal share={shareMock} currentPrice={currentPrice} />,
@@ -282,7 +282,7 @@ describe('<SellModal />', () => {
         catalogue: {searchTerm: '', loadedTracks: [trackMock]},
         loadingState: 'loading',
       },
-      app: {access_token: ''},
+      app: {access_token: '', name: ''},
     });
 
     renderWithProvider(

@@ -11,3 +11,4 @@ export const selectLoadingState = (state: PopstockState) =>
 export const selectSearchTerm = (state: PopstockState) =>
   state.tracks.catalogue.searchTerm;
 export const selectAuthToken = (state: PopstockState) => state.app.access_token;
+export const selectName = (state: PopstockState) => state.app.name;

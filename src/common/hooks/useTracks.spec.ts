@@ -19,7 +19,7 @@ describe('useTrackList', () => {
       .mockReturnValue(fetchSpy);
     const store = createMockStore({
       portfolio: {portfolio: [], wallet: 0},
-      app: {access_token: ''},
+      app: {access_token: '', name: ''},
       tracks: {
         loadingState: 'idle',
         catalogue: {searchTerm: '', loadedTracks: []},
@@ -36,7 +36,7 @@ describe('useTrackList', () => {
 
     const store = createMockStore({
       portfolio: {portfolio: [], wallet: 0},
-      app: {access_token: ''},
+      app: {access_token: '', name: ''},
       tracks: {
         loadingState: 'loading',
         catalogue: {searchTerm: '', loadedTracks: []},
@@ -52,7 +52,7 @@ describe('useTrackList', () => {
 
     const store = createMockStore({
       portfolio: {portfolio: [], wallet: 0},
-      app: {access_token: ''},
+      app: {access_token: '', name: ''},
       tracks: {
         loadingState: 'rejected',
         catalogue: {searchTerm: '', loadedTracks: []},
@@ -68,7 +68,7 @@ describe('useTrackList', () => {
 
     const store = createMockStore({
       portfolio: {portfolio: [], wallet: 0},
-      app: {access_token: ''},
+      app: {access_token: '', name: ''},
       tracks: {
         loadingState: 'success',
         catalogue: {searchTerm: '', loadedTracks: [trackMock]},
