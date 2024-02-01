@@ -50,8 +50,10 @@ export const startAuth = async () => {
 };
 
 export const getTokenFromParams = async () => {
+  if (localStorage.getItem('access_token')) return Promise.resolve(undefined);
   const urlParams = new URLSearchParams(window.location.search);
-  const code = urlParams.get('code') ?? undefined; // Yet another JS inconsistency
+  const code = urlParams.get('code');
+  if (!code) return Promise.resolve(undefined);
 
   // stored in the previous step
   const codeVerifier = localStorage.getItem('code_verifier') ?? undefined;
