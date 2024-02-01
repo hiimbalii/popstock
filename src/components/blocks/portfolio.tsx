@@ -3,7 +3,7 @@ import {getTrackPrices} from '../../clients/get_track_prices';
 import calculateDelta from '../../common/utils/calcDelta';
 import {selectShares} from '../../common/selectors/selectors';
 import Tile, {TileTitle} from '../partials/tile';
-import useAuth from '../../common/hooks/useAuth';
+import {useAuth} from '../../core/providers/authProvider';
 import {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 

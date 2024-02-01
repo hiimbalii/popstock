@@ -1,6 +1,6 @@
 import TrackSummary from '../partials/track';
 import {useTrackList} from '../../common/hooks/useTracks';
-import useAuth from '../../common/hooks/useAuth';
+import {useAuth} from '../../core/providers/authProvider';
 
 export default function Marketplace() {
   const authToken = useAuth();
