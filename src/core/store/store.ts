@@ -1,6 +1,7 @@
 import {trackReducer, TracksState} from './tracksReducer';
 import {portfolioReducer, PortfolioState} from './portfolioReducer';
 import {appReducer, AppState} from './appReducer';
+import {tryParseTokenFromUrl} from '../actions/appActions';
 import {
   CombinedState,
   applyMiddleware,
@@ -21,6 +22,8 @@ store.subscribe(() => {
   localStorage.setItem('wallet', JSON.stringify(state.portfolio.wallet));
   localStorage.setItem('portfolio', JSON.stringify(state.portfolio.portfolio));
 });
+
+tryParseTokenFromUrl()(store.dispatch);
 
 export {store, reducer};
 export type PopstockState = CombinedState<{
