@@ -34,37 +34,43 @@ export default function Portfolio() {
   return (
     <Tile className='flex-grow flex flex-col h-5/6'>
       <TileTitle>Portfolio</TileTitle>
-      <div className='overflow-auto flex-grow flex flex-col gap-1'>
-        {shares.map(share => (
-          <ShareDetails
-            key={share.shareId}
-            share={share}
-            currentPrice={priceList[share.trackData.id] ?? 0}
-          />
-        ))}
-      </div>
-      <div className='flex justify-between mt-1'>
-        <span>
-          <strong data-testid='shares-count'>{shares.length}</strong>{' '}
-          <small>shares</small>
-        </span>
-        <span>
-          <strong data-testid='total-value'>
-            {Number.isNaN(totalValue) ? 0 : totalValue}
-          </strong>{' '}
-          <small>
-            in value (
-            <strong data-testid='total-invested'>{totalInvested}</strong>{' '}
-            invested{' '}
-            <span data-testid='total-delta'>
-              {totalDelta !== 0 &&
-                !Number.isNaN(totalDelta) &&
-                `${totalDelta}% ${totalDelta > 0 ? 'growth' : 'decrease'}`}
+      {authToken ? (
+        <>
+          <div className='overflow-auto flex-grow flex flex-col gap-1'>
+            {shares.map(share => (
+              <ShareDetails
+                key={share.shareId}
+                share={share}
+                currentPrice={priceList[share.trackData.id] ?? 0}
+              />
+            ))}
+          </div>
+          <div className='flex justify-between mt-1'>
+            <span>
+              <strong data-testid='shares-count'>{shares.length}</strong>{' '}
+              <small>shares</small>
             </span>
-            )
-          </small>
-        </span>
-      </div>
+            <span>
+              <strong data-testid='total-value'>
+                {Number.isNaN(totalValue) ? 0 : totalValue}
+              </strong>{' '}
+              <small>
+                in value (
+                <strong data-testid='total-invested'>{totalInvested}</strong>{' '}
+                invested{' '}
+                <span data-testid='total-delta'>
+                  {totalDelta !== 0 &&
+                    !Number.isNaN(totalDelta) &&
+                    `${totalDelta}% ${totalDelta > 0 ? 'growth' : 'decrease'}`}
+                </span>
+                )
+              </small>
+            </span>
+          </div>
+        </>
+      ) : (
+        <span>Please log in to see the songs :)</span>
+      )}
     </Tile>
   );
 }
