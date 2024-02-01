@@ -80,3 +80,7 @@ export const getTokenFromParams = async () => {
 export const getAccessToken: () => string | null = () => {
   return localStorage.getItem('access_token');
 };
+
+export const setAccessToken = (token: string) => {
+  return localStorage.setItem('access_token', token);
+};

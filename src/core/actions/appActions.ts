@@ -1,5 +1,5 @@
 import getUser from '../../clients/user_info';
-import {getTokenFromParams} from '../../common/utils/auth';
+import {getTokenFromParams, setAccessToken} from '../../common/utils/auth';
 import {PopstockState} from '../store/store';
 import {Dispatch} from 'redux';
 
@@ -37,6 +37,7 @@ export const tryParseTokenFromUrl = () => (dispatch: Dispatch<AppAction>) => {
   getTokenFromParams().then(token => {
     if (token) {
       dispatch(login(token));
+      setAccessToken(token);
     }
   });
 };
