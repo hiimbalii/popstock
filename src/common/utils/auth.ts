@@ -19,7 +19,7 @@ const base64encode = (input: ArrayBuffer) => {
     .replace(/\+/g, '-')
     .replace(/\//g, '_');
 };
-export const codeChallenge = async () => {
+const codeChallenge = async () => {
   const hashed = await sha256(codeVerifier);
   return base64encode(hashed);
 };
@@ -72,8 +72,7 @@ export const getTokenFromParams = async () => {
 
   const body = await fetch('https://accounts.spotify.com/api/token', payload);
   const response = await body.json();
-  if (response.access_token)
-    localStorage.setItem('access_token', response.access_token);
+  return response.access_token as string | undefined;
 };
 
 export const getAccessToken: () => string | null = () => {
