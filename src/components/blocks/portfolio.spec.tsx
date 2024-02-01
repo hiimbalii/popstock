@@ -24,6 +24,7 @@ jest.mock('../../clients/get_track_prices', () => ({
 jest.mock('../../common/hooks/useAuth', () => () => 'auth_token');
 describe('<Portfolio />', () => {
   const initialState: ReturnType<typeof reducer> = {
+    app: {access_token: ''},
     portfolio: {
       wallet: 1000,
       portfolio: [shareMock, shareMock2],
