@@ -25,9 +25,9 @@ export const codeChallenge = async () => {
 };
 
 const clientId = '613bd20898634fe8a56b61c3827c64e2';
-const redirectUri = 'http://localhost:3000';
+const redirectUri = 'http://localhost:3000/';
 
-export const preRedirect = async () => {
+export const startAuth = async () => {
   const scope = 'user-read-private user-read-email';
   const authUrl = new URL('https://accounts.spotify.com/authorize');
 
@@ -49,7 +49,7 @@ export const preRedirect = async () => {
   window.location.href = authUrl.toString();
 };
 
-export const postRedirect = async () => {
+export const getTokenFromParams = async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code') ?? undefined; // Yet another JS inconsistency
 
@@ -72,8 +72,8 @@ export const postRedirect = async () => {
 
   const body = await fetch('https://accounts.spotify.com/api/token', payload);
   const response = await body.json();
-
-  localStorage.setItem('access_token', response.access_token);
+  if (response.access_token)
+    localStorage.setItem('access_token', response.access_token);
 };
 
 export const getAccessToken: () => string | null = () => {
