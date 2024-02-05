@@ -34,10 +34,14 @@ export const loadData =
     );
   };
 export const tryParseTokenFromUrl = () => (dispatch: Dispatch<AppAction>) => {
-  getTokenFromParams().then(token => {
-    if (token) {
-      dispatch(login(token));
-      setAccessToken(token);
-    }
-  });
+  try {
+    getTokenFromParams().then(token => {
+      if (token) {
+        dispatch(login(token));
+        setAccessToken(token);
+      }
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
