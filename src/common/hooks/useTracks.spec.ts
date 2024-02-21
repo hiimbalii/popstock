@@ -19,12 +19,13 @@ describe('useTrackList', () => {
       .mockReturnValue(fetchSpy);
     const store = createMockStore({
       portfolio: {portfolio: [], wallet: 0},
+      app: {access_token: '', name: ''},
       tracks: {
         loadingState: 'idle',
         catalogue: {searchTerm: '', loadedTracks: []},
       },
     });
-    renderHookWithProvider(() => useTrackList('auth_token'), store);
+    renderHookWithProvider(() => useTrackList(), store);
 
     expect(actionSpy).toBeCalled();
     expect(fetchSpy).toBeCalled();
@@ -35,15 +36,13 @@ describe('useTrackList', () => {
 
     const store = createMockStore({
       portfolio: {portfolio: [], wallet: 0},
+      app: {access_token: '', name: ''},
       tracks: {
         loadingState: 'loading',
         catalogue: {searchTerm: '', loadedTracks: []},
       },
     });
-    const {result} = renderHookWithProvider(
-      () => useTrackList('auth_token'),
-      store,
-    );
+    const {result} = renderHookWithProvider(() => useTrackList(), store);
 
     expect(result.current).toEqual({status: 'loading', tracks: []});
   });
@@ -53,15 +52,13 @@ describe('useTrackList', () => {
 
     const store = createMockStore({
       portfolio: {portfolio: [], wallet: 0},
+      app: {access_token: '', name: ''},
       tracks: {
         loadingState: 'rejected',
         catalogue: {searchTerm: '', loadedTracks: []},
       },
     });
-    const {result} = renderHookWithProvider(
-      () => useTrackList('auth_token'),
-      store,
-    );
+    const {result} = renderHookWithProvider(() => useTrackList(), store);
 
     expect(result.current).toEqual({status: 'rejected', tracks: []});
   });
@@ -71,15 +68,13 @@ describe('useTrackList', () => {
 
     const store = createMockStore({
       portfolio: {portfolio: [], wallet: 0},
+      app: {access_token: '', name: ''},
       tracks: {
         loadingState: 'success',
         catalogue: {searchTerm: '', loadedTracks: [trackMock]},
       },
     });
-    const {result} = renderHookWithProvider(
-      () => useTrackList('auth_token'),
-      store,
-    );
+    const {result} = renderHookWithProvider(() => useTrackList(), store);
 
     expect(result.current).toEqual({status: 'success', tracks: [trackMock]});
   });

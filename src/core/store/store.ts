@@ -1,5 +1,7 @@
 import {trackReducer, TracksState} from './tracksReducer';
 import {portfolioReducer, PortfolioState} from './portfolioReducer';
+import {appReducer, AppState} from './appReducer';
+import {tryParseTokenFromUrl} from '../actions/appActions';
 import {
   CombinedState,
   applyMiddleware,
@@ -11,6 +13,7 @@ import thunkMiddleware from 'redux-thunk';
 const reducer = combineReducers({
   portfolio: portfolioReducer,
   tracks: trackReducer,
+  app: appReducer,
 });
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
@@ -20,8 +23,11 @@ store.subscribe(() => {
   localStorage.setItem('portfolio', JSON.stringify(state.portfolio.portfolio));
 });
 
+tryParseTokenFromUrl()(store.dispatch);
+
 export {store, reducer};
-export type AppState = CombinedState<{
+export type PopstockState = CombinedState<{
   portfolio: PortfolioState;
   tracks: TracksState;
+  app: AppState;
 }>;

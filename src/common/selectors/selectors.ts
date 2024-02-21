@@ -1,12 +1,14 @@
-import {AppState} from '../../core/store/store';
+import {PopstockState} from '../../core/store/store';
 
-export const selectShares = (state: AppState) => state.portfolio.portfolio;
+export const selectShares = (state: PopstockState) => state.portfolio.portfolio;
 
-export const selectWallet = (state: AppState) => state.portfolio.wallet;
+export const selectWallet = (state: PopstockState) => state.portfolio.wallet;
 
-export const selectTracks = (state: AppState) =>
+export const selectTracks = (state: PopstockState) =>
   state.tracks.catalogue.loadedTracks;
-export const selectLoadingState = (state: AppState) =>
+export const selectLoadingState = (state: PopstockState) =>
   state.tracks.loadingState;
-export const selectSearchTerm = (state: AppState) =>
+export const selectSearchTerm = (state: PopstockState) =>
   state.tracks.catalogue.searchTerm;
+export const selectAuthToken = (state: PopstockState) => state.app.access_token;
+export const selectName = (state: PopstockState) => state.app.name;

@@ -1,10 +1,11 @@
 import TrackSummary from '../partials/track';
 import {useTrackList} from '../../common/hooks/useTracks';
-import useAuth from '../../common/hooks/useAuth';
+import {selectAuthToken} from '../../common/selectors/selectors';
+import {useSelector} from 'react-redux';
 
 export default function Marketplace() {
-  const authToken = useAuth();
-  const {tracks, status} = useTrackList(authToken);
+  const {tracks, status} = useTrackList();
+  const auth_token = useSelector(selectAuthToken);
 
   const Inner = () => {
     if (status === 'rejected')
@@ -27,7 +28,11 @@ export default function Marketplace() {
   };
   return (
     <div className='px-2 w-full h-full overflow-x-scroll'>
-      <Inner />
+      {auth_token ? (
+        <Inner />
+      ) : (
+        <span className='text-white'>Log in to see tracks!!!</span>
+      )}
     </div>
   );
 }
