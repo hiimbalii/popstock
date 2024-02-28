@@ -37,5 +37,5 @@ export function mapTrackResponse(res: TrackResponse): TrackData {
 export function mapRecommendationResponse(
   res: RecommendationsResponse,
 ): TrackData[] {
-  return res.tracks.map(mapTrackResponse);
+  return res.tracks?.map(mapTrackResponse) ?? [];
 }
