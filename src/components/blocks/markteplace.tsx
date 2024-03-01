@@ -1,3 +1,4 @@
+import Search from './search';
 import TrackSummary from '../partials/track';
 import {useTrackList} from '../../common/hooks/useTracks';
 import {selectAuthToken} from '../../common/selectors/selectors';
@@ -28,11 +29,14 @@ export default function Marketplace() {
   };
   return (
     <div className='px-2 w-full h-full overflow-x-scroll'>
-      {auth_token ? (
-        <Inner />
-      ) : (
-        <span className='text-white'>Log in to see tracks!!!</span>
-      )}
+      <Search />
+      <div className='overflow-x-scroll my-1'>
+        {auth_token ? (
+          <Inner />
+        ) : (
+          <span className='text-white'>Log in to see tracks!!!</span>
+        )}
+      </div>
     </div>
   );
 }
