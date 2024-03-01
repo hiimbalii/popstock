@@ -5,7 +5,7 @@ const createMockTracksState = (): TracksState => ({
   loadingState: 'idle',
   catalogue: {
     loadedTracks: [],
-    searchTerm: '',
+    filters: null,
   },
 });
 describe('action: tracks/load', () => {

@@ -17,18 +17,20 @@ import {screen} from '@testing-library/react';
 jest.mock('nanoid', () => ({
   nanoid: () => 1234,
 }));
-jest.mock('../../common/hooks/useAuth', () => () => 'auth_token');
 
 describe('<Marketplace />', () => {
   const initialState: ReturnType<typeof reducer> = {
-    app: {access_token: '', name: ''},
+    app: {access_token: 'auth', name: 'auth'},
     portfolio: {
       wallet: 1000,
       portfolio: [],
     },
     tracks: {
       loadingState: 'idle',
-      catalogue: {searchTerm: '', loadedTracks: []},
+      catalogue: {
+        loadedTracks: [],
+        filters: null,
+      },
     },
   };
   it('should render loading state', () => {

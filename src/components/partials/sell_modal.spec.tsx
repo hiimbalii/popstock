@@ -197,7 +197,10 @@ describe('<SellModal />', () => {
     const store = createMockStore({
       portfolio: {portfolio: [{...shareMock, quantity: 1}], wallet: 1000},
       tracks: {
-        catalogue: {searchTerm: '', loadedTracks: [trackMock]},
+        catalogue: {
+          loadedTracks: [trackMock],
+          filters: null,
+        },
         loadingState: 'loading',
       },
       app: {access_token: '', name: ''},
@@ -224,7 +227,10 @@ describe('<SellModal />', () => {
     const store = createMockStore({
       portfolio: {portfolio: [shareMock], wallet: initialWallet},
       tracks: {
-        catalogue: {searchTerm: '', loadedTracks: [trackMock]},
+        catalogue: {
+          loadedTracks: [trackMock],
+          filters: null,
+        },
         loadingState: 'loading',
       },
       app: {access_token: '', name: ''},
@@ -250,7 +256,10 @@ describe('<SellModal />', () => {
     const store = createMockStore({
       portfolio: {portfolio: [shareMock], wallet: initialWallet},
       tracks: {
-        catalogue: {searchTerm: '', loadedTracks: [trackMock]},
+        catalogue: {
+          loadedTracks: [trackMock],
+          filters: null,
+        },
         loadingState: 'loading',
       },
       app: {access_token: '', name: ''},
@@ -279,7 +288,10 @@ describe('<SellModal />', () => {
     const store = createMockStore({
       portfolio: {portfolio: [shareMock], wallet: initialWallet},
       tracks: {
-        catalogue: {searchTerm: '', loadedTracks: [trackMock]},
+        catalogue: {
+          loadedTracks: [trackMock],
+          filters: null,
+        },
         loadingState: 'loading',
       },
       app: {access_token: '', name: ''},

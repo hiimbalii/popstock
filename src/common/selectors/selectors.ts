@@ -9,6 +9,6 @@ export const selectTracks = (state: PopstockState) =>
 export const selectLoadingState = (state: PopstockState) =>
   state.tracks.loadingState;
 export const selectSearchTerm = (state: PopstockState) =>
-  state.tracks.catalogue.searchTerm;
+  state.tracks.catalogue.filters?.searchTerm;
 export const selectAuthToken = (state: PopstockState) => state.app.access_token;
 export const selectName = (state: PopstockState) => state.app.name;

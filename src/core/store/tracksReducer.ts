@@ -1,19 +1,20 @@
 import {TracksAction} from '../actions/tracksActions';
 import {TrackData} from '../../common/types/track';
+import {Filters} from '../../common/types/filters';
 import {Reducer} from 'redux';
 
 export interface TracksState {
   loadingState: 'idle' | 'rejected' | 'success' | 'loading';
   catalogue: {
     loadedTracks: TrackData[];
-    searchTerm: string | null;
+    filters: Filters | null;
   };
   open?: TrackData | null;
 }
 export const trackReducer: Reducer<TracksState, TracksAction> = (
   state: TracksState = {
     loadingState: 'idle',
-    catalogue: {loadedTracks: [], searchTerm: null},
+    catalogue: {loadedTracks: [], filters: null},
     open: null,
   },
   action: TracksAction,
@@ -29,6 +30,11 @@ export const trackReducer: Reducer<TracksState, TracksAction> = (
       };
     case 'tracks/open':
       return {...state, open: action.payload.track};
+    case 'tracks/search':
+      return {
+        ...state,
+        catalogue: {...state.catalogue, filters: action.payload.filters},
+      };
     default:
       return state;
   }

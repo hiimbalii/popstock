@@ -22,3 +22,10 @@ Object.defineProperties(globalThis, {
   Request: {value: Request},
   Response: {value: Response},
 });
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const nodeCrypto = require('crypto');
+window.crypto = {
+  getRandomValues: function (buffer) {
+    return nodeCrypto.randomFillSync(buffer);
+  },
+};
