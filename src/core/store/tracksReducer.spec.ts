@@ -12,7 +12,6 @@ describe('action: tracks/load', () => {
   it('should set `loadingState` to `loading`', () => {
     const reducedState = trackReducer(createMockTracksState(), {
       type: 'tracks/load',
-      payload: {searchTerm: null},
     });
     expect(reducedState.loadingState).toBe('loading');
   });

@@ -10,7 +10,7 @@ describe('fetchTracks()', () => {
   beforeEach(() => jest.resetAllMocks());
   it('should start fetching tracks', () => {
     mockedGetTracks.mockImplementation(() => new Promise(() => {}));
-    fetchTracks('auth', null)(mockDispatch);
+    fetchTracks('auth')(mockDispatch);
     expect(mockDispatch).toBeCalledTimes(1);
     expect(mockDispatch).toBeCalledWith({
       type: 'tracks/load',
@@ -19,7 +19,7 @@ describe('fetchTracks()', () => {
   });
   it('should load tracks if fetch was successful', async () => {
     mockedGetTracks.mockResolvedValue([trackMock]);
-    fetchTracks('auth', null)(mockDispatch);
+    fetchTracks('auth')(mockDispatch);
 
     await new Promise(process.nextTick); //more reliable version of using setTimeout(..., 0) to wait for the eventloop
 

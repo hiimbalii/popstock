@@ -1,12 +1,10 @@
 import {TrackData} from '../../common/types/track';
 import getTracks from '../../clients/tracks';
+import {Tag} from '../../common/types/filters';
 import {Dispatch} from 'redux';
 
 interface LoadTracksAction {
   type: 'tracks/load';
-  payload: {
-    searchTerm: string | null;
-  };
 }
 interface RecieveTracksAction {
   type: 'tracks/recieve';
@@ -25,10 +23,10 @@ export type TracksAction =
   | RecieveTracksAction
   | OpenTrackAction;
 
-export function fetchTracks(authToken: string, searchTerm: string | null) {
+export function fetchTracks(authToken: string) {
   return (dispatch: Dispatch<TracksAction>) => {
-    dispatch({type: 'tracks/load', payload: {searchTerm}});
-    getTracks(authToken, searchTerm).then(tracks => {
+    dispatch({type: 'tracks/load'});
+    getTracks(authToken, null).then(tracks => {
       dispatch({
         type: 'tracks/recieve',
         payload: {tracks},

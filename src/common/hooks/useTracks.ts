@@ -23,7 +23,7 @@ const useTrackList = () => {
   useEffect(() => {
     if (!authToken) return;
     if (status === 'idle' || prevSearchTerm.current !== searchTerm) {
-      dispatch(fetchTracks(authToken, searchTerm));
+      dispatch(fetchTracks(authToken));
     }
   }, [status, dispatch, searchTerm, authToken]);
   return {tracks, status};
