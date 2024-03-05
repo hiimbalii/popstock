@@ -1,33 +1,8 @@
 import Tag from '../partials/tag';
-import {selectSearchTerm} from '../../common/selectors/selectors';
-import {searchTracks} from '../../core/actions/tracksActions';
-import {AppAction} from '../../core/actions/appActions';
-import {PopstockState} from '../../core/store/store';
-import {useDebounce} from '../../common/utils/debounce';
 import {useTrackList} from '../../common/hooks/useTracks';
-import {ChangeEventHandler, useId} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {ThunkDispatch} from 'redux-thunk';
+import {useSearch} from '../../common/hooks/useSearch';
+import {useId} from 'react';
 
-const useSearch = () => {
-  const searchTerm = useSelector(selectSearchTerm);
-  const dispatch =
-    useDispatch<ThunkDispatch<PopstockState, unknown, AppAction>>();
-  const dispatchSearch = (term: string) =>
-    dispatch(searchTracks({searchTerm: term}));
-
-  const [inputSearchTerm, setInputSearchTerm] = useDebounce(
-    searchTerm ?? '',
-    dispatchSearch,
-  );
-  const handleChange: ChangeEventHandler<HTMLInputElement> = ev =>
-    setInputSearchTerm(ev.target.value);
-  return [
-    inputSearchTerm,
-    handleChange,
-    inputSearchTerm !== searchTerm,
-  ] as const;
-};
 export default function Search() {
   const inputId = useId();
   const [searchTerm, handleSearch, isSearchDirty] = useSearch();
