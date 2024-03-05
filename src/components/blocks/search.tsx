@@ -1,11 +1,13 @@
 import Tag from '../partials/tag';
 import {useTrackList} from '../../common/hooks/useTracks';
 import {useSearch} from '../../common/hooks/useSearch';
-import {useId} from 'react';
+import {ChangeEventHandler, useId} from 'react';
 
 export default function Search() {
   const inputId = useId();
-  const [searchTerm, handleSearch, isSearchDirty] = useSearch();
+  const [searchTerm, startSearch, isSearchDirty] = useSearch();
+  const handleSearch: ChangeEventHandler<HTMLInputElement> = ev =>
+    startSearch(ev.target.value);
 
   const {tracks, status} = useTrackList();
   const isBackgroundLoading = status === 'loading' && tracks.length;

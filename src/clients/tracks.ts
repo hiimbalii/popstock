@@ -9,7 +9,6 @@ const getTracks = (
   auth_token: string,
   filters: Filters | null,
 ): Promise<TrackData[]> => {
-  console.trace(filters);
   return (
     fetch(createUrlFromFilters(filters), {
       headers: {Authorization: `Bearer ${auth_token}`},
