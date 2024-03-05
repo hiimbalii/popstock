@@ -10,6 +10,6 @@ export const useDebounce = <T>(
       syncValue(state);
     }, 500);
     return () => clearTimeout(delayInputTimeoutId);
-  }, [state, 500]);
+  }, [state]);
   return [state, setState] as const;
 };
