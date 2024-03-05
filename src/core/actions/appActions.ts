@@ -15,7 +15,11 @@ type LoadDataAction = {
     name: string;
   };
 };
-export type AppAction = LoginAction | LoadDataAction;
+type LogoutAction = {
+  type: 'app/logout';
+  payload: unknown;
+};
+export type AppAction = LoginAction | LoadDataAction | LogoutAction;
 
 export const login = (token: string): LoginAction => ({
   type: 'app/login',
@@ -29,9 +33,11 @@ export const loadData =
       app: {access_token},
     } = store();
     if (!access_token) return;
-    getUser(access_token).then(({display_name}) =>
-      dispatch({type: 'app/loadData', payload: {name: display_name}}),
-    );
+    getUser(access_token)
+      .then(({display_name}) =>
+        dispatch({type: 'app/loadData', payload: {name: display_name}}),
+      )
+      .catch(() => dispatch({type: 'app/logout', payload: undefined}));
   };
 export const tryParseTokenFromUrl = () => (dispatch: Dispatch<AppAction>) => {
   try {

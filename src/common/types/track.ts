@@ -22,6 +22,11 @@ export interface TrackResponse {
 export interface RecommendationsResponse {
   tracks: TrackResponse[];
 }
+export interface SearchResponse {
+  tracks: {
+    items: TrackResponse[];
+  };
+}
 
 export function mapTrackResponse(res: TrackResponse): TrackData {
   return {
@@ -34,8 +39,11 @@ export function mapTrackResponse(res: TrackResponse): TrackData {
     date: res.album.release_date,
   };
 }
+export function mapSearchResponse(res: SearchResponse): TrackData[] {
+  return res?.tracks?.items?.map(mapTrackResponse) ?? [];
+}
 export function mapRecommendationResponse(
   res: RecommendationsResponse,
 ): TrackData[] {
-  return res.tracks?.map(mapTrackResponse) ?? [];
+  return res?.tracks?.map(mapTrackResponse) ?? [];
 }

@@ -19,5 +19,6 @@ export const appReducer: Reducer<AppState, AppAction> = (
 ) => {
   if (type === 'app/login') return {...state, access_token: payload.token};
   if (type === 'app/loadData') return {...state, name: payload.name};
+  if (type === 'app/logout') return {access_token: null, name: null};
   return state;
 };

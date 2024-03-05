@@ -19,10 +19,10 @@ export default function Marketplace() {
     if (status === 'idle')
       return <p className='text-lg text-white'>Loading...</p>;
     if (status === 'success')
-      return tracks.length === 0 ? (
+      return !tracks.length ? (
         <p className='text-lg text-white'>No songs found</p>
       ) : (
-        tracks.map(track => (
+        tracks?.map(track => (
           <TrackSummary key={track.id} {...track}></TrackSummary>
         ))
       );

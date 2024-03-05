@@ -33,7 +33,12 @@ export const trackReducer: Reducer<TracksState, TracksAction> = (
     case 'tracks/search':
       return {
         ...state,
-        catalogue: {...state.catalogue, filters: action.payload.filters},
+        catalogue: {
+          ...state.catalogue,
+          filters: action.payload.filters
+            ? {...state.catalogue.filters, ...action.payload.filters}
+            : null,
+        },
       };
     default:
       return state;
