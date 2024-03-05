@@ -7,6 +7,7 @@ import {useSelector} from 'react-redux';
 export default function Marketplace() {
   const {tracks, status} = useTrackList();
   const auth_token = useSelector(selectAuthToken);
+  const emptyLoadingState = status === 'loading' && !tracks?.length;
 
   const Inner = () => {
     if (status === 'rejected')
@@ -16,9 +17,9 @@ export default function Marketplace() {
         </p>
       );
 
-    if (status === 'idle')
+    if (status === 'idle' || emptyLoadingState)
       return <p className='text-lg text-white'>Loading...</p>;
-    if (status === 'success')
+    if (status === 'success' || (status === 'loading' && !emptyLoadingState))
       return !tracks.length ? (
         <p className='text-lg text-white'>No songs found</p>
       ) : (
