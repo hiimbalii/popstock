@@ -10,16 +10,23 @@ describe('fetchTracks()', () => {
   beforeEach(() => jest.resetAllMocks());
   it('should start fetching tracks', () => {
     mockedGetTracks.mockImplementation(() => new Promise(() => {}));
-    fetchTracks('auth', null)(mockDispatch);
+    fetchTracks()(
+      mockDispatch,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      () => ({app: {access_token: 'auth'}}) as unknown as any,
+    );
     expect(mockDispatch).toBeCalledTimes(1);
     expect(mockDispatch).toBeCalledWith({
       type: 'tracks/load',
-      payload: {searchTerm: null},
     });
   });
   it('should load tracks if fetch was successful', async () => {
     mockedGetTracks.mockResolvedValue([trackMock]);
-    fetchTracks('auth', null)(mockDispatch);
+    fetchTracks()(
+      mockDispatch,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      () => ({app: {access_token: 'auth'}}) as unknown as any,
+    );
 
     await new Promise(process.nextTick); //more reliable version of using setTimeout(..., 0) to wait for the eventloop
 

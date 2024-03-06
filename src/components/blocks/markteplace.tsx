@@ -1,11 +1,14 @@
+import Search from './search';
 import TrackSummary from '../partials/track';
 import {useTrackList} from '../../common/hooks/useTracks';
 import {selectAuthToken} from '../../common/selectors/selectors';
 import {useSelector} from 'react-redux';
 
 export default function Marketplace() {
-  const {tracks, status} = useTrackList();
+  const {tracks: tracksRes, status} = useTrackList();
+  const tracks = tracksRes.filter(t => t.id.length);
   const auth_token = useSelector(selectAuthToken);
+  const emptyLoadingState = status === 'loading' && !tracks?.length;
 
   const Inner = () => {
     if (status === 'rejected')
@@ -15,24 +18,27 @@ export default function Marketplace() {
         </p>
       );
 
-    if (status === 'idle')
+    if (status === 'idle' || emptyLoadingState)
       return <p className='text-lg text-white'>Loading...</p>;
-    if (status === 'success')
-      return tracks.length === 0 ? (
+    if (status === 'success' || (status === 'loading' && !emptyLoadingState))
+      return !tracks.length ? (
         <p className='text-lg text-white'>No songs found</p>
       ) : (
-        tracks.map(track => (
+        tracks?.map(track => (
           <TrackSummary key={track.id} {...track}></TrackSummary>
         ))
       );
   };
   return (
     <div className='px-2 w-full h-full overflow-x-scroll'>
-      {auth_token ? (
-        <Inner />
-      ) : (
-        <span className='text-white'>Log in to see tracks!!!</span>
-      )}
+      <Search />
+      <div className='overflow-x-scroll my-1'>
+        {auth_token ? (
+          <Inner />
+        ) : (
+          <span className='text-white'>Log in to see tracks!!!</span>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import getGenres from '../../clients/genres';
 import getUser from '../../clients/user_info';
 import {getTokenFromParams, setAccessToken} from '../../common/utils/auth';
 import {PopstockState} from '../store/store';
@@ -15,7 +16,21 @@ type LoadDataAction = {
     name: string;
   };
 };
-export type AppAction = LoginAction | LoadDataAction;
+type LogoutAction = {
+  type: 'app/logout';
+  payload: unknown;
+};
+type GenresLoadedAction = {
+  type: 'app/loadGenres';
+  payload: {
+    genres: string[];
+  };
+};
+export type AppAction =
+  | LoginAction
+  | LoadDataAction
+  | LogoutAction
+  | GenresLoadedAction;
 
 export const login = (token: string): LoginAction => ({
   type: 'app/login',
@@ -29,8 +44,13 @@ export const loadData =
       app: {access_token},
     } = store();
     if (!access_token) return;
-    getUser(access_token).then(({display_name}) =>
-      dispatch({type: 'app/loadData', payload: {name: display_name}}),
+    getUser(access_token)
+      .then(({display_name}) =>
+        dispatch({type: 'app/loadData', payload: {name: display_name}}),
+      )
+      .catch(() => dispatch({type: 'app/logout', payload: undefined}));
+    getGenres(access_token).then(genres =>
+      dispatch({type: 'app/loadGenres', payload: {genres}}),
     );
   };
 export const tryParseTokenFromUrl = () => (dispatch: Dispatch<AppAction>) => {

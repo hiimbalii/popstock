@@ -19,10 +19,13 @@ describe('useTrackList', () => {
       .mockReturnValue(fetchSpy);
     const store = createMockStore({
       portfolio: {portfolio: [], wallet: 0},
-      app: {access_token: '', name: ''},
+      app: {access_token: 'auth', name: 'auth'},
       tracks: {
         loadingState: 'idle',
-        catalogue: {searchTerm: '', loadedTracks: []},
+        catalogue: {
+          loadedTracks: [],
+          filters: null,
+        },
       },
     });
     renderHookWithProvider(() => useTrackList(), store);
@@ -39,7 +42,10 @@ describe('useTrackList', () => {
       app: {access_token: '', name: ''},
       tracks: {
         loadingState: 'loading',
-        catalogue: {searchTerm: '', loadedTracks: []},
+        catalogue: {
+          loadedTracks: [],
+          filters: null,
+        },
       },
     });
     const {result} = renderHookWithProvider(() => useTrackList(), store);
@@ -55,7 +61,10 @@ describe('useTrackList', () => {
       app: {access_token: '', name: ''},
       tracks: {
         loadingState: 'rejected',
-        catalogue: {searchTerm: '', loadedTracks: []},
+        catalogue: {
+          loadedTracks: [],
+          filters: null,
+        },
       },
     });
     const {result} = renderHookWithProvider(() => useTrackList(), store);
@@ -71,7 +80,10 @@ describe('useTrackList', () => {
       app: {access_token: '', name: ''},
       tracks: {
         loadingState: 'success',
-        catalogue: {searchTerm: '', loadedTracks: [trackMock]},
+        catalogue: {
+          loadedTracks: [trackMock],
+          filters: null,
+        },
       },
     });
     const {result} = renderHookWithProvider(() => useTrackList(), store);

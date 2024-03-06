@@ -21,17 +21,19 @@ const priceListMock = {
 jest.mock('../../clients/get_track_prices', () => ({
   getTrackPrices: () => Promise.resolve(priceListMock),
 }));
-jest.mock('../../common/hooks/useAuth', () => () => 'auth_token');
 describe('<Portfolio />', () => {
   const initialState: ReturnType<typeof reducer> = {
-    app: {access_token: '', name: ''},
+    app: {access_token: 'sdasd', name: 'asd'},
     portfolio: {
       wallet: 1000,
       portfolio: [shareMock, shareMock2],
     },
     tracks: {
       loadingState: 'idle',
-      catalogue: {searchTerm: '', loadedTracks: []},
+      catalogue: {
+        loadedTracks: [],
+        filters: null,
+      },
     },
   };
 

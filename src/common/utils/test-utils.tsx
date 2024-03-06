@@ -5,14 +5,14 @@ import {render, renderHook} from '@testing-library/react';
 import {Provider} from 'react-redux';
 import {Store, applyMiddleware, createStore} from 'redux';
 import thunkMiddleware from 'redux-thunk';
-import {HttpResponse, http} from 'msw';
+import {http} from 'msw';
 import {SetupServer, setupServer} from 'msw/node';
 import {useContext} from 'react';
 
 export function createMockStore(initialState?: ReturnType<typeof appReducer>) {
   return createStore(
     appReducer,
-    initialState,
+    {app: {access_token: 'auth', name: 'auth'}, ...initialState},
     applyMiddleware(thunkMiddleware),
   );
 }
