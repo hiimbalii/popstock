@@ -43,7 +43,7 @@ export default function BuyModal({track}: BuyModalProps) {
   const diff = selectedAmmount * price - wallet;
 
   return (
-    <Modal title='Buy share' openButton={<Button>Buy</Button>}>
+    <Modal title='Buy share' openButton={<Button color='primary'>Buy</Button>}>
       <div className='flex-grow gap-1 flex flex-col'>
         <div className='flex flex-row items-center py-2'>
           <img

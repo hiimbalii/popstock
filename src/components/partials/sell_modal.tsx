@@ -39,7 +39,11 @@ export default function SellModal({share, currentPrice}: SellModalProps) {
   return (
     <Modal
       title='Sell share'
-      openButton={<Button onClick={handleOpen}>Sell</Button>}>
+      openButton={
+        <Button onClick={handleOpen} color='primary'>
+          Sell
+        </Button>
+      }>
       <div className='flex-grow gap-1 flex flex-col'>
         <div className='flex flex-row items-center py-2'>
           <img
