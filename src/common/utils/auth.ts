@@ -24,7 +24,7 @@ const codeChallenge = async () => {
   return base64encode(hashed);
 };
 
-const clientId = '613bd20898634fe8a56b61c3827c64e2';
+const clientId = '36f88c9426684bd6ab5499e41b6ac97b';
 const redirectUri = 'http://localhost:3000/';
 
 export const startAuth = async () => {

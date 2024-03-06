@@ -1,6 +1,6 @@
 import {TrackData} from '../../common/types/track';
 import getTracks from '../../clients/tracks';
-import {Filters} from '../../common/types/filters';
+import {Filters, Tag} from '../../common/types/filters';
 import {PopstockState} from '../store/store';
 import {selectAuthToken} from '../../common/selectors/selectors';
 import {Dispatch} from 'redux';
@@ -20,6 +20,18 @@ interface OpenTrackAction {
     track: TrackData | null;
   };
 }
+interface AddTagAction {
+  type: 'tracks/addFilter';
+  payload: {
+    tag: Tag;
+  };
+}
+interface RemoveTagAction {
+  type: 'tracks/removeFilter';
+  payload: {
+    id: string;
+  };
+}
 interface SearchAction {
   type: 'tracks/search';
   payload: {
@@ -30,7 +42,9 @@ export type TracksAction =
   | LoadTracksAction
   | RecieveTracksAction
   | OpenTrackAction
-  | SearchAction;
+  | SearchAction
+  | AddTagAction
+  | RemoveTagAction;
 
 export function searchTracks(filters: Filters) {
   return (dispatch: Dispatch<TracksAction>, getState: () => PopstockState) => {
@@ -75,5 +89,45 @@ export function closeTrack(): OpenTrackAction {
     payload: {
       track: null,
     },
+  };
+}
+export function addTag(tag: Tag) {
+  return (dispatch: Dispatch<TracksAction>, getState: () => PopstockState) => {
+    const authToken = selectAuthToken(getState());
+    if (!authToken) return;
+    dispatch({type: 'tracks/load'});
+    dispatch({
+      type: 'tracks/addFilter',
+      payload: {
+        tag,
+      },
+    });
+    const filters = getState().tracks.catalogue.filters;
+    getTracks(authToken, filters).then(tracks => {
+      dispatch({
+        type: 'tracks/recieve',
+        payload: {tracks},
+      });
+    });
+  };
+}
+export function removeTag(id: string) {
+  return (dispatch: Dispatch<TracksAction>, getState: () => PopstockState) => {
+    const authToken = selectAuthToken(getState());
+    if (!authToken) return;
+    dispatch({type: 'tracks/load'});
+    dispatch({
+      type: 'tracks/removeFilter',
+      payload: {
+        id,
+      },
+    });
+    const filters = getState().tracks.catalogue.filters;
+    getTracks(authToken, filters).then(tracks => {
+      dispatch({
+        type: 'tracks/recieve',
+        payload: {tracks},
+      });
+    });
   };
 }

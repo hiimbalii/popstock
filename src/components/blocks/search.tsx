@@ -1,18 +1,35 @@
 import Tag from '../partials/tag';
 import {useTrackList} from '../../common/hooks/useTracks';
 import {useSearch} from '../../common/hooks/useSearch';
+import {selectFilters} from '../../common/selectors/selectors';
+import {PopstockState} from '../../core/store/store';
+import {
+  TracksAction,
+  addTag,
+  removeTag,
+} from '../../core/actions/tracksActions';
 import {ChangeEventHandler, useId} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {ThunkDispatch} from 'redux-thunk';
 
 export default function Search() {
   const inputId = useId();
   const [searchTerm, startSearch, isSearchDirty] = useSearch();
   const handleSearch: ChangeEventHandler<HTMLInputElement> = ev =>
     startSearch(ev.target.value);
+  const dispatch =
+    useDispatch<ThunkDispatch<PopstockState, unknown, TracksAction>>();
+  const [selectedFilters, notSelectedFilters] = useSelector(selectFilters);
 
   const {tracks, status} = useTrackList();
   const isBackgroundLoading = status === 'loading' && tracks.length;
+
+  // useEffect(() => {
+  //   dispatch(searchTracks({tags: selectedFilters}, true));
+  // }, [selectedFilters, dispatch]);
+
   return (
-    <div className='flex flex-col gap-2'>
+    <div className='flex flex-col gap-2 w-full mb-2'>
       <label htmlFor={inputId} className='text-white'>
         Search for your favourite songs
       </label>
@@ -23,19 +40,27 @@ export default function Search() {
         onChange={handleSearch}
         value={searchTerm}
       />
-      <div className='flex flew-row gap-2 '>
-        <Tag onClick={() => alert(1)}>Sort</Tag>
+      <div className='flex flew-row gap-3  overflow-y-scroll'>
         <div className='flex flew-row gap-1'>
-          <Tag active>Tag 1</Tag>
-          <Tag active>Tag 2</Tag>
+          {selectedFilters.map(({id, displayName, url}) => (
+            <Tag
+              key={id}
+              active
+              onClick={() => dispatch(removeTag(id))}
+              primary={!!url}>
+              {displayName}
+            </Tag>
+          ))}
         </div>
         <div className='flex flew-row gap-1'>
-          <Tag>Tag 1</Tag>
-          <Tag>Tag 2</Tag>
-          <Tag>Tag 3</Tag>
-          <Tag>Tag 4</Tag>
-          <Tag>Tag 5</Tag>
-          <Tag>Tag 6</Tag>
+          {notSelectedFilters.map(tag => (
+            <Tag
+              key={tag.id}
+              onClick={() => dispatch(addTag(tag))}
+              primary={!!tag.url}>
+              {tag.displayName}
+            </Tag>
+          ))}
         </div>
       </div>
       {isBackgroundLoading || isSearchDirty ? (

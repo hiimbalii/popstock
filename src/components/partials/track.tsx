@@ -14,7 +14,7 @@ export default function TrackSummary(props: TrackData) {
   } = props;
   const price = popularity || 1;
   return (
-    <Tile className='h-auto mb-2'>
+    <Tile className='h-auto w-full mb-2'>
       <div className='h-full p-1 flex '>
         <img
           className='w-24 h-24'

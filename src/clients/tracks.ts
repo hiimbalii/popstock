@@ -21,12 +21,19 @@ const getTracks = (
 export default getTracks;
 
 const mapBasedOnFilters = (filters: Filters | null) =>
-  filters?.searchTerm ? mapSearchResponse : mapRecommendationResponse;
+  filters?.searchTerm || filters?.tags
+    ? mapSearchResponse
+    : mapRecommendationResponse;
 
 export function createUrlFromFilters(filters: Filters | null): string {
-  if (filters?.searchTerm)
+  if (filters?.searchTerm || filters?.tags?.length) {
+    if (filters?.tags?.find(tag => tag.url))
+      return filters.tags.find(tag => tag.url)!.url!;
+    const searchString = filters.searchTerm ?? '';
+    const tags = filters.tags?.map(tag => tag.id).join(',');
     return `https://api.spotify.com/v1/search?q=${encodeURIComponent(
-      filters.searchTerm,
+      (searchString ? searchString + ',' : '') + tags,
     )}&type=track`;
+  }
   return 'https://api.spotify.com/v1/recommendations?seed_genres=alternative';
 }

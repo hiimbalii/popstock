@@ -40,6 +40,35 @@ export const trackReducer: Reducer<TracksState, TracksAction> = (
             : null,
         },
       };
+    case 'tracks/removeFilter':
+      return {
+        ...state,
+        catalogue: {
+          ...state.catalogue,
+          filters: {
+            ...state.catalogue.filters,
+            tags: state.catalogue.filters?.tags?.filter(
+              ({id}) => id !== action.payload.id,
+            ),
+          },
+        },
+      };
+    case 'tracks/addFilter':
+      return {
+        ...state,
+        catalogue: {
+          ...state.catalogue,
+          filters: {
+            ...state.catalogue.filters,
+            tags: [
+              ...(action.payload.tag.url
+                ? []
+                : state.catalogue.filters?.tags?.filter(({url}) => !url) ?? []),
+              action.payload.tag,
+            ],
+          },
+        },
+      };
     default:
       return state;
   }
