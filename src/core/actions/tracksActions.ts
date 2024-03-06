@@ -52,7 +52,8 @@ export function searchTracks(filters: Filters) {
     if (!authToken) return;
     dispatch({type: 'tracks/load'});
     dispatch({type: 'tracks/search', payload: {filters}});
-    getTracks(authToken, filters).then(tracks => {
+    const allFilters = getState().tracks.catalogue.filters;
+    getTracks(authToken, allFilters).then(tracks => {
       dispatch({
         type: 'tracks/recieve',
         payload: {tracks},
