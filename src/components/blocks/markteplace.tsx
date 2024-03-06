@@ -5,7 +5,8 @@ import {selectAuthToken} from '../../common/selectors/selectors';
 import {useSelector} from 'react-redux';
 
 export default function Marketplace() {
-  const {tracks, status} = useTrackList();
+  const {tracks: tracksRes, status} = useTrackList();
+  const tracks = tracksRes.filter(t => t.id.length);
   const auth_token = useSelector(selectAuthToken);
   const emptyLoadingState = status === 'loading' && !tracks?.length;
 

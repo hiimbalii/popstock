@@ -42,4 +42,10 @@ export const getConstantTags = (): Tag[] => [
     displayName: 'Newest tracks',
     category: 'year',
   },
+  // // in case i get rate limited again
+  // {
+  //   id: 'genre:alt-rock',
+  //   displayName: 'Alt Rock',
+  //   category: 'genre',
+  // },
 ];
