@@ -1,5 +1,4 @@
 import BuyModal from './buy_modal';
-import Button from './button';
 import Tile from './tile';
 import {TrackData} from '../../common/types/track';
 
@@ -31,9 +30,9 @@ export default function TrackSummary(props: TrackData) {
         </div>
         <div className='flex flex-col'>
           <p data-testid='price'>Price per share: {price}</p>
-          <Button color='primary' disabled>
+          {/* <Button color='primary' disabled>
             Open
-          </Button>
+          </Button> */}
           <BuyModal track={props} />
         </div>
       </div>

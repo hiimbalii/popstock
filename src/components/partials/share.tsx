@@ -1,5 +1,4 @@
 import SellModal from './sell_modal';
-import Button from './button';
 import {Share} from '../../common/types/share';
 import calculateDelta from '../../common/utils/calcDelta';
 
@@ -46,9 +45,9 @@ export default function ShareDetails({share, currentPrice}: ShareDetailsProps) {
         </p>
       </div>
       <div className='flex flex-col gap-0'>
-        <Button color='primary' disabled>
+        {/* <Button color='primary' disabled>
           Open
-        </Button>
+        </Button> */}
         <SellModal currentPrice={currentPrice} share={share} />
       </div>
     </div>
