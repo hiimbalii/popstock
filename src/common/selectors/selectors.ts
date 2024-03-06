@@ -1,5 +1,5 @@
 import {PopstockState} from '../../core/store/store';
-import {Tag} from '../types/filters';
+import {NormalTag, Tag} from '../types/filters';
 import {getConstantTags} from '../utils/tags';
 
 export const selectShares = (state: PopstockState) => state.portfolio.portfolio;
@@ -16,10 +16,14 @@ export const selectFilters = (state: PopstockState): [Tag[], Tag[]] => {
   const selected = state.tracks.catalogue.filters?.tags ?? [];
   const allFilters = [
     ...getConstantTags(),
-    ...(state.app.genres ?? []).map(genre => ({
-      id: `genre:${genre}`,
-      displayName: genre,
-    })),
+    ...(state.app.genres ?? []).map(
+      genre =>
+        ({
+          id: `genre:${genre}`,
+          displayName: genre,
+          category: 'genre',
+        }) as NormalTag,
+    ),
   ];
   return [
     selected,

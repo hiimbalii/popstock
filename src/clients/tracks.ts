@@ -1,4 +1,4 @@
-import {Filters} from '../common/types/filters';
+import {Filters, Tag, TagWithUrl} from '../common/types/filters';
 import {
   TrackData,
   mapRecommendationResponse,
@@ -20,20 +20,33 @@ const getTracks = (
 };
 export default getTracks;
 
-const mapBasedOnFilters = (filters: Filters | null) =>
-  filters?.searchTerm || filters?.tags
-    ? mapSearchResponse
-    : mapRecommendationResponse;
-
-export function createUrlFromFilters(filters: Filters | null): string {
+export const mapBasedOnFilters = (filters: Filters | null) => {
+  const tagWithUrl = filters?.tags?.find(tag => 'url' in tag && tag.url);
+  if (tagWithUrl) return (tagWithUrl as TagWithUrl).mapper;
   if (filters?.searchTerm || filters?.tags?.length) {
-    if (filters?.tags?.find(tag => tag.url))
-      return filters.tags.find(tag => tag.url)!.url!;
-    const searchString = filters.searchTerm ?? '';
-    const tags = filters.tags?.map(tag => tag.id).join(',');
-    return `https://api.spotify.com/v1/search?q=${encodeURIComponent(
-      (searchString ? searchString + ',' : '') + tags,
+    return mapSearchResponse;
+  }
+  return mapRecommendationResponse;
+};
+
+function createUrlFromFilters(filters: Filters | null): string {
+  const tagWithUrl = filters?.tags?.find(tag => 'url' in tag && tag.url);
+  if (tagWithUrl) return (tagWithUrl as TagWithUrl).url;
+  if (filters?.searchTerm || filters?.tags?.length) {
+    return `https://api.spotify.com/v1/search?q=${makeQueryString(
+      filters.searchTerm,
+      filters.tags,
     )}&type=track`;
   }
   return 'https://api.spotify.com/v1/recommendations?seed_genres=alternative';
+}
+export function makeQueryString(
+  searchTerm: string | null | undefined,
+  tags: Tag[] | undefined,
+): string {
+  const search = searchTerm || '';
+  const tagsStr = tags?.length ? tags.map(tag => tag.id).join(' ') : '';
+  const concated = [search, tagsStr].filter(Boolean).join(' ');
+  // eslint-disable-next-line quotes
+  return encodeURIComponent(concated).replace("'", '%27');
 }

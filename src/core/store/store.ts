@@ -21,6 +21,7 @@ store.subscribe(() => {
   const state = store.getState();
   localStorage.setItem('wallet', JSON.stringify(state.portfolio.wallet));
   localStorage.setItem('portfolio', JSON.stringify(state.portfolio.portfolio));
+  console.log(state);
 });
 
 tryParseTokenFromUrl()(store.dispatch);

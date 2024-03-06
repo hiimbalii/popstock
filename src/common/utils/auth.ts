@@ -29,7 +29,7 @@ const redirectUri = 'http://localhost:3000/';
 
 export const startAuth = async () => {
   const scope =
-    'user-read-private user-read-email user-library-read user-top-read';
+    'user-read-private user-read-email user-library-read user-top-read user-read-recently-played';
   const authUrl = new URL('https://accounts.spotify.com/authorize');
 
   // generated in the previous step

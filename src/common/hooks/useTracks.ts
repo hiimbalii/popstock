@@ -26,7 +26,7 @@ const useTrackList = () => {
     if (!tracks.length && status === 'idle') {
       dispatch(fetchTracks());
     }
-  }, [status, dispatch, authToken]);
+  }, [status, dispatch, authToken, tracks]);
   return {tracks, status};
 };
 export {useTrackList};

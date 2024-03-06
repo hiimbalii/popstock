@@ -42,13 +42,13 @@ export default function Search() {
       />
       <div className='flex flew-row gap-3  overflow-y-scroll'>
         <div className='flex flew-row gap-1'>
-          {selectedFilters.map(({id, displayName, url}) => (
+          {selectedFilters.map(tag => (
             <Tag
-              key={id}
+              key={tag.id}
               active
-              onClick={() => dispatch(removeTag(id))}
-              primary={!!url}>
-              {displayName}
+              onClick={() => dispatch(removeTag(tag.id))}
+              primary={'url' in tag}>
+              {tag.displayName}
             </Tag>
           ))}
         </div>
@@ -57,7 +57,7 @@ export default function Search() {
             <Tag
               key={tag.id}
               onClick={() => dispatch(addTag(tag))}
-              primary={!!tag.url}>
+              primary={'url' in tag}>
               {tag.displayName}
             </Tag>
           ))}

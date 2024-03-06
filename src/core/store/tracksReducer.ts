@@ -1,6 +1,6 @@
 import {TracksAction} from '../actions/tracksActions';
 import {TrackData} from '../../common/types/track';
-import {Filters} from '../../common/types/filters';
+import {Filters, TagWithUrl} from '../../common/types/filters';
 import {Reducer} from 'redux';
 
 export interface TracksState {
@@ -61,9 +61,11 @@ export const trackReducer: Reducer<TracksState, TracksAction> = (
           filters: {
             ...state.catalogue.filters,
             tags: [
-              ...(action.payload.tag.url
+              ...('url' in action.payload.tag
                 ? []
-                : state.catalogue.filters?.tags?.filter(({url}) => !url) ?? []),
+                : (
+                    state.catalogue.filters?.tags as TagWithUrl[] | undefined
+                  )?.filter(({url}) => !url) ?? []),
               action.payload.tag,
             ],
           },
