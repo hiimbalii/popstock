@@ -25,7 +25,7 @@ const codeChallenge = async () => {
 };
 
 const clientId = '36f88c9426684bd6ab5499e41b6ac97b';
-const redirectUri = 'http://localhost:3000/';
+const redirectUri = window.location.origin + '/';
 
 export const startAuth = async () => {
   const scope =
