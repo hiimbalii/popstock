@@ -1,8 +1,7 @@
 import {TracksAction} from '../actions/tracksActions';
 import {TrackData} from '../../common/types/track';
-import {Filters, TagWithUrl} from '../../common/types/filters';
+import {Filters, Tag} from '../../common/types/filters';
 import {Reducer} from 'redux';
-
 export interface TracksState {
   loadingState: 'idle' | 'rejected' | 'success' | 'loading';
   catalogue: {
@@ -63,9 +62,7 @@ export const trackReducer: Reducer<TracksState, TracksAction> = (
             tags: [
               ...('url' in action.payload.tag
                 ? []
-                : (
-                    state.catalogue.filters?.tags as TagWithUrl[] | undefined
-                  )?.filter(({url}) => !url) ?? []),
+                : filterTags(state, action.payload.tag) ?? []),
               action.payload.tag,
             ],
           },
@@ -75,3 +72,13 @@ export const trackReducer: Reducer<TracksState, TracksAction> = (
       return state;
   }
 };
+function filterTags(state: TracksState, tag: Tag) {
+  return (
+    state.catalogue.filters?.tags?.filter(
+      currentTag =>
+        'category' in currentTag &&
+        'category' in tag &&
+        tag.category !== currentTag.category,
+    ) ?? []
+  );
+}
