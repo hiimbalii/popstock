@@ -24,7 +24,7 @@ const codeChallenge = async () => {
   return base64encode(hashed);
 };
 
-const clientId = '1dae23c4c18046e193ca57eeaabdff4e';
+const clientId = '613bd20898634fe8a56b61c3827c64e2';
 const redirectUri = window.location.origin + '/';
 
 export const startAuth = async () => {
@@ -84,4 +84,8 @@ export const getAccessToken: () => string | null = () => {
 
 export const setAccessToken = (token: string) => {
   return localStorage.setItem('access_token', token);
+};
+
+export const clearAccessToken = () => {
+  return localStorage.removeItem('access_token');
 };

@@ -31,4 +31,6 @@ export const selectFilters = (state: PopstockState): [Tag[], Tag[]] => {
   ];
 };
 export const selectAuthToken = (state: PopstockState) => state.app.access_token;
+export const selectShouldShowLogoutReason = (state: PopstockState) =>
+  state.app.logout;
 export const selectName = (state: PopstockState) => state.app.name;
