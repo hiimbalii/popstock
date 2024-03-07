@@ -7,13 +7,14 @@ export interface TracksState {
   catalogue: {
     loadedTracks: TrackData[];
     filters: Filters | null;
+    pageNumber?: number;
   };
   open?: TrackData | null;
 }
 export const trackReducer: Reducer<TracksState, TracksAction> = (
   state: TracksState = {
     loadingState: 'idle',
-    catalogue: {loadedTracks: [], filters: null},
+    catalogue: {loadedTracks: [], filters: null, pageNumber: 0},
     open: null,
   },
   action: TracksAction,
@@ -25,7 +26,11 @@ export const trackReducer: Reducer<TracksState, TracksAction> = (
       return {
         ...state,
         loadingState: 'success',
-        catalogue: {...state.catalogue, loadedTracks: action.payload.tracks},
+        catalogue: {
+          ...state.catalogue,
+          loadedTracks: action.payload.tracks,
+          pageNumber: action.payload.pageNumber,
+        },
       };
     case 'tracks/open':
       return {...state, open: action.payload.track};

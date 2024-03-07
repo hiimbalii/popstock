@@ -12,6 +12,7 @@ interface RecieveTracksAction {
   type: 'tracks/recieve';
   payload: {
     tracks: TrackData[];
+    pageNumber: number;
   };
 }
 interface OpenTrackAction {
@@ -46,6 +47,18 @@ export type TracksAction =
   | AddTagAction
   | RemoveTagAction;
 
+const getAndSaveTracks = (
+  dispatch: Dispatch<TracksAction>,
+  ...args: Parameters<typeof getTracks>
+) => {
+  return getTracks(...args).then(page => {
+    dispatch({
+      type: 'tracks/recieve',
+      payload: {tracks: page.items, pageNumber: page.pageNumber},
+    });
+  });
+};
+
 export function searchTracks(filters: Filters) {
   return (dispatch: Dispatch<TracksAction>, getState: () => PopstockState) => {
     const authToken = selectAuthToken(getState());
@@ -53,25 +66,35 @@ export function searchTracks(filters: Filters) {
     dispatch({type: 'tracks/load'});
     dispatch({type: 'tracks/search', payload: {filters}});
     const allFilters = getState().tracks.catalogue.filters;
-    getTracks(authToken, allFilters).then(tracks => {
-      dispatch({
-        type: 'tracks/recieve',
-        payload: {tracks},
-      });
-    });
+    getAndSaveTracks(dispatch, authToken, allFilters, 0);
   };
 }
+export const nextPage = () => {
+  return (dispatch: Dispatch<TracksAction>, getState: () => PopstockState) => {
+    const authToken = selectAuthToken(getState());
+    if (!authToken) return;
+    dispatch({type: 'tracks/load'});
+    const filters = getState().tracks.catalogue.filters;
+    const pageNumber = (getState().tracks.catalogue.pageNumber ?? 0) + 1;
+    getAndSaveTracks(dispatch, authToken, filters, pageNumber);
+  };
+};
+export const previousPage = () => {
+  return (dispatch: Dispatch<TracksAction>, getState: () => PopstockState) => {
+    const authToken = selectAuthToken(getState());
+    if (!authToken) return;
+    dispatch({type: 'tracks/load'});
+    const filters = getState().tracks.catalogue.filters;
+    const pageNumber = (getState().tracks.catalogue.pageNumber ?? 1) - 1;
+    getAndSaveTracks(dispatch, authToken, filters, pageNumber);
+  };
+};
 export function fetchTracks() {
   return (dispatch: Dispatch<TracksAction>, getState: () => PopstockState) => {
     const authToken = selectAuthToken(getState());
     if (!authToken) return;
     dispatch({type: 'tracks/load'});
-    getTracks(authToken, null).then(tracks => {
-      dispatch({
-        type: 'tracks/recieve',
-        payload: {tracks},
-      });
-    });
+    getAndSaveTracks(dispatch, authToken, null, 0);
   };
 }
 
@@ -104,12 +127,8 @@ export function addTag(tag: Tag) {
       },
     });
     const filters = getState().tracks.catalogue.filters;
-    getTracks(authToken, filters).then(tracks => {
-      dispatch({
-        type: 'tracks/recieve',
-        payload: {tracks},
-      });
-    });
+
+    getAndSaveTracks(dispatch, authToken, filters, 0);
   };
 }
 export function removeTag(id: string) {
@@ -124,11 +143,6 @@ export function removeTag(id: string) {
       },
     });
     const filters = getState().tracks.catalogue.filters;
-    getTracks(authToken, filters).then(tracks => {
-      dispatch({
-        type: 'tracks/recieve',
-        payload: {tracks},
-      });
-    });
+    getAndSaveTracks(dispatch, authToken, filters, 0);
   };
 }
