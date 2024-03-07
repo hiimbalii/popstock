@@ -18,7 +18,9 @@ type LoadDataAction = {
 };
 type LogoutAction = {
   type: 'app/logout';
-  payload: unknown;
+  payload: {
+    showReason: boolean;
+  };
 };
 type GenresLoadedAction = {
   type: 'app/loadGenres';
@@ -46,7 +48,7 @@ export const loadData =
     if (!access_token) return;
     getUser(access_token).then(authToken => {
       if (!authToken) {
-        dispatch({type: 'app/logout', payload: undefined});
+        dispatch(logout(true));
         return;
       }
       const {display_name} = authToken;
@@ -68,3 +70,10 @@ export const tryParseTokenFromUrl = () => (dispatch: Dispatch<AppAction>) => {
     console.error(e);
   }
 };
+
+export const logout = (showReason: boolean): LogoutAction => ({
+  type: 'app/logout',
+  payload: {
+    showReason,
+  },
+});
