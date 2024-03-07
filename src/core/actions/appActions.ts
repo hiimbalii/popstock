@@ -44,11 +44,14 @@ export const loadData =
       app: {access_token},
     } = store();
     if (!access_token) return;
-    getUser(access_token)
-      .then(({display_name}) =>
-        dispatch({type: 'app/loadData', payload: {name: display_name}}),
-      )
-      .catch(() => dispatch({type: 'app/logout', payload: undefined}));
+    getUser(access_token).then(authToken => {
+      if (!authToken) {
+        dispatch({type: 'app/logout', payload: undefined});
+        return;
+      }
+      const {display_name} = authToken;
+      dispatch({type: 'app/loadData', payload: {name: display_name}});
+    });
     getGenres(access_token).then(genres =>
       dispatch({type: 'app/loadGenres', payload: {genres}}),
     );
