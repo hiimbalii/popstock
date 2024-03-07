@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {makeQueryString, mapBasedOnFilters} from './tracks';
+import {makeQueryString, mapBasedOnFilters, paginate} from './tracks';
 import {Filters} from '../common/types/filters';
 import {
   mapRecommendationResponse,
@@ -101,4 +101,23 @@ describe('mapBasedOnFilters', () => {
     expect(mockMapRecommendationResponse).toHaveBeenCalled();
     expect(mockMapSearchResponse).not.toHaveBeenCalled();
   });
+});
+
+describe('paginate', () => {
+  it.each`
+    page | expected
+    ${0} | ${'https://api.spotify.com/v1/recommendations?seed_genres=alternative&offset=0&limit=20'}
+    ${1} | ${'https://api.spotify.com/v1/recommendations?seed_genres=alternative&offset=20&limit=20'}
+    ${2} | ${'https://api.spotify.com/v1/recommendations?seed_genres=alternative&offset=40&limit=20'}
+  `(
+    'should return the url with the page offset of $offset',
+    ({page, expected}) => {
+      expect(
+        paginate(
+          'https://api.spotify.com/v1/recommendations?seed_genres=alternative',
+          page,
+        ),
+      ).toBe(expected);
+    },
+  );
 });

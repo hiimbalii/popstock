@@ -24,6 +24,8 @@ export interface RecommendationsResponse {
 }
 export interface SearchResponse {
   tracks: {
+    offset: number;
+    limit: number;
     items: TrackResponse[];
   };
 }
@@ -49,11 +51,19 @@ export function mapTrackResponse(res: TrackResponse): TrackData {
     date: res.album?.release_date ?? '',
   };
 }
-export function mapSearchResponse(res: SearchResponse): TrackData[] {
-  return res?.tracks?.items?.map(mapTrackResponse) ?? [];
+export function mapSearchResponse(response: unknown): Page {
+  const res = response as SearchResponse;
+  return {
+    items: res?.tracks?.items?.map(mapTrackResponse) ?? [],
+    pageNumber: res?.tracks?.offset / res?.tracks.limit ?? 0,
+  };
 }
-export function mapRecommendationResponse(
-  res: RecommendationsResponse,
-): TrackData[] {
-  return res?.tracks?.map(mapTrackResponse) ?? [];
+export function mapRecommendationResponse(response: unknown): Page {
+  const res = response as RecommendationsResponse;
+  // page number does not matter on recommendations
+  return {items: res?.tracks?.map(mapTrackResponse) ?? [], pageNumber: 0};
 }
+export type Page = {
+  items: TrackData[];
+  pageNumber: number;
+};

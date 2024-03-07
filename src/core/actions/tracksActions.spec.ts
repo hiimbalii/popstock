@@ -21,7 +21,7 @@ describe('fetchTracks()', () => {
     });
   });
   it('should load tracks if fetch was successful', async () => {
-    mockedGetTracks.mockResolvedValue([trackMock]);
+    mockedGetTracks.mockResolvedValue({items: [trackMock], pageNumber: 0});
     fetchTracks()(
       mockDispatch,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

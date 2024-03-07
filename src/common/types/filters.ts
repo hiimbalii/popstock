@@ -1,4 +1,4 @@
-import {TrackData} from './track';
+import {Page} from './track';
 
 type NakedTag = {
   id: string;
@@ -6,7 +6,7 @@ type NakedTag = {
 };
 export type TagWithUrl = NakedTag & {
   url: string;
-  mapper: (data: unknown) => TrackData[];
+  mapper: (data: unknown) => Page;
 };
 export type NormalTag = NakedTag & {
   category: 'genre' | 'year';
