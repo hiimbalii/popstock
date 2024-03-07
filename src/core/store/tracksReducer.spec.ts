@@ -21,14 +21,14 @@ describe('action: tracks/recieve', () => {
   it('should set `loadingState` to `success`', () => {
     const reducedState = trackReducer(createMockTracksState(), {
       type: 'tracks/recieve',
-      payload: {tracks: [], pageNumber: 0},
+      payload: {tracks: [], pageNumber: 0, reset: false},
     });
     expect(reducedState.loadingState).toBe('success');
   });
   it('should set the loaded tracks to the list of tracks included in the payload', () => {
     const reducedState = trackReducer(createMockTracksState(), {
       type: 'tracks/recieve',
-      payload: {tracks: [trackMock, trackMock2], pageNumber: 0},
+      payload: {tracks: [trackMock, trackMock2], pageNumber: 0, reset: false},
     });
     expect(reducedState.catalogue.loadedTracks).toHaveLength(2);
     expect(reducedState.catalogue.loadedTracks).toEqual([

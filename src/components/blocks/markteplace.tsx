@@ -3,8 +3,12 @@ import TrackSummary from '../partials/track';
 import {useTrackList} from '../../common/hooks/useTracks';
 import {selectAuthToken} from '../../common/selectors/selectors';
 import {useInfiniteScroll} from '../../common/hooks/useInfiniteScroll';
-import {useSelector} from 'react-redux';
+import {nextPage} from '../../core/actions/tracksActions';
+import {AppAction} from '../../core/actions/appActions';
+import {PopstockState} from '../../core/store/store';
+import {useDispatch, useSelector} from 'react-redux';
 import {useMemo, useRef} from 'react';
+import {ThunkDispatch} from 'redux-thunk';
 
 export default function Marketplace() {
   const {tracks: tracksRes, status} = useTrackList();
@@ -13,7 +17,9 @@ export default function Marketplace() {
   const emptyLoadingState = status === 'loading' && !tracks?.length;
 
   const loadNextRef = useRef<HTMLDivElement>(null);
-  useInfiniteScroll(() => console.log('fetch next'), loadNextRef);
+  const dispatch =
+    useDispatch<ThunkDispatch<PopstockState, unknown, AppAction>>();
+  useInfiniteScroll(() => dispatch(nextPage()), loadNextRef);
 
   const trackList = useMemo(
     () =>

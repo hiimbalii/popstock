@@ -13,6 +13,7 @@ interface RecieveTracksAction {
   payload: {
     tracks: TrackData[];
     pageNumber: number;
+    reset: boolean;
   };
 }
 interface OpenTrackAction {
@@ -54,7 +55,11 @@ const getAndSaveTracks = (
   return getTracks(...args).then(page => {
     dispatch({
       type: 'tracks/recieve',
-      payload: {tracks: page.items, pageNumber: page.pageNumber},
+      payload: {
+        tracks: page.items,
+        pageNumber: page.pageNumber,
+        reset: args[2] === 0,
+      },
     });
   });
 };
