@@ -1,8 +1,12 @@
 import BuyModal from './buy_modal';
 import Tile from './tile';
 import {TrackData} from '../../common/types/track';
+import {ForwardedRef, forwardRef} from 'react';
 
-export default function TrackSummary(props: TrackData) {
+function TrackSummaryInner(
+  props: TrackData,
+  ref: ForwardedRef<HTMLDivElement>,
+) {
   const {
     albumCoverUrl: imageUrl,
     artist,
@@ -14,7 +18,7 @@ export default function TrackSummary(props: TrackData) {
   const price = popularity || 1;
   return (
     <Tile className='h-auto w-full mb-2'>
-      <div className='h-full p-1 flex '>
+      <div ref={ref} className='h-full p-1 flex '>
         <img
           className='w-24 h-24'
           aria-hidden
@@ -39,3 +43,5 @@ export default function TrackSummary(props: TrackData) {
     </Tile>
   );
 }
+const TrackSummary = forwardRef(TrackSummaryInner);
+export default TrackSummary;

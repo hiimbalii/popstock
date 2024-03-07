@@ -16,10 +16,21 @@ const getTracks = (
     })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then(res => res.json() as unknown)
-      .then(mapBasedOnFilters(filters))
+      .then(addErrorHandler(mapBasedOnFilters(filters)))
   );
 };
 export default getTracks;
+
+const addErrorHandler = (mapper: (response: unknown) => Page) => {
+  return (response: unknown) => {
+    try {
+      return mapper(response);
+    } catch (e) {
+      console.error(e);
+      return {items: [], pageNumber: 0};
+    }
+  };
+};
 
 export const mapBasedOnFilters = (
   filters: Filters | null,
